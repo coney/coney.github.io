@@ -12,8 +12,6 @@ categories:
 ---
 
 今天通过gem安装mysql和libv8时, 均遇到了编译错误, 尤其是mysql的比较晦涩:
-
-    
     coney:cp-agentadmin$gem install mysql
     Building native extensions.  This could take a while...
     ERROR:  Error installing mysql:
@@ -30,11 +28,7 @@ categories:
     ...
     
     Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gems/mysql-2.9.1/ext/mysql_api/gem_make.out
-
-
 起初认为是mysql安装路径有问题, 但是无论往/usr/include或者/usr/local/include中放头文件, 或者通过--with-mysql-include等指定路径, 错误依旧.  打开下面提示的gem_make.out, 发现内容跟上面显示的差不多, 没有任何帮助. 后来在gem_make.out相同目录下发现一个名为mkmf.log的日志文件, 打开后发现真正的问题在这里:
-
-    
     have_header: checking for mysql.h... -------------------- no
     
     "/usr/local/bin/gcc-4.2 -E -I/opt/local/include -I. -I/Users/coney/.rvm/rubies/ree-1.8.7-2012.02/lib/ruby/1.8/i686-darwin12.4.0 -I.  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE   -I/usr/local/Cellar/mysql/5.6.12/include  -Wno-null-conversion -Os -g -fno-strict-aliasing -g -O2 -I/usr/local/opt/libyaml/include -I/usr/local/opt/readline/include -I/usr/local/opt/libxml2/include -I/usr/local/opt/libxslt/include -I/usr/local/opt/libksba/include -I/usr/local/opt/openssl098/include  -fno-common -pipe -fno-common    conftest.c -o conftest.i"
@@ -43,19 +37,11 @@ categories:
     /* begin */
     1: #include <mysql.h>
     /* end */
-
-
 在configure的时候, 它通过gcc尝试编译一个只有#include <mysql.h>的文件来判断是否包含mysql.h, 如果编译失败返回非0就认为头文件不存在(理论上来说这么简单的程序也不可能出现什么问题), 但是恰好mac上的这个gcc-4.2不支持-Wno-null-conversion这个开关, 导致cc失败, 所以外面打出的提示就是找不到mysql.h, 真是坑爹.
-
 找到问题后就要想办法解决掉, google了一把, 找到这个编译选项的位置, 存放在mysql安装路径的bin/mysql_config中, 修改如下两行:
-
-    
     cflags="-I$pkgincludedir  -Wall -Wno-null-conversion -Wno-unused-private-field -Os -g -fno-strict-aliasing -DDBUG_OFF " #note: end space!
     cxxflags="-I$pkgincludedir  -Wall -Wno-null-conversion -Wno-unused-private-field -Os -g -fno-strict-aliasing -DDBUG_OFF " #note: end space!
-
-
 去掉其中的-Wno-null-conversion -Wno-unused-private-field, 然后重新执行gem install mysql就可以了.
-
 当然, 还有另一种方法就是通过brew安装一个较新的gcc, 不用mac提供的那个古老的gcc, 目前我这边使用的gcc-4.9编译是没有什么问题的.
 
 libv8的问题比较直接, 安装时提示信息如下:
