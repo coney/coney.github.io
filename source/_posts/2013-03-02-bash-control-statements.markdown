@@ -11,44 +11,38 @@ categories:
 ---
 
 1. if
-
-    
-    if [ test ]; then
+``` bash
+if [ test ]; then
     xxxx
-    elif [ test ]; then
+elif [ test ]; then
     xxxx
-    else
+else
     xxxx
-    fi
-
+fi
+```
 
 2. for
-
-    
-    for it in list; do
+``` bash
+for it in list; do
     xxxx $it
-    done
-
+done
+```
 
 3. while
-
-    
-    while [ test ]; do
+``` bash
+while [ test ]; do
     xxxx
-    done
-
+done
+```
 
 4. case
-
-    
-    case $var in
+``` bash
+case $var in
     "a")
-    xxxx;;
+        xxxx;;
     "b")
-    xxxx;;
-    *)
-    xxxx;;
-    esac
-
-
-
+        xxxx;;
+    *)  #default
+        xxxx;;
+esac
+```
