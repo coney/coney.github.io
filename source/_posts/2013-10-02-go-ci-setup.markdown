@@ -18,7 +18,7 @@ categories:
 
 首先我们要到Go的产品页面去下载安装包([请猛击此处](http://www.thoughtworks.com/products/go-continuous-delivery)). 目前Go提供一个免费的社区版, 限制是最多10个用户, 3个远程Agent. 这个对个人使用感觉已经足够了. 来到Go的下载页面, 能看到Go提供了多种安装包, 针对不同的系统, 因为我的VPS是Ubuntu的, 所以点击Linux(Debian/Ubuntu)下载了deb包, 如果使用的是CentOS等使用RPM的发行版, 可以点击Linux(Redhat/Suse)这一项下载rpm包. 当然如果您使用非linux系统可以选择其他类型的安装包:
 
-[![Screen Shot 2013-10-04 at 下午11.43.37](http://coney.lemonconey.com/wp-content/uploads/2013/10/Screen-Shot-2013-10-04-at-下午11.43.37.png)](http://coney.lemonconey.com/2013/10/go-ci/screen-shot-2013-10-04-at-%e4%b8%8b%e5%8d%8811-43-37/) Go的安装包分了两部分, 一个是Go Server, 另一个是Go Agent. Go Server是供用户(也就是我们)来进行操作管理的服务, 而Go Agent则是执行Go Server下发的工作的苦力. 要实现完整的CI系统, 我们需要同时安装和配置Server以及Agent. 一个Go Server可以拥有多个Agent, 而且这些Agent可以跟Server安装在一起, 也可以安装在其他服务器上.
+{% img /images/2013/10/Screen-Shot-2013-10-04-at-下午11.43.37.png '' 'Screen Shot 2013-10-04 at 下午11.43.37' %}来进行操作管理的服务, 而Go Agent则是执行Go Server下发的工作的苦力. 要实现完整的CI系统, 我们需要同时安装和配置Server以及Agent. 一个Go Server可以拥有多个Agent, 而且这些Agent可以跟Server安装在一起, 也可以安装在其他服务器上.
 
 下载好安装包后, 我们首先来安装Go Server. 以我使用的Ubuntu Server为例, 首先通过Dpkg来进行安装:
 
@@ -46,7 +46,7 @@ categories:
 
 虽然看起来像是有些错误, 但实际还是安装成功了, 根据提示, 我们访问一下服务器的8153端口, It works!
 
-[![Screen Shot 2013-10-05 at 上午12.24.32](http://coney.lemonconey.com/wp-content/uploads/2013/10/Screen-Shot-2013-10-05-at-上午12.24.32.png)](http://coney.lemonconey.com/2013/10/go-ci/screen-shot-2013-10-05-at-%e4%b8%8a%e5%8d%8812-24-32/)
+{% img /images/2013/10/Screen-Shot-2013-10-05-at-上午12.24.32.png '' 'Screen Shot 2013-10-05 at 上午12.24.32' %}
 
 
 #  配置用户认证
@@ -54,7 +54,7 @@ categories:
 
 初次进入Go, 并没有见到登录验证之类的页面, 而是直接跳转到Admin下让我们构建pipeline. 如果只是个人使用的话, 这样还是挺方便的, 但是如果发布到公网或者有多个用户时, 这样就太不安全啦,  所以首要任务是加入登录验证, 在[Admin][Server Configuration]标签下, 能够找到User Management相关的配置选项:
 
-[![Screen Shot 2013-10-05 at 上午12.31.39](http://coney.lemonconey.com/wp-content/uploads/2013/10/Screen-Shot-2013-10-05-at-上午12.31.39.png)](http://coney.lemonconey.com/2013/10/go-ci/screen-shot-2013-10-05-at-%e4%b8%8a%e5%8d%8812-31-39/)
+{% img /images/2013/10/Screen-Shot-2013-10-05-at-上午12.31.39.png '' 'Screen Shot 2013-10-05 at 上午12.31.39' %}
 
 参考配置文档的说明, 支持LDAP和密码文件认证. 因为没有AD服务器, 所以这里使用的第二种方式. Go要求密码要通过sha1哈希后在通过base64编码一次. 手动操作比较繁琐, 这里用apache提供的htpasswd命令生成和修改密码:
 
@@ -68,7 +68,7 @@ categories:
 
 参数-c表示创建新的密码文件, passwd是文件名, coney是要添加的第一个用户, 命令执行后会提示输入和确认密码. 输入无误便会创建用户. 之后将新创建的文件路径填入"Password File Path"一栏中提交. 提交后便会跳转到登陆页面, 此时通过刚才创建的用户名密码登陆, 重新进入Go主页.
 
-[![Screen Shot 2013-10-05 at 上午12.49.56](http://coney.lemonconey.com/wp-content/uploads/2013/10/Screen-Shot-2013-10-05-at-上午12.49.56.png)](http://coney.lemonconey.com/2013/10/go-ci/screen-shot-2013-10-05-at-%e4%b8%8a%e5%8d%8812-49-56/)
+{% img /images/2013/10/Screen-Shot-2013-10-05-at-上午12.49.56.png '' 'Screen Shot 2013-10-05 at 上午12.49.56' %}
 
 
 #  安装Go Agent
@@ -110,4 +110,4 @@ Agent的安装速度相当快, 根据安装的提示, 我们要编辑/etc/defaul
 
 启动成功后, 我们在Go Server Agent面板下能够看到现在可用的Agents列表:
 
-[![Screen Shot 2013-10-05 at 上午1.03.41](http://coney.lemonconey.com/wp-content/uploads/2013/10/Screen-Shot-2013-10-05-at-上午1.03.41.png)](http://coney.lemonconey.com/2013/10/go-ci/screen-shot-2013-10-05-at-%e4%b8%8a%e5%8d%881-03-41/) 到此为止, 一个基本可用的Go就算搭建完成.
+{% img /images/2013/10/Screen-Shot-2013-10-05-at-上午1.03.41.png '' 'Screen Shot 2013-10-05 at 上午1.03.41' %} 到此为止, 一个基本可用的Go就算搭建完成.

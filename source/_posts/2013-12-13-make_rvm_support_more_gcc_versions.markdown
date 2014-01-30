@@ -14,10 +14,10 @@ categories:
 
 从网上搜索解决方案时看到这个commit:
 
-[![QQ20131210-1](http://coney.lemonconey.com/wp-content/uploads/2013/12/QQ20131210-1.png)](http://coney.lemonconey.com/2013/12/make_rvm_support_more_gcc_versions/qq20131210-1/)
+{% img /images/2013/12/QQ20131210-1.png '' 'QQ20131210-1' %}
 
 [https://github.com/wayneeseguin/rvm/commit/2b899c9c446a7e5391720f70208c0e2f71629ff0](https://github.com/wayneeseguin/rvm/commit/2b899c9c446a7e5391720f70208c0e2f71629ff0)
 
 rvm通过这个脚本来维护支持的编译器列表, 所以依葫芦画瓢, 自己改动了下home/.rvm/scripts/functions/requirements/osx_brew文件, 添加了对gcc49的支持:
 
-[![QQ20131210-2](http://coney.lemonconey.com/wp-content/uploads/2013/12/QQ20131210-2.png)](http://coney.lemonconey.com/2013/12/make_rvm_support_more_gcc_versions/qq20131210-2/)
+{% img /images/2013/12/QQ20131210-2.png '' 'QQ20131210-2' %}

@@ -9,8 +9,7 @@ wordpress_id: 11
 categories:
 - Linux/Network
 ---
-
-[![ldd man](http://coney.lemonconey.com/wp-content/uploads/2013/02/无标题.png)](http://coney.lemonconey.com/2013/02/%e9%80%9a%e8%bf%87ldd%e6%9f%a5%e6%89%be%e7%ac%a6%e5%8f%b7%e5%bc%95%e7%94%a8/%e6%97%a0%e6%a0%87%e9%a2%98/)根据ldd manual, 通过-d, -r分别可以查看缺失的符号, 对于elf格式的so一样有效, 例如:
+{% img /images/2013/02/无标题.png '' 'ldd man' %}根据ldd manual, 通过-d, -r分别可以查看缺失的符号, 对于elf格式的so一样有效, 例如:
 
     
     [~/qmf/application/server/qmf_cmdsvr]$ ldd -r src/qmfcmd_spp.so
