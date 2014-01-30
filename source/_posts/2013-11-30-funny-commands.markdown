@@ -25,7 +25,7 @@ wordpress_id: 225
 
 
 
-[![QQ20131130-2](http://coney.lemonconey.com/wp-content/uploads/2013/11/QQ20131130-2.png)](http://coney.lemonconey.com/2013/11/funny-commands/qq20131130-2/)
+{% img /images/2013/11/QQ20131130-2.png '' 'QQ20131130-2' %}
 
 
 # watch
@@ -37,7 +37,7 @@ wordpress_id: 225
 
 
 
-[![QQ20131130-3](http://coney.lemonconey.com/wp-content/uploads/2013/11/QQ20131130-3.png)](http://coney.lemonconey.com/2013/11/funny-commands/qq20131130-3/)
+{% img /images/2013/11/QQ20131130-3.png '' 'QQ20131130-3' %}
 
 
 
@@ -45,6 +45,6 @@ wordpress_id: 225
 
 
 
-[![QQ20131130-4](http://coney.lemonconey.com/wp-content/uploads/2013/11/QQ20131130-4.png)](http://coney.lemonconey.com/2013/11/funny-commands/qq20131130-4/)
+{% img /images/2013/11/QQ20131130-4.png '' 'QQ20131130-4' %}
 
 

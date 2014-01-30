@@ -12,4 +12,5 @@ categories:
 
 最近好累啊, 碎了
 
-[![yy102483](http://coney.lemonconey.com/wp-content/uploads/2013/01/yy102483.jpg)](http://coney.lemonconey.com/2013/01/%e5%86%99%e7%82%b9%e5%95%a5%e5%91%a2/yy102483/)
+{% img /images/2013/01/yy102483.jpg %}
+
