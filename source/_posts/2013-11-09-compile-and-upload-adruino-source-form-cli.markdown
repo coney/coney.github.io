@@ -15,6 +15,7 @@ Arduino官方提供了一个IDE, 集成了编辑, 编译, 上传和串口监视�
 首先尝试带参启动arduino的IDE, 没有发现类似devenv.exe带参直接编译工程的功能. 之后在arduino主站搜索一番, 倒是发现了一个通过makefile的方法([http://playground.arduino.cc/Learning/CommandLine](http://playground.arduino.cc/Learning/CommandLine)), 不过提供的库略坑爹. 折腾了半天后发现提供的uart.h里面没有mega2560的定义. 从IDE中提取的库也找不到这个定义. 只能搞一些较老的芯片, 遂放弃.
 
 继续google, 发现另外一套基于python的命令行工具ino, 试用了下, 还是比较稳定的. ino的介绍可以看这里:[http://inotool.org/](http://inotool.org/) 网站上提供了多种安装方式, 因为我的树莓派是debian的系统,  所以相关的东西基本都是通过apt安装的.
+<!-- more -->
 
 因为ino可以通过pip安装, 首先我们要安装一个pip:
 

@@ -20,6 +20,7 @@ else
     xxxx
 fi
 ```
+<!-- more -->
 
 2. for
 ``` bash

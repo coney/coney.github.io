@@ -15,6 +15,7 @@ categories:
 从网上搜索解决方案时看到这个commit:
 
 {% img /images/2013/12/QQ20131210-1.png '' 'QQ20131210-1' %}
+<!-- more -->
 
 [https://github.com/wayneeseguin/rvm/commit/2b899c9c446a7e5391720f70208c0e2f71629ff0](https://github.com/wayneeseguin/rvm/commit/2b899c9c446a7e5391720f70208c0e2f71629ff0)
 

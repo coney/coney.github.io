@@ -38,6 +38,8 @@ tags:
         return 0;
     }
 ```
+<!-- more -->
+
 按照代码的意图, 从main传入的str应该是不会因为process处理发生变化的, 因为process处理的时候从原数据复制了一份newstr进行处理. 在gcc 4.1.2下编译, 输出结果如下:
 ``` cpp
 before:'1,2,3,4'
