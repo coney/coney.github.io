@@ -22,6 +22,7 @@ tags:
 
 
 从网上搜了很多内容, 大部分都没有什么帮助, 后来发现不是gradle的问题, 貌似是使用了java的https并且证书有问题导致的. 根据网上的一些建议应该是证书的问题, 于是参考这篇文章准备修改默认的keystore:[http://publib.boulder.ibm.com/infocenter/javasdk/v6r0/index.jsp?topic=%2Fcom.ibm.java.security.component.60.doc%2Fsecurity-component%2Fjsse2Docs%2Fcustomizingstores.html](http://publib.boulder.ibm.com/infocenter/javasdk/v6r0/index.jsp?topic=%2Fcom.ibm.java.security.component.60.doc%2Fsecurity-component%2Fjsse2Docs%2Fcustomizingstores.html)
+<!-- more -->
 
 当我准备打开 <java-home>/lib/security/cacerts的时候, 发现这个文件是一个软连接指向另一个目录下:
 

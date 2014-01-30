@@ -18,6 +18,7 @@ categories:
 首先我们给Pipeline起一个名字:
 
 {% img /images/2013/10/Screen-Shot-2013-10-05-at-上午1.08.42.png '' 'Screen Shot 2013-10-05 at 上午1.08.42' %}
+<!-- more -->
 
 点击Next后, 我们需要设置Pipline使用的repo, 这里支持svn, git等多种版本管理工具, 设置好repo地址后继续点击Next.
 

@@ -38,6 +38,8 @@ tags:
         echo $arg
     done
 ```
+<!-- more -->
+
 上面总共列出了4种遍历的格式, 分别对$@和$*进行遍历, 这两个变量的区别是$*将所有的参数合为一个字符串, 而$@将输入的参数分别保存不同的字符串, 例如执行get-args.sh a "b c" d的结果如下:
     coney:temp$./get-args.sh a "b c" d
     args from $*

@@ -28,6 +28,8 @@ categories:
     ...
     
     Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gems/mysql-2.9.1/ext/mysql_api/gem_make.out
+<!-- more -->
+
 起初认为是mysql安装路径有问题, 但是无论往/usr/include或者/usr/local/include中放头文件, 或者通过--with-mysql-include等指定路径, 错误依旧.  打开下面提示的gem_make.out, 发现内容跟上面显示的差不多, 没有任何帮助. 后来在gem_make.out相同目录下发现一个名为mkmf.log的日志文件, 打开后发现真正的问题在这里:
     have_header: checking for mysql.h... -------------------- no
     

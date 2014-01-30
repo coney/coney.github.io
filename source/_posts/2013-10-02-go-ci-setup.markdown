@@ -14,7 +14,7 @@ categories:
 
 
 # 安装Go Server
-
+<!-- more -->
 
 首先我们要到Go的产品页面去下载安装包([请猛击此处](http://www.thoughtworks.com/products/go-continuous-delivery)). 目前Go提供一个免费的社区版, 限制是最多10个用户, 3个远程Agent. 这个对个人使用感觉已经足够了. 来到Go的下载页面, 能看到Go提供了多种安装包, 针对不同的系统, 因为我的VPS是Ubuntu的, 所以点击Linux(Debian/Ubuntu)下载了deb包, 如果使用的是CentOS等使用RPM的发行版, 可以点击Linux(Redhat/Suse)这一项下载rpm包. 当然如果您使用非linux系统可以选择其他类型的安装包:
 
