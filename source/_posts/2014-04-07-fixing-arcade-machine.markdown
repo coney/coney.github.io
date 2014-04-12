@@ -28,7 +28,8 @@ MAME for windows
 
 # 交叉编译模拟器 #
 方案就绪, 下一步就是先将游戏在树莓派上跑起来. AdvanceMAME是基于C的跨平台软件, API兼容ABI不兼容, 所以如果想要在arm架构的树莓派上跑起来的话, 需要交叉编译模拟器.
-获取交叉编译工具的方法很多, 可以通过包管理器安装, 或是从树莓派的github上进行[下载](https://github.com/raspberrypi/tools). 如果你使用mac或cygwin的话, 还可以通过crosstool-ng来生成自己的交叉编译工具链. 这里我们选择最快捷方式, 直接从树莓派的github上下载.
+获取交叉编译工具的方法很多, 可以通过包管理器安装, 或是从树莓派的github上进行[下载](https://github.com/raspberrypi/tools). 如果你使用mac或cygwin的话, 还可以通过crosstool-ng来生成自己的交叉编译工具链. 这里我们选择最快捷方式, 直接从树莓派的github上下载:
+```git clone https://github.com/raspberrypi/tools```
 下载完成后, 我们可以先编译一个简单的小程序, 验证下交叉编译环境是否有问题, 国际惯例, 先来个hello world:
 ``` c++
 #include <stdio.h>
@@ -69,8 +70,19 @@ MAME - Copyright (C) 1997-2003 by Nicola Salmoria and the MAME Team
 No monitor clocks specification `device_video_p/h/vclock'.
 video_init failed
 ```
-`/opt/mame-arm`是编译后的模拟器目录, 第一次运行advmame时, 会在当前用户目录下创建`.advance`目录, 默认情况下, advanceMAME所有的配置, 游戏Rom, 截图等都放在这里. 之后我们将下载的游戏Rom拷入`.advance/rom`中(可能存在版权问题, 请自行查找rom), 再次启动`advmame`并传入游戏名称. 呵呵, 还是没有启动起来. 根据提示, 我们没有配置显示器的刷新率, 根据网上现有的经验, 如果使用树莓派HDMI接口输出的话, 可以在` 
+`/opt/mame-arm`是编译后的模拟器目录, 第一次运行advmame时, 会在当前用户目录下创建`.advance`目录, 默认情况下, advanceMAME所有的配置, 游戏Rom, 截图等都放在这里. 之后我们将下载的游戏Rom拷入`.advance/rom`中(可能存在版权问题, 请自行查找rom), 再次启动`advmame`并传入游戏名称. 呵呵, 还是没有启动起来. 根据提示, 我们没有配置显示器的刷新率, 根据网上现有的经验, 如果使用树莓派HDMI接口输出的话, 可以编辑`.advance/advmame.rc`并加入这行配置:
+`device_video_clock 5 - 50 / 15.62 / 50 ; 5 - 50 / 15.73 / 60`
+再次运行`advmame snowbros`启动游戏, 不出意外的话你就能看到久违的游戏画面:
+图片
+p.s. advmame可以直接操纵framebuffer, 不需要启动X, 但是需要root权限.
 
 # 编写摇杆驱动 #
-# 联机调试 #
+到此游戏已经能够成功的在树莓派上运行, 通过视频转换接入游戏机后便能够通过游戏机的显像管输出. 但是现在还有一个另一个重要的问题没有解决, 那就是游戏操控只能通过键盘而不是游戏机上的摇杆.
+关于如何接入游戏机的摇杆, 我们曾考虑过读入GPIO信号, 然后模拟键盘事件. 但是通过advMAME附带的几个测试程序, 很神奇的发现Linux居然有专门的摇杆设备标准, 真是工作娱乐两不误的好系统. 网上关于linux摇杆驱动的内容并不多, 但是幸运的是linux内核是开源的, 并且带有大量第三方摇杆驱动源码可以借鉴.
+摇杆驱动在linux中属于Input Driver的一种. Input Driver分为Input Device Driver及Input Event Driver两类:
+{% img /images/2014/04/input-subsystem.jpg '' 'Input Subsystem' %}
+event driver创建了我们最终向应用层提供输出的设备文件`/dev/input/jsX`, 但是从头去编写我们自己的event driver并且实现所有摇杆相关的ioctl无疑工作量巨大. 所以内核向我们提供了一套input的标准事件. 我们只需编写一个device driver, 并且装成一个摇杆的样子, 向event driver上报一些上下左右或是按钮按下之类的事件, 剩下处理委托给现有的event driver去处理.
+ 
 
+
+# 联机调试 #
