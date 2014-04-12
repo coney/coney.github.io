@@ -29,8 +29,47 @@ MAME for windows
 # 交叉编译模拟器 #
 方案就绪, 下一步就是先将游戏在树莓派上跑起来. AdvanceMAME是基于C的跨平台软件, API兼容ABI不兼容, 所以如果想要在arm架构的树莓派上跑起来的话, 需要交叉编译模拟器.
 获取交叉编译工具的方法很多, 可以通过包管理器安装, 或是从树莓派的github上进行[下载](https://github.com/raspberrypi/tools). 如果你使用mac或cygwin的话, 还可以通过crosstool-ng来生成自己的交叉编译工具链. 这里我们选择最快捷方式, 直接从树莓派的github上下载.
+下载完成后, 我们可以先编译一个简单的小程序, 验证下交叉编译环境是否有问题, 国际惯例, 先来个hello world:
+``` c++
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+	printf("hello world\n");
+	return 0;
+}
+```
+将代码保存至hello.c中, 之后调用gcc进行编译
+```
+coney@UServer: ~ $ ./raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-gcc  hello.c -o hello
+coney@UServer: ~ $ file hello
+hello: ELF 32-bit LSB executable, ARM, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.26, BuildID[sha1]=0x1a4b10f8034567384fbc51490dc09d6646262a58, not stripped
+```
+`raspi/tools`这个目录是刚刚clone下来的工具链目录. 编译完成后通过`file`命令可以看到生成的文件是32位的arm应用程序. 接下来将`hello`程序复制到树莓派上进行执行, 验证我们的程序是否真的能hello world:
+```
+coney@coney-pi: ~ $ ./hello
+hello world
+```
 交叉编译工具准备好后, 下一步就是获取AdvanceMAME的源码进行编译, 代码可以在此处下载: http://advancemame.sourceforge.net/download.html
-将下载的tar包解压后, 进入
+将下载的tar包解压, 进入解压后的目录, 首先要通过configure生成makefile. 因为这次是交叉编译, 所以在./configure前需要将交叉编译工具的路径加入PATH中:
+`export PATH=~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/:$PATH`
+然后运行configure, 指定目标平台为arm-linux-gnueabihf, 另外可以修改prefix, 以方便编译完成后获取生成的程序.
+`./configure --prefix=/home/coney/mame-arm/ --host=arm-linux-gnueabihf`
+configure完成后, 运行make编译模拟器, 并将编译后的内容安装到刚才通过prefix指定的目录:
+`make all install`
+编译完成后, 将prefix指定目录中的内容全部复制到树莓派上, 接下来接上树莓派的键盘显示器, 在树莓派上体验下刚刚编译的模拟器.
+```
+root@coney-pi: /opt/mame-arm # ./bin/advmame
+Creating a standard configuration file...
+Configuration file `/root/.advance/advmame.rc' created with all the default options.
+root@coney-pi: /opt/mame-arm # cp ~/snowbros.zip ~/.advance/rom
+root@coney-pi: /opt/mame-arm # ./bin/advmame snowbros
+AdvanceMAME - Copyright (C) 1999-2003 by Andrea Mazzoleni
+MAME - Copyright (C) 1997-2003 by Nicola Salmoria and the MAME Team
+No monitor clocks specification `device_video_p/h/vclock'.
+video_init failed
+```
+`/opt/mame-arm`是编译后的模拟器目录, 第一次运行advmame时, 会在当前用户目录下创建`.advance`目录, 默认情况下, advanceMAME所有的配置, 游戏Rom, 截图等都放在这里. 之后我们将下载的游戏Rom拷入`.advance/rom`中(可能存在版权问题, 请自行查找rom), 再次启动`advmame`并传入游戏名称. 呵呵, 还是没有启动起来. 根据提示, 我们没有配置显示器的刷新率, 根据网上现有的经验, 如果使用树莓派HDMI接口输出的话, 可以在` 
 
 # 编写摇杆驱动 #
 # 联机调试 #
