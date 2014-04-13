@@ -29,7 +29,7 @@ MAME for windows
 # 交叉编译模拟器 #
 方案就绪, 下一步就是先将游戏在树莓派上跑起来. AdvanceMAME是基于C的跨平台软件, API兼容ABI不兼容, 所以如果想要在arm架构的树莓派上跑起来的话, 需要交叉编译模拟器.
 获取交叉编译工具的方法很多, 可以通过包管理器安装, 或是从树莓派的github上进行[下载](https://github.com/raspberrypi/tools). 如果你使用mac或cygwin的话, 还可以通过crosstool-ng来生成自己的交叉编译工具链. 这里我们选择最快捷方式, 直接从树莓派的github上下载:
-```git clone https://github.com/raspberrypi/tools```
+`git clone https://github.com/raspberrypi/tools`
 下载完成后, 我们可以先编译一个简单的小程序, 验证下交叉编译环境是否有问题, 国际惯例, 先来个hello world:
 ``` c++
 #include <stdio.h>
@@ -53,11 +53,17 @@ hello world
 ```
 交叉编译工具准备好后, 下一步就是获取AdvanceMAME的源码进行编译, 代码可以在此处下载: http://advancemame.sourceforge.net/download.html
 将下载的tar包解压, 进入解压后的目录, 首先要通过configure生成makefile. 因为这次是交叉编译, 所以在./configure前需要将交叉编译工具的路径加入PATH中:
+
 `export PATH=~/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/:$PATH`
-然后运行configure, 指定目标平台为arm-linux-gnueabihf, 另外可以修改prefix, 以方便编译完成后获取生成的程序.
+
+然后运行configure, 指定目标平台为arm-linux-gnueabihf, 另外可以修改prefix, 以方便编译完成后获取生成的程序:
+
 `./configure --prefix=/home/coney/mame-arm/ --host=arm-linux-gnueabihf`
+
 configure完成后, 运行make编译模拟器, 并将编译后的内容安装到刚才通过prefix指定的目录:
+
 `make all install`
+
 编译完成后, 将prefix指定目录中的内容全部复制到树莓派上, 接下来接上树莓派的键盘显示器, 在树莓派上体验下刚刚编译的模拟器.
 ```
 root@coney-pi: /opt/mame-arm # ./bin/advmame
@@ -70,19 +76,58 @@ MAME - Copyright (C) 1997-2003 by Nicola Salmoria and the MAME Team
 No monitor clocks specification `device_video_p/h/vclock'.
 video_init failed
 ```
-`/opt/mame-arm`是编译后的模拟器目录, 第一次运行advmame时, 会在当前用户目录下创建`.advance`目录, 默认情况下, advanceMAME所有的配置, 游戏Rom, 截图等都放在这里. 之后我们将下载的游戏Rom拷入`.advance/rom`中(可能存在版权问题, 请自行查找rom), 再次启动`advmame`并传入游戏名称. 呵呵, 还是没有启动起来. 根据提示, 我们没有配置显示器的刷新率, 根据网上现有的经验, 如果使用树莓派HDMI接口输出的话, 可以编辑`.advance/advmame.rc`并加入这行配置:
+`/opt/mame-arm`是编译后的模拟器目录, 第一次运行advmame时, 会在当前用户目录下创建`.advance`目录, 默认情况下, advanceMAME所有的配置, 游戏Rom, 截图等都放在这里. 之后我们将下载的游戏Rom拷入`.advance/rom`中(可能存在版权问题, 请自行查找rom), 再次启动AdvanceMAME并传入游戏名称. 呵呵, 还是没有启动起来. 根据提示, 我们没有配置显示器的刷新率, 根据网上现有的经验, 如果使用树莓派HDMI接口输出的话, 可以编辑`.advance/advmame.rc`并加入这行配置:
+
 `device_video_clock 5 - 50 / 15.62 / 50 ; 5 - 50 / 15.73 / 60`
+
 再次运行`advmame snowbros`启动游戏, 不出意外的话你就能看到久违的游戏画面:
+
 图片
+
 p.s. advmame可以直接操纵framebuffer, 不需要启动X, 但是需要root权限.
 
 # 编写摇杆驱动 #
-到此游戏已经能够成功的在树莓派上运行, 通过视频转换接入游戏机后便能够通过游戏机的显像管输出. 但是现在还有一个另一个重要的问题没有解决, 那就是游戏操控只能通过键盘而不是游戏机上的摇杆.
-关于如何接入游戏机的摇杆, 我们曾考虑过读入GPIO信号, 然后模拟键盘事件. 但是通过advMAME附带的几个测试程序, 很神奇的发现Linux居然有专门的摇杆设备标准, 真是工作娱乐两不误的好系统. 网上关于linux摇杆驱动的内容并不多, 但是幸运的是linux内核是开源的, 并且带有大量第三方摇杆驱动源码可以借鉴.
+到此游戏已经能够成功的在树莓派上运行, 通过视频转换接入游戏机后便能够通过游戏机的显像管输出. 但是现在还有一个重要的问题没有解决, 那就是游戏操控只能通过键盘而不是游戏机上的摇杆.
+关于如何接入游戏机摇杆, 我们曾考虑过读入GPIO信号, 然后模拟键盘事件. 但是通过advMAME附带的几个测试程序, 很神奇的发现Linux居然有专门的摇杆设备标准, 真是工作娱乐两不误的好系统. 网上关于linux摇杆驱动的内容并不多, 但是幸运的是linux内核是开源的, 并且带有大量第三方摇杆驱动源码可以借鉴.
 摇杆驱动在linux中属于Input Driver的一种. Input Driver分为Input Device Driver及Input Event Driver两类:
 {% img /images/2014/04/input-subsystem.jpg '' 'Input Subsystem' %}
-event driver创建了我们最终向应用层提供输出的设备文件`/dev/input/jsX`, 但是从头去编写我们自己的event driver并且实现所有摇杆相关的ioctl无疑工作量巨大. 所以内核向我们提供了一套input的标准事件. 我们只需编写一个device driver, 并且装成一个摇杆的样子, 向event driver上报一些上下左右或是按钮按下之类的事件, 剩下处理委托给现有的event driver去处理.
- 
+其中event driver创建了我们最终向应用层提供输出的设备文件`/dev/input/jsX`, 但是重新去编写我们自己的event driver并且实现所有摇杆相关的ioctl无疑工作量巨大. 所以内核向我们提供了一套input相关的标准事件. 我们只需编写一个device driver, 并且装成一个摇杆的样子, 向event driver上报一些上下左右或是按钮按下之类的事件, 剩下处理就可以委托给现有的event driver去处理.
+首先我们通过alloc device创建一个input device:
+``` c
 
+```
+接着我们向input子系统声明将要上报摇杆的方向和按钮事件, 这样上层的event driver会将这个device识别成一个摇杆, 并在`/dev/input/`下创建对应的摇杆设备文件:
+``` c
+
+```
+最后, 我们需要采集gpio的数据并且上报input事件, 目前实现使用中断的方式来采集gpio的变化, 然后触发的定时器中判断GPIO的最终状态, 并上报input事件. 定时器的作用主要是为了消除按键抖动(貌似抖得不是很厉害), 关键代码如下:
+``` c
+```
+以上是摇杆驱动的核心功能部分代码, 如果需要完整的驱动代码可以从这里获取到:
+
+https://github.com/coney/tw-joystick.git
+
+驱动编写完成后, 同样需要对代码进行交叉编译, 驱动的交叉编译会稍微麻烦些, 首先要获取到对应版本的内核源码. 内核源码同样可以从树莓派的官方github上获取, 获取时需要注意clone的branch要和树莓派的内核版本对应, 树莓派的内核版本可以通过`uname -r`进行获取, 例如我的树莓派内核版本是3.11.1, 我获取的branch就是3.11.y:
+
+`git clone https://github.com/raspberrypi/linux.git -b rpi-3.10.y`
+
+获取到内核源码后, 接下来要获取的是当前树莓派使用的内核配置, 只有配置相同才能保证编译出来驱动能够与内核兼容. 树莓派当前使用的内核配置可以很方便的通过`/proc/config.gz`进行获取. 将这个文件复制并解压到内核源码的目录, 接下来我们要做的是导出一些环境变量, 让内核和编译器知道我们要进行交叉编译:
+
+```
+export RASPI_BASE=$(pwd)
+# 内核文件路径, 在编译摇杆驱动的Makefile中会用到
+export KERNEL_SRC=$RASPI_BASE/linux
+export ARCH=arm
+# 交叉编译器路径和前缀
+export CCPREFIX=$RASPI_BASE/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
+export CROSS_COMPILE=$CCPREFIX
+```
+这些环境变量准备妥当后, 我们先要到内核源码目录`make`一次, 虽然我们不会更新内核, 但是这次make能够让我们根据获取到的树莓派内核配置文件对内核源码进行一些配置(例如最大CPU数量, 特性开关, 内核符号依赖等). 这个编译的可能会稍有点漫长, 但是今后只要内核版本及配置文件没有更改, 可以一直使用这个源码来辅助编译摇杆驱动.
+ 
+内核编译完成后, 进入摇杆驱动目录, 运行`make`, 这个过程应该不会太久, 编译成功后, 将生成的ko文件复制到树莓派上, 以root身份执行以下命令:
+
+`insmod tw_joystick.ko`
+
+如果顺利话, 通过`dmesg`能够看到一些驱动输出的调试信息.
 
 # 联机调试 #
