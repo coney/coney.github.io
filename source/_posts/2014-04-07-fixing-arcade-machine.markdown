@@ -94,14 +94,15 @@ p.s. advmame可以直接操纵framebuffer, 不需要启动X, 但是需要root权
 其中event driver创建了我们最终向应用层提供输出的设备文件`/dev/input/jsX`, 但是重新去编写我们自己的event driver并且实现所有摇杆相关的ioctl无疑工作量巨大. 所以内核向我们提供了一套input相关的标准事件. 我们只需编写一个device driver, 并且装成一个摇杆的样子, 向event driver上报一些上下左右或是按钮按下之类的事件, 剩下处理就可以委托给现有的event driver去处理.
 首先我们通过alloc device创建一个input device:
 ``` c
-
+    aa
 ```
 接着我们向input子系统声明将要上报摇杆的方向和按钮事件, 这样上层的event driver会将这个device识别成一个摇杆, 并在`/dev/input/`下创建对应的摇杆设备文件:
 ``` c
-
+    aa
 ```
 最后, 我们需要采集gpio的数据并且上报input事件, 目前实现使用中断的方式来采集gpio的变化, 然后触发的定时器中判断GPIO的最终状态, 并上报input事件. 定时器的作用主要是为了消除按键抖动(貌似抖得不是很厉害), 关键代码如下:
 ``` c
+aa
 ```
 以上是摇杆驱动的核心功能部分代码, 如果需要完整的驱动代码可以从这里获取到:
 
@@ -122,12 +123,71 @@ export ARCH=arm
 export CCPREFIX=$RASPI_BASE/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
 export CROSS_COMPILE=$CCPREFIX
 ```
+
 这些环境变量准备妥当后, 我们先要到内核源码目录`make`一次, 虽然我们不会更新内核, 但是这次make能够让我们根据获取到的树莓派内核配置文件对内核源码进行一些配置(例如最大CPU数量, 特性开关, 内核符号依赖等). 这个编译的可能会稍有点漫长, 但是今后只要内核版本及配置文件没有更改, 可以一直使用这个源码来辅助编译摇杆驱动.
  
 内核编译完成后, 进入摇杆驱动目录, 运行`make`, 这个过程应该不会太久, 编译成功后, 将生成的ko文件复制到树莓派上, 以root身份执行以下命令:
 
 `insmod tw_joystick.ko`
 
-如果顺利话, 通过`dmesg`能够看到一些驱动输出的调试信息.
+如果顺利话, 通过`dmesg`能够看到一些驱动输出的调试信息. 因为游戏机摇杆上按键闭合后会跟GND联通, 所以在驱动工作前我们需要将GPIO设置为上拉模式, 这样GPIO在开关闭合前是稳定的高电平, 闭合后变为低电平. 通过WiringPI中提供的gpio工具, 我们可以通过命令行设置GPIO为pull up模式. 首先参考这个链接安装WiringPI:
+
+https://projects.drogon.net/raspberry-pi/wiringpi/download-and-install/
+
+安装好后, 在shell下运行这段命令将所有GPIO设为pull up模式:
+
+`for ((i=0;i<=20;i++)); do gpio mode $i up; done`
+
+接下来可以通过AdvanceMAME中的`advj`工具或者`joystick`包中的`jstest`工具来测试:
+
+`advj` 或 `jstest --event /dev/input/js0`
+
+启动命令后, 从树莓派的GND引出一根线, 分别连接驱动中定义的GPIO输入引脚(千万不要碰到VCC), 观察`advj`或`jstest`是否有正确的摇杆事件输出, 例如:
+
+```
+root@coney-pi: /home/coney # jstest --event /dev/input/js0                                                   [22:39:51]
+Driver version is 2.1.0.Joystick (Thoughtworks Fake Joystick) has 2 axes (X, Y)
+and 8 buttons (BtnX, BtnY, BtnZ, BtnTL, BtnTR, BtnTL2, BtnTR2, BtnSelect).
+Testing ... (interrupt to exit)
+Event: type 129, time 347000, number 0, value 0
+Event: type 129, time 347000, number 1, value 0
+Event: type 129, time 347000, number 2, value 0
+Event: type 129, time 347000, number 3, value 0
+Event: type 129, time 347000, number 4, value 0
+Event: type 129, time 347000, number 5, value 0
+...
+```
 
 # 联机调试 #
+万事具备, 只欠东风. 输入输出都搞定后就可以上机测试啦. 这里不得不赞一下游戏机的金手指接口定义, 对开发者相当友好, 每一个引脚都有对应的中文描述, 省去了分析引脚功能的烦恼.
+我们没有专门的金手指插片, 所以临时使用一张硬纸片分离开插槽两边的弹簧片以达到绝缘, 同时通过新宇精湛的手艺, 所有摇杆按钮和电源相关的引脚都焊接了一根面包线, 用来连接树莓派的GPIO, 最终完成的效果图如下:
+
+`图片`
+
+图像则通过两个转换设备, 一路由HDMI转为VGA再转至RGBS, 最后输出的4根信号线同样接在金手指插槽上(标注红绿蓝信号的几个引脚).
+
+上电开机, 这时我们还是需要一下键盘的帮助, 首先通过之前介绍的`advj`或`jstest`测试摇杆按键是否灵敏. 确定摇杆功能正常后, 启动MAME加载游戏, 在游戏中按`TAB`键呼出MAME功能菜单, 进入摇杆控制设置, 校对各个功能的按键, 并将两个多出来的按键设置为投币和开始游戏. 接下来便可以开始这台山寨街机初体验:
+
+`图片`
+
+游戏机基本功能已经修好, 但是每次都要接着键盘启动游戏着实不爽, 下面要做的就是让游戏机能够自行启动.
+首先想到的做法就是通过在rcX.d中加入一个脚本, 启动游戏, 但是这样启动的AdvanveMAME有些问题(可能是因为没有tty的原因), 所以后来采取的方法是让linux启动后自动以root用户登陆一个tty, 并在root的bash profile中判断如果是从这个tty登陆的, 插入驱动并启动游戏.
+修改系统的`/etc/inittab`, 将tty6改为`mingetty`并自动以root登陆.
+```
+1:2345:respawn:/sbin/getty --noclear 38400 tty1
+#2:23:respawn:/sbin/getty 38400 tty2
+#3:23:respawn:/sbin/getty 38400 tty3
+#4:23:respawn:/sbin/getty 38400 tty4
+#5:23:respawn:/sbin/getty 38400 tty5
+6:23:respawn:/sbin/mingetty --autologin root tty6
+```
+接下来修改`/root/.profile`, 新增如下几行, 在通过tty6登陆后加载驱动并启动游戏:
+```
+GAME=snowbrow
+if [[ $TTY == "/dev/tty6" ]]; then
+    insmod tw_joystick.ko
+    advmame $GAME
+fi
+```
+重启游戏机, 系统引导完成后, 游戏应该会自动启动, enjoy yourself, 少年!
+
