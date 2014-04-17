@@ -87,7 +87,7 @@ video_init failed
 
 再次运行`advmame snowbros`启动游戏, 不出意外的话你就能看到久违的游戏画面:
 
-图片
+![Running AdvanceMAME](/images/2014/04/running-advmame.jpg)
 
 p.s. AdvanceMAME可以直接操纵FrameBuffer, 不需要启动X, 但是需要root权限.
 
@@ -233,15 +233,16 @@ Event: type 129, time 347000, number 5, value 0
 万事具备, 只欠东风. 输入输出都搞定后就可以上机测试啦. 这里不得不赞一下游戏机的金手指接口定义, 对开发者相当友好, 每一个引脚都有对应的中文描述, 省去了分析引脚功能的烦恼.
 因为我们没有专业的金手指插片, 所以临时使用一张硬纸片分离开插槽两边的弹簧片以达到绝缘效果. 同时通过新宇精湛的手艺, 所有摇杆按钮和电源相关的引脚都焊接了一根面包线, 用来连接树莓派的GPIO, 完成的效果图如下:
 
-`图片`
+![slot](/images/2014/04/slot.jpg)
 
 图像显示则通过两个视频转换设备, 将HDMI转为VGA再转至RGBS, 并将最终输出的4根信号线接在金手指插槽上(标注红绿蓝信号的几个引脚).
 
-`图片`
+![HDMI to VGA convertor](/images/2014/04/hdmi2vga.jpg)
+![VGA to RGBS convertor](/images/2014/04/vga2rgbs.jpg)
 
 上电开机, 此时我们还是需要一些键盘的辅助, 首先是通过`advj`或`jstest`测试连接的摇杆按键是否灵敏. 确定摇杆功能正常后, 启动MAME加载游戏, 在游戏中按`TAB`键呼出MAME功能菜单, 进入摇杆控制设置, 校对各个功能的按键配置, 并将多出来的两个按键设置为投币和开始游戏. 接下来便可以开始这台山寨街机初体验:
 
-`图片`
+![First Experience](/images/2014/04/finished.jpg)
 
 至此游戏机基本功能已经恢复, 但是每次都要接着键盘启动游戏着实不爽, 下面要做的就是让游戏机能够自行启动并加载游戏.
 最初尝试的做法是通过在`rcX.d`中加入一个脚本来启动游戏, 但是这样启动的AdvanveMAME有些问题(可能是因为没有tty的原因), 最终采取的方式是让linux启动后自动以root用户登陆一个tty, 并bash profile中判断如果是从这个tty登录, 插入驱动并启动游戏.
