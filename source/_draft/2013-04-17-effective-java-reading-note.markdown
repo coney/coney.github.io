@@ -1,5 +1,4 @@
 ---
-published: false
 author: coney
 comments: true
 date: 2013-04-17 08:30:16+00:00
