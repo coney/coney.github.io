@@ -24,6 +24,7 @@ __except( XXX )
 }
 ```
 但是对于`__finally`却没有介绍具体的实现方式. 通过调试器trace不到`__finally`的调用路径.
+<!-- more -->
 
 限于当时搜商有限, 没有找到比较好的资料, 只能结合<<软件调试>>中介绍的内容自己进行摸索实验. 
 写了一段包含`__try`, `__finally`的简单代码进行反汇编, 发现VC对SEH做了些扩展, 往ExceptionList中添加的链表节点并不是书上描述的`_EXCEPTION_REGISTRATION_RECORD`,而是`_EH3_EXCEPTION_REGISTRATION`, 并且多向栈里压了8个字节. 同时异常处理函数也不是`__except`或者`__finally`里面的代码,而是统一的`__except_handler3`(老的编译器可能是`__except_handler2`, 还有那个某网站上贴的代码是`__except_handler4`, 不同版本VC扩展的结构不太一样, 但基本原理都差不多), 真正的`__finally`和`__except`中的处理代码放在`_EXCEPTION_REGISTRATION_RECORD`里的`_SCOPETABLE_ENTRY`中:
