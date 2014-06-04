@@ -15,3 +15,5 @@ Gemfile.lock
 
 # Idea Project Files
 .idea
+
+.preview-mode
