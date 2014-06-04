@@ -14,3 +14,5 @@ node_modules
 
 # Idea Project Files
 .idea
+
+.preview-mode
