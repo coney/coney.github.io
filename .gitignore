@@ -17,5 +17,5 @@ Gemfile.lock
 .idea
 
 .preview-mode
-.ruby-version
+#.ruby-version
 
