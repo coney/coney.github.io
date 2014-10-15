@@ -3,6 +3,7 @@ layout: post
 title: "手提箱云硬件方案选型"
 date: 2014-05-31 23:59:26 +0800
 comments: true
+published: false
 categories:
 ---
 近几年来云计算可谓是大红大紫, 什么东西只要跟云沾上点关系立刻就会变得高大上起来. 而我们要做的事情就是把这朵高高在上的云塞进一个小箱子里.
