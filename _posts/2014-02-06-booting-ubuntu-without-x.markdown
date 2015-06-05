@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2014-02-06-booting-ubuntu-without-x.markdown

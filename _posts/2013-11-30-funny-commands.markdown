@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2013-11-30-funny-commands.markdown

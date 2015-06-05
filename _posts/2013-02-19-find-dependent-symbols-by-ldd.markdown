@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2013-02-19-find-dependent-symbols-by-ldd.markdown

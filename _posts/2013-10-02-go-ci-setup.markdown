@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2013-10-02-go-ci-setup.markdown

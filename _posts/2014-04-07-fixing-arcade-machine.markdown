@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2014-04-07-fixing-arcade-machine.markdown

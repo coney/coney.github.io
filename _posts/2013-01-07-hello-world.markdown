@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2013-01-07-hello-world.markdown

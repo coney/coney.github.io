@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2013-03-17-design-pattern-summary.markdown

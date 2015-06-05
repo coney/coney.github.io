@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2013-06-28-issuses-of-installing-mysql-and-libv8-on-mac.markdown

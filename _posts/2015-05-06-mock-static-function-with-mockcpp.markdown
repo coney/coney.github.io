@@ -1,0 +1,1 @@
+../../coney.github.io/source/_posts/2015-05-06-mock-static-function-with-mockcpp.markdown
