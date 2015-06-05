@@ -1,1 +1,0 @@
-../../coney.github.io/source/_posts/2013-10-14-installing-embbedded-navigator-on-regal.markdown
