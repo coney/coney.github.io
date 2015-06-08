@@ -14,11 +14,11 @@ categories:
 
 从网上搜索解决方案时看到这个commit:
 
-{% img /images/2013/12/QQ20131210-1.png '' 'QQ20131210-1' %}
+![img](/images/2013/12/QQ20131210-1.png)
 <!-- more -->
 
 [https://github.com/wayneeseguin/rvm/commit/2b899c9c446a7e5391720f70208c0e2f71629ff0](https://github.com/wayneeseguin/rvm/commit/2b899c9c446a7e5391720f70208c0e2f71629ff0)
 
 rvm是通过这个脚本来维护支持的编译器列表, 所以依葫芦画瓢, 自己修改`$HOME/.rvm/scripts/functions/requirements/osx_brew`, 添加了对gcc49的支持:
 
-{% img /images/2013/12/QQ20131210-2.png '' 'QQ20131210-2' %}
+![img](/images/2013/12/QQ20131210-2.png)

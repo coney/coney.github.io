@@ -9,7 +9,8 @@ wordpress_id: 11
 categories:
 - Linux/Network
 ---
-{% img /images/2013/02/无标题.png '' 'ldd man' %}
+![ldd man](/images/2013/02/无标题.png)
+
 根据ldd manual, 通过-d, -r分别可以查看缺失的符号, 对于elf格式的so一样有效, 例如:
     [~/qmf/application/server/qmf_cmdsvr]$ ldd -r src/qmfcmd_spp.so
     linux-gate.so.1 => (0xbfffe000)
@@ -20,8 +21,3 @@ categories:
     libc.so.6 => /lib/libc.so.6 (0xb7276000)
     /lib/ld-linux.so.2 (0x80000000)
     undefined symbol: _ZN5tbase4tlog5CTLog5log_iEiiPKcz (src/qmfcmd_spp.so)
-
-
-
-
-

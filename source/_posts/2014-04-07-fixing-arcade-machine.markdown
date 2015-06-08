@@ -33,6 +33,7 @@ MAME for windows
 `git clone https://github.com/raspberrypi/tools`
 
 clone完成后, 我们可以尝试编译一个简单的小程序, 验证交叉编译环境是否OK, 国际惯例, hello world:
+
 ``` c hello.c
 #include <stdio.h>
 
@@ -42,17 +43,22 @@ int main(int argc, char **argv)
 	return 0;
 }
 ```
+
 将代码保存至hello.c, 之后调用gcc进行编译
+
 ``` text
 coney@UServer: ~ $ ./raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-gcc  hello.c -o hello
 coney@UServer: ~ $ file hello
 hello: ELF 32-bit LSB executable, ARM, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.26, BuildID[sha1]=0x1a4b10f8034567384fbc51490dc09d6646262a58, not stripped
 ```
+
 `raspi/tools`这个目录是刚刚clone下来的工具链目录. 编译完成后通过`file`命令可以查看生成的文件是否是32位的arm应用程序. 接下来将`hello`程序复制到树莓派上执行, 验证我们的程序是否真的能hello world:
+
 ```
 coney@coney-pi: ~ $ ./hello
 hello world
 ```
+
 交叉编译工具验证没有问题后, 下一步就是获取AdvanceMAME的源码进行编译, 源码可以在此处下载:
 
 http://advancemame.sourceforge.net/download.html
@@ -70,6 +76,7 @@ http://advancemame.sourceforge.net/download.html
 `make all install`
 
 编译完成后, 将`--prefix`指定目录中的内容全部复制到树莓派上, 给树莓派连接键盘显示器, 在树莓派上体验下刚刚编译的模拟器.
+
 ``` text
 root@coney-pi: /opt/mame-arm # ./bin/advmame
 Creating a standard configuration file...
@@ -81,6 +88,7 @@ MAME - Copyright (C) 1997-2003 by Nicola Salmoria and the MAME Team
 No monitor clocks specification `device_video_p/h/vclock'.
 video_init failed
 ```
+
 `/opt/mame-arm`是编译后的模拟器目录, 第一次运行AdvanceMAME时, 会在当前用户目录下创建`.advance`目录. 默认情况下, AdvanceMAME所有的配置, 游戏Rom, 截图等都放在这里. 我们将下载的游戏Rom拷入`.advance/rom`中(可能存在版权问题, 请自行查找rom), 再次启动AdvanceMAME并传入游戏名. 呵呵, 还是没有启动起来. 根据提示, 我们没有配置显示器的刷新率, 根据网上现有的经验, 使用树莓派HDMI接口输出的话, 可以编辑`.advance/advmame.rc`并加入这行配置:
 
 `device_video_clock 5 - 50 / 15.62 / 50 ; 5 - 50 / 15.73 / 60`
@@ -100,10 +108,13 @@ p.s. AdvanceMAME可以直接操纵FrameBuffer, 不需要启动X, 但是需要roo
 
 其中event driver创建了我们最终向应用层提供输出的设备文件`/dev/input/jsX`, 但重新编写我们自己的event driver并且实现所有摇杆相关的ioctl无疑工作量巨大. 所以内核向我们提供了一套input相关的标准事件. 我们只需编写一个device driver, 并且装成一个摇杆的样子, 向event driver上报一些上下左右或是按钮按下之类的事件, 剩下处理就可以委托给现有的event driver去处理.
 这里忽略驱动框架部分的内容, 主要介绍摇杆事件相关的处理. 首先通过`input_allocate_device`创建一个input device:
+
 ``` c Allocate Joystick Device
 struct input_dev *js_input_dev = input_allocate_device();
 ```
+
 接着我们向input子系统声明将要上报摇杆专属事件, 这样上层的event driver会将这个device识别成一个摇杆, 并在`/dev/input/`下创建对应的摇杆设备文件:
+
 ``` c Report Events
 // report joystick button and direction
 set_bit(EV_KEY, js_input_dev->evbit);
@@ -124,9 +135,10 @@ set_bit(BTN_Z, js_input_dev->keybit);
 // register this device to input subsystem
 input_register_device(js_input_dev)
 ```
-最后, 我们需要采集gpio数据并且上报input事件, 目前的实现使用中断来获取gpio变化, 触发定时器并在定时器回调中判断GPIO的最终状态, 上报相关的input事件. 定时器的作用主要是为了消除按键抖动(貌似抖得不是很厉害):
-``` c Read Events From GPIO
 
+最后, 我们需要采集gpio数据并且上报input事件, 目前的实现使用中断来获取gpio变化, 触发定时器并在定时器回调中判断GPIO的最终状态, 上报相关的input事件. 定时器的作用主要是为了消除按键抖动(貌似抖得不是很厉害):
+
+``` c Read Events From GPIO
 typedef struct gpio_config
 {
     unsigned int button;
@@ -175,6 +187,7 @@ static void gpio_timer_callback(unsigned long data)
     js_device_process(0, config->button, value);
 }
 ```
+
 以上是摇杆驱动的核心功能部分代码, 完整的代码请猛击这里:
 
 https://github.com/coney/tw-joystick.git
@@ -196,7 +209,7 @@ export CROSS_COMPILE=$CCPREFIX
 ```
 
 这些环境变量准备妥当后, 需要先进入内核源码目录`make`一次, 虽然我们不会去更新树莓派的更新内核, 但是这次`make`能够对内核源码进行一些配置(例如最大CPU数量, 特性开关, 内核符号依赖等). 这次编译可能会比较漫长, 但只要今后内核版本及配置文件没有更改, 可以一直使用这个源码来辅助编译驱动.
- 
+
 内核编译完成后, 进入摇杆驱动目录, 执行`make`, 编译成功后, 将生成的`tw_joystick.ko`复制到树莓派, 并以root身份执行以下命令:
 
 `insmod tw_joystick.ko`
@@ -247,6 +260,7 @@ Event: type 129, time 347000, number 5, value 0
 至此游戏机基本功能已经恢复, 但是每次都要接着键盘启动游戏着实不爽, 下面要做的就是让游戏机能够自行启动并加载游戏.
 最初尝试的做法是通过在`rcX.d`中加入一个脚本来启动游戏, 但是这样启动的AdvanveMAME有些问题(可能是因为没有tty的原因), 最终采取的方式是让linux启动后自动以root用户登陆一个tty, 并bash profile中判断如果是从这个tty登录, 插入驱动并启动游戏.
 修改系统的`/etc/inittab`, 将tty6改为`mingetty`并自动以root登陆:
+
 ``` text /etc/inittab
 ...
 1:2345:respawn:/sbin/getty --noclear 38400 tty1
@@ -257,7 +271,9 @@ Event: type 129, time 347000, number 5, value 0
 6:23:respawn:/sbin/mingetty --autologin root tty6
 ...
 ```
+
 修改`/root/.profile`, 新增如下几行, 在通过tty6登陆后加载驱动并启动游戏:
+
 ``` bash /root/.profile
 ...
 GAME=snowbrow
@@ -266,4 +282,5 @@ if [[ $TTY == "/dev/tty6" ]]; then
     advmame $GAME
 fi
 ```
+
 重启游戏机, 系统引导完成后, 游戏应该会自动启动, enjoy yourself!

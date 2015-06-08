@@ -11,6 +11,7 @@ categories:
 ---
 
 1. if
+
 ``` bash
 if [ test ]; then
     xxxx
@@ -20,9 +21,11 @@ else
     xxxx
 fi
 ```
+
 <!-- more -->
 
 2. for
+
 ``` bash
 for it in list; do
     xxxx $it
@@ -30,6 +33,7 @@ done
 ```
 
 3. while
+
 ``` bash
 while [ test ]; do
     xxxx
@@ -37,6 +41,7 @@ done
 ```
 
 4. case
+
 ``` bash
 case $var in
     "a")

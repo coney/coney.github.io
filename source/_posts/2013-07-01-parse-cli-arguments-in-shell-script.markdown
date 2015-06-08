@@ -16,28 +16,30 @@ tags:
 平时多少会用shell写点小工具, 而这些小工具运行后的第一件事就是解析参数, 这里总结了下shell脚本几种处理命令行参数的方法.
 
 比较常见的做法就是解析bash内置的几个特殊变量, 例如直接遍历$*或者$@:
+
 ``` bash
     #/bin/sh
     echo 'args from \$*'
     for arg in $*; do
         echo $arg
     done
-    
+
     echo 'args from \$@'
     for arg in $@; do
         echo $arg
     done
-    
+
     echo 'args from "\$*"'
     for arg in "$*"; do
         echo $arg
     done
-    
+
     echo 'args from "\$@"'
     for arg in "$@"; do
         echo $arg
     done
 ```
+
 <!-- more -->
 
 上面总共列出了4种遍历的格式, 分别对$@和$*进行遍历, 这两个变量的区别是$*将所有的参数合为一个字符串, 而$@将输入的参数分别保存不同的字符串, 例如执行get-args.sh a "b c" d的结果如下:
@@ -59,6 +61,7 @@ tags:
     b c
     d
 还有一种方法就是通过shift方法来将处理过的参数移除, 从而完成遍历:
+
 ``` bash
     #!/bin/sh
     while [ $# != 0 ]; do
@@ -66,6 +69,7 @@ tags:
         shift
     done
 ```
+
 其中$1代表第一个参数, 类似的$2, $3...分别代表第二个 第三个参数. $#是参数的总个数, 每次调用shift后, 会将所有的参数左移, 并将第一个参数移除, 所以在脚本里面我们只要一直访问$1即可, 这种方式比较适合解析类似-p 80这种类型的参数, 可以在解析到-p后, shift一下, 然后再解析该参数附带的内容. 执行shift-args.sh a "b c" d的结果类似遍历"$@":
     coney:temp$./shift-args.sh a "b c" d
     a
@@ -73,38 +77,40 @@ tags:
     d
 以上是使用shell内建变量处理的方式, 虽然遍历较为简单, 但是解析参数的时候很复杂, 尤其是要对参数的合法性做校验时, 需要大量逻辑.
 所以我们有更好的选择: getopt. getopt命令可以将根据格式化字符串将输入参数重新整理排序, 方便我们进行处理, 并且对输入的参数格式进行校验, 判断参数格式是否正确以及符合规范. 下面是一个getopt的使用示例:
+
 ``` bash
     #!/bin/sh
     args=`getopt abc: "$@"`
-    
+
     # check arguments, exit on fail
     if [ $? != 0 ]; then
         exit $?
     fi
-    
+
     # reorder arguments
     echo before reorder, args : $*
     set -- $args
     echo after reorder, args : $*
-    
+
     # parse arguments
     while :; do
         opt=$1; shift
         case $opt in
             -a|-b)
                 echo $opt is set;;
-            -c) 
+            -c)
                 echo found $opt with $1; shift;;
-            --) 
+            --)
                 break;;
         esac
     done
-    
+
     # print rest arguments
     if [ -n "$*" ]; then
         echo arguments : $*
     fi
 ```
+
 脚本一开始将格式化字符串和脚本接受的所有参数传递给getopt, getopt执行后将重新排序后的参数存储在args中. 当然getopt会对参数进行校验, 如果校验失败会直接在stderr上输出错误信息, 并且将返回码设为非0, 这样我们就能够及时终止脚本执行.
 我们传入的格式化字符串"abc:"的含义是, 接收-a -b -c三种开关参数, 并且-c开关有附加参数, 例如"-c file".
 在拿到getopt重新排序的参数后, 我们要通过"set -- $args"替换脚本接收的参数, 这样$* $@ $1 $2等变量就可以使用排序后的参数, 先看下这个命令的运行效果:

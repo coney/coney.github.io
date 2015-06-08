@@ -14,13 +14,16 @@ categories:
 
 <!-- more -->
 网上的得到的方法是修改内核启动参数, 修改`/etc/default/grub`(需要root):
+
 ``` text Update /etc/default/grub
     # 将GRUB_CMDLINE_LINUX_DEFAULT修改成text, 注意大小写
     GRUB_CMDLINE_LINUX_DEFAULT="text"
     # 更新grub.conf
     update-grub
 ```
+
 修改完成后重启, 下次启动完成后遍不会直接进入GUI. 看了下`update-grub`对`grub.conf`的修改, 貌似是在引导参数后加了一项`text`:
+
 ``` text /boot/grub/grub.cfg
 menuentry 'Ubuntu, with Linux 3.2.0-59-generic' --class ubuntu --class gnu-linux --class gnu --class os {
     recordfail

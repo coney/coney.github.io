@@ -9,4 +9,4 @@ wordpress_id: 15
 categories:
 - Mood
 ---
-{% img /images/2013/02/未命名.gif %}
+![img](/images/2013/02/未命名.gif)

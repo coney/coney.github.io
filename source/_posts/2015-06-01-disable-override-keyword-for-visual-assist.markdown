@@ -16,6 +16,7 @@ public:
 ```
 
 使用Implement Virtual Methods后, Visual Assist帮我们生成如下代码:
+
 ``` cpp
 class SomeImplementation : public SomeInterface {
 public:

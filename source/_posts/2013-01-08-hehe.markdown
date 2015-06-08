@@ -12,5 +12,4 @@ categories:
 
 最近好累啊, 碎了
 
-{% img /images/2013/01/yy102483.jpg %}
-
+![img](/images/2013/01/yy102483.jpg)

@@ -14,6 +14,7 @@ categories: c++ mock mockcpp gmock
 ``` cpp
 int add(int x, int y);
 ```
+
 可以通过Wrapper包裹为:
 
 ``` cpp
@@ -92,6 +93,7 @@ Dump of assembler code for function _ZL3addii:
    0x00000000004060b7 <+19>:    retq
 End of assembler dump.
 ```
+
 通过mockcpp Mock之后, 开头的一段指令让逻辑跳转到了`<_ZN38Mockcpp_ShouldAbleToMockCFunction_Test8TestBodyEv+53>`:
 
 ``` objdump
@@ -107,6 +109,7 @@ Dump of assembler code for function _ZL3addii:
    0x00000000004060b7 <+19>:    retq
 End of assembler dump.
 ```
+
 而跳转到的`<_ZN38Mockcpp_ShouldAbleToMockCFunction_Test8TestBodyEv+53>`正是我们通过mockcpp设置的expects:
 
 ``` objdump
@@ -118,6 +121,7 @@ Dump of assembler code for function _ZN38Mockcpp_ShouldAbleToMockCFunction_Test8
    ...
 End of assembler dump.
 ```
+
 然后问题来了, mockcpp的inline hooking只会对原函数做一次, 如果发现原来的函数已经被hook过, 就会忽略后续的MOCKER.
 这会导致:
 * 被Mock的函数在脱离MOCKER作用域后依旧生效
@@ -139,7 +143,6 @@ mockcpp虽然能够对静态函数进行Mock, 但mockcpp出现的年代比较久
 我们先来看一个示例:
 
 ``` cpp
-
 class Calc {
 public:
     static int add(int x, int y) {
