@@ -21,6 +21,7 @@ categories:
 - STL实现版本较多, 内部接口的编程风格不是很好, 建议通过SGI STL的源码进行阅读
 - 源码地址: https://www.sgi.com/tech/stl/
 
+<!--more-->
 
 ### Poco
 - 大而全的实用类库, 提供类似于JDK或者.net frameworks的功能, 是stl/boost的强大补充
