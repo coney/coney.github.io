@@ -6,9 +6,13 @@ comments: true
 categories:
 ---
 
-Node.js需要下载安装`Karma`, `Jasmine`等组件来运行UT, 但是华为访问网络需要通过NTLM认证的代理, npm不支持NTLM, 需要通过CNTLM工具将代理转化为不需要认证的HTTP代理.
+某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙.
 
-从[CNTLM](http://cntlm.sourceforge.net/)官方网站下载最新版本的CNTLM程序:
+通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持.
+
+例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择CNTLM将代理转化为不需要认证的HTTP代理.
+
+首先从[CNTLM](http://cntlm.sourceforge.net/)官方网站下载最新版本的CNTLM程序:
 
 http://sourceforge.net/projects/cntlm/files/
 
