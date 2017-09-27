@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>命令行编译arduino源码及上传执行 | Hello Coney</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Arduino官方提供了一个IDE, 集成了编辑, 编译, 上传和串口监视等功能, 但是这个基于java的IDE的编辑功能略弱. 所以想是否能使用其他的c++ IDE外加类似Makefile的命令行方式编译执行. 这样也能够在类似树莓派之类的设备上直接编译和烧录程序至arduino. 首先尝试带参启动arduino的IDE, 没有发现类似devenv.exe带参直接编译工程的功能. 之后在ardu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令行编译arduino源码及上传执行">
+<meta property="og:url" content="http://coney.github.io/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/index.html">
+<meta property="og:site_name" content="Hello Coney">
+<meta property="og:description" content="Arduino官方提供了一个IDE, 集成了编辑, 编译, 上传和串口监视等功能, 但是这个基于java的IDE的编辑功能略弱. 所以想是否能使用其他的c++ IDE外加类似Makefile的命令行方式编译执行. 这样也能够在类似树莓派之类的设备上直接编译和烧录程序至arduino. 首先尝试带参启动arduino的IDE, 没有发现类似devenv.exe带参直接编译工程的功能. 之后在ardu">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2017-09-27T08:59:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令行编译arduino源码及上传执行">
+<meta name="twitter:description" content="Arduino官方提供了一个IDE, 集成了编辑, 编译, 上传和串口监视等功能, 但是这个基于java的IDE的编辑功能略弱. 所以想是否能使用其他的c++ IDE外加类似Makefile的命令行方式编译执行. 这样也能够在类似树莓派之类的设备上直接编译和烧录程序至arduino. 首先尝试带参启动arduino的IDE, 没有发现类似devenv.exe带参直接编译工程的功能. 之后在ardu">
+  
+    <link rel="alternate" href="/atom.xml" title="Hello Coney" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hello Coney</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://coney.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2013-11-09-compile-and-upload-adruino-source-form-cli" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/" class="article-date">
+  <time datetime="2013-11-09T02:34:49.000Z" itemprop="datePublished">2013-11-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Raspi-amp-Arduino/">Raspi &amp; Arduino</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      命令行编译arduino源码及上传执行
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Arduino官方提供了一个IDE, 集成了编辑, 编译, 上传和串口监视等功能, 但是这个基于java的IDE的编辑功能略弱. 所以想是否能使用其他的c++ IDE外加类似Makefile的命令行方式编译执行. 这样也能够在类似树莓派之类的设备上直接编译和烧录程序至arduino.</p>
+<p>首先尝试带参启动arduino的IDE, 没有发现类似devenv.exe带参直接编译工程的功能. 之后在arduino主站搜索一番, 倒是发现了一个通过makefile的方法(<a href="http://playground.arduino.cc/Learning/CommandLine" target="_blank" rel="external">http://playground.arduino.cc/Learning/CommandLine</a>), 不过提供的库略坑爹. 折腾了半天后发现提供的uart.h里面没有mega2560的定义. 从IDE中提取的库也找不到这个定义. 只能搞一些较老的芯片, 遂放弃.</p>
+<p>继续google, 发现另外一套基于python的命令行工具ino, 试用了下, 还是比较稳定的. ino的介绍可以看这里:<a href="http://inotool.org/" target="_blank" rel="external">http://inotool.org/</a> 网站上提供了多种安装方式, 因为我的树莓派是debian的系统,  所以相关的东西基本都是通过apt安装的.<br><a id="more"></a></p>
+<p>因为ino可以通过pip安装, 首先我们要安装一个pip:</p>
+<pre><code>coney@UServer:~$ sudo apt-get install python-pip -y
+</code></pre><p>然后通过pip安装ino:</p>
+<pre><code>coney@UServer:~$ sudo pip install ino
+</code></pre><p>ino只是一个构建工具, 编译时依赖于arduino的库, 有了apt真的很方便:</p>
+<pre><code>coney@UServer:~$ sudo apt-get install arduino -y
+</code></pre><p>安装好之后我们来看看ino都有什么功能:</p>
+<pre><code>usage: ino [-h] {build,clean,init,list-models,preproc,serial,upload} ...
+
+Ino is a command-line toolkit for working with Arduino hardware.
+
+It is intended to replace Arduino IDE UI for those who prefer to work in
+terminal or want to integrate Arduino development in a 3rd party IDE.
+
+Ino can build sketches, libraries, upload firmwares, establish
+serial-communication. For this it is split in a bunch of subcommands, like git
+or mercurial do. The full list is provided below. You may run any of them with
+--help to get further help. E.g.:
+
+    ino build --help
+
+positional arguments:
+  {build,clean,init,list-models,preproc,serial,upload}
+    build               Build firmware from the current directory project
+    clean               Remove intermediate compilation files completely
+    init                Setup a new project in the current directory
+    list-models         List supported Arduino board models
+    preproc             Transform a sketch file into valid C++ source
+    serial              Open a serial monitor
+    upload              Upload built firmware to the device
+
+optional arguments:
+  -h, --help            show this help message and exit
+</code></pre><p>命令行很简单, 但是包含了build, upload, serial monitor等功能, 已经基本覆盖了IDE提供的所有功能.</p>
+<p>我们通过一个简单的blink工程来测试下整个流程:</p>
+<pre><code>coney@UServer:~$ mkdir blink &amp;&amp; cd blink
+
+coney@UServer:~/blink$ ino init -t blink
+
+coney@UServer:~/blink$ tree
+.
+├── lib
+└── src
+    └── sketch.ino
+
+coney@UServer:~/blink$ cat src/sketch.ino
+
+#define LED_PIN 13
+
+void setup()
+{
+    pinMode(LED_PIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(LED_PIN, HIGH);
+    delay(100);
+    digitalWrite(LED_PIN, LOW);
+    delay(900);
+}
+</code></pre><p>首先是通过ino init创建一个arudino的工程, -t可以指定模板(实际除了默认的empty就提供了一个blink模板). 创建后可以看到工程的目录结构包含src和lib, 分别存放工程源码ino文件和将来要引入的库.</p>
+<p>从blink模板创建的源码包含一个简单的闪烁led的示例. 程序将反复将13口(arduino板子上13口接着一个led)在高低电平见切换.</p>
+<p>接下来我们要把刚才的程序编译并且上传到arduino上执行:</p>
+<pre><code>coney@UServer:~/blink$ ino build
+Searching for Board description file (boards.txt) ... /usr/share/arduino/hardware/arduino/boards.txt
+Searching for Arduino lib version file (version.txt) ... /usr/share/arduino/lib/version.txt
+Detecting Arduino software version ...  1.0.0 (1.0)
+Searching for Arduino core library ... /usr/share/arduino/hardware/arduino/cores/arduino
+Searching for Arduino standard libraries ... /usr/share/arduino/libraries
+Searching for Arduino variants directory ... /usr/share/arduino/hardware/arduino/variants
+Searching for make ... /usr/bin/make
+Searching for avr-gcc ... /usr/bin/avr-gcc
+Searching for avr-g++ ... /usr/bin/avr-g++
+Searching for avr-ar ... /usr/bin/avr-ar
+Searching for avr-objcopy ... /usr/bin/avr-objcopy
+src/sketch.ino
+Searching for Arduino lib version file (version.txt) ... /usr/share/arduino/lib/version.txt
+Detecting Arduino software version ...  1.0.0 (1.0)
+Scanning dependencies of src
+Scanning dependencies of arduino
+src/sketch.cpp
+arduino/WInterrupts.c
+arduino/wiring_digital.c
+arduino/wiring_pulse.c
+arduino/wiring.c
+arduino/wiring_shift.c
+arduino/wiring_analog.c
+arduino/new.cpp
+arduino/IPAddress.cpp
+arduino/HardwareSerial.cpp
+arduino/Print.cpp
+arduino/Stream.cpp
+arduino/HID.cpp
+arduino/WMath.cpp
+arduino/WString.cpp
+arduino/Tone.cpp
+arduino/main.cpp
+arduino/USBCore.cpp
+arduino/CDC.cpp
+Linking libarduino.a
+Linking firmware.elf
+Converting to firmware.hex
+</code></pre><p>编译生成的文件都放在.build中, 所以通过ls看不到的时候千万别紧张~ 接着我们要把程序uplaod上去:</p>
+<pre><code>[~/arduino/blink]$ ino upload
+Searching for stty ... /bin/stty
+Searching for avrdude ... /usr/share/arduino/hardware/tools/avrdude
+Searching for avrdude.conf ... /usr/share/arduino/hardware/tools/avrdude.conf
+Guessing serial port ... /dev/ttyACM0
+avrdude: stk500_recv(): programmer is not responding
+
+avrdude done.  Thank you.
+</code></pre><p>ino比较智能, 会探测串口对应的tty, 但是上传好像失败了? 查看下upload的帮助:</p>
+<pre><code>[~/arduino/blink]$ ino upload --help
+usage: ino upload [-h] [-p PORT] [-m MODEL] [-d PATH]
+
+Upload built firmware to the device.
+
+The firmware must be already explicitly built with `ino build&apos;. If current
+device firmare reads/writes serial port extensively, upload may fail. In
+that case try to retry few times or upload just after pushing Reset button
+on Arduino board.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p PORT, --serial-port PORT
+                        Serial port to upload firmware to
+                        Try to guess if not specified
+  -m MODEL, --board-model MODEL
+                        Arduino board model (default: uno)
+                        For a full list of supported models run:
+                        `ino list-models&apos;
+  -d PATH, --arduino-dist PATH
+                        Path to Arduino distribution, e.g.
+                        ~/Downloads/arduino-0022.
+                        Try to guess if not specified
+</code></pre><p>原来默认的model是uno, 而我的是mega2560. 重新执行build和upload, 指定model:(如果探测不到正确的tty, 可以通过-p指定串口)</p>
+<pre><code>[~/arduino/blink]$ ino build -m mega2560
+   ...
+[~/arduino/blink]$ ino upload -m mega2560
+Searching for stty ... /bin/stty
+Searching for avrdude ... /usr/share/arduino/hardware/tools/avrdude
+Searching for avrdude.conf ... /usr/share/arduino/hardware/tools/avrdude.conf
+Guessing serial port ... /dev/ttyACM0
+
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.02s
+
+avrdude: Device signature = 0x1e9801
+avrdude: reading input file &quot;.build/mega2560/firmware.hex&quot;
+avrdude: writing flash (1556 bytes):
+
+Writing | ################################################## | 100% 0.25s
+
+avrdude: 1556 bytes of flash written
+avrdude: verifying flash memory against .build/mega2560/firmware.hex:
+avrdude: load data flash data from input file .build/mega2560/firmware.hex:
+avrdude: input file .build/mega2560/firmware.hex contains 1556 bytes
+avrdude: reading on-chip flash data:
+
+Reading | ################################################## | 100% 0.19s
+
+avrdude: verifying ...
+avrdude: 1556 bytes of flash verified
+
+avrdude: safemode: Fuses OK
+
+avrdude done.  Thank you.
+</code></pre><p>一切就绪, 可以看到板子上led在闪烁.</p>
+<p>如果觉得每次都要-m指定model或者-p指定tty的话, 可以通过ino.ini来配置model和port:</p>
+<pre><code>[~/arduino/blink]$ cat ino.ini
+[build]
+board-model = mega2560
+
+[upload]
+board-model = mega2560
+serial-port = /dev/ttyACM0
+
+[serial]
+serial-port = /dev/ttyACM0
+</code></pre><p>ino.ini可以放在工程目录下对当前工程生效, 也可以放在/etc/下, 作为全局配置. 设置好ino.ini后, 我们就不用每次build或者upload的时候都显式指定model.</p>
+<p>最后是ino的serial monitor功能, 这个实际是依赖于picocom, 这个功能其实不需要ino也能用. 有兴趣可以看看官方的示例.</p>
+<p>另外, 在Arduino 1.5版本中, 好像也提供了更官方的命令行支持:<a href="https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-from-command-line" target="_blank" rel="external">https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-from-command-line</a> , 因为目前还在beta, 尚未体验过.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://coney.github.io/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/" data-id="cj82t2wm2000x4te2l2ijugi3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/11/2013-11-30-funny-commands/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Funny Commands
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/10/2013-10-04-go-ci-pipeline/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">GO CI - 创建Pipeline</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Ruby/">Ruby</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Device-Driver-MAME/">Linux/Device Driver MAME</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Network/">Linux/Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mood/">Mood</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspi-amp-Arduino/">Raspi &amp; Arduino</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/">Ruby</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WinDev/">WinDev</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-mock-mockcpp-gmock/">c++ mock mockcpp gmock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-visual-assist/">c++ visual assist</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interface-虚析构/">Interface 虚析构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/getopt/">getopt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle-java-ssl/">gradle java ssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/">string</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Interface-虚析构/" style="font-size: 10px;">Interface 虚析构</a> <a href="/tags/getopt/" style="font-size: 10px;">getopt</a> <a href="/tags/gradle-java-ssl/" style="font-size: 10px;">gradle java ssl</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/string/" style="font-size: 10px;">string</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">March 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/2015-09-11-gmock-with-const-function/">GMOCK下对const函数重载的处理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/">handle ambiguous overloaded functions in gmock</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/">移除HTTP Proxy的NTLM认证</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/">C++ 源码阅读项目推荐</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Coney Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>防止Ubuntu启动时自动进入GUI | Hello Coney</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="为了实验几个需要X的小程序, 很不情愿的在Ubuntu Server上安装了Ubuntu-Desktop, 但是Ubuntu每次引导后自动进入Gnome实在是烦. 一般情况下想默认进入CLI的话只需要修改下runlevel, 可是我安装的Ubuntu(Server 12.04 LTS)默认的runlevel是2, Gnome也跑在level 2上. 貌似不能像往常一样通过修改inittab来禁用X">
+<meta property="og:type" content="article">
+<meta property="og:title" content="防止Ubuntu启动时自动进入GUI">
+<meta property="og:url" content="http://coney.github.io/2014/02/2014-02-06-booting-ubuntu-without-x/index.html">
+<meta property="og:site_name" content="Hello Coney">
+<meta property="og:description" content="为了实验几个需要X的小程序, 很不情愿的在Ubuntu Server上安装了Ubuntu-Desktop, 但是Ubuntu每次引导后自动进入Gnome实在是烦. 一般情况下想默认进入CLI的话只需要修改下runlevel, 可是我安装的Ubuntu(Server 12.04 LTS)默认的runlevel是2, Gnome也跑在level 2上. 貌似不能像往常一样通过修改inittab来禁用X">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2017-09-27T08:59:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="防止Ubuntu启动时自动进入GUI">
+<meta name="twitter:description" content="为了实验几个需要X的小程序, 很不情愿的在Ubuntu Server上安装了Ubuntu-Desktop, 但是Ubuntu每次引导后自动进入Gnome实在是烦. 一般情况下想默认进入CLI的话只需要修改下runlevel, 可是我安装的Ubuntu(Server 12.04 LTS)默认的runlevel是2, Gnome也跑在level 2上. 貌似不能像往常一样通过修改inittab来禁用X">
+  
+    <link rel="alternate" href="/atom.xml" title="Hello Coney" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hello Coney</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://coney.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2014-02-06-booting-ubuntu-without-x" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/2014-02-06-booting-ubuntu-without-x/" class="article-date">
+  <time datetime="2014-02-06T13:56:15.000Z" itemprop="datePublished">2014-02-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Network/">Linux/Network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      防止Ubuntu启动时自动进入GUI
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>为了实验几个需要X的小程序, 很不情愿的在Ubuntu Server上安装了Ubuntu-Desktop, 但是Ubuntu每次引导后自动进入Gnome实在是烦.</p>
+<p>一般情况下想默认进入CLI的话只需要修改下runlevel, 可是我安装的Ubuntu(Server 12.04 LTS)默认的runlevel是2, Gnome也跑在level 2上. 貌似不能像往常一样通过修改<code>inittab</code>来禁用X.</p>
+<a id="more"></a>
+<p>网上的得到的方法是修改内核启动参数, 修改<code>/etc/default/grub</code>(需要root):</p>
+<figure class="highlight plain"><figcaption><span>Update</span><a href="/etc/default/grub">link</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 将GRUB_CMDLINE_LINUX_DEFAULT修改成text, 注意大小写</div><div class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;text&quot;</div><div class="line"># 更新grub.conf</div><div class="line">update-grub</div></pre></td></tr></table></figure>
+<p>修改完成后重启, 下次启动完成后遍不会直接进入GUI. 看了下<code>update-grub</code>对<code>grub.conf</code>的修改, 貌似是在引导参数后加了一项<code>text</code>:</p>
+<figure class="highlight plain"><figcaption><span>/boot/grub/grub.cfg</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">menuentry &apos;Ubuntu, with Linux 3.2.0-59-generic&apos; --class ubuntu --class gnu-linux --class gnu --class os &#123;</div><div class="line">    recordfail</div><div class="line">    gfxmode $linux_gfx_mode</div><div class="line">    insmod gzio</div><div class="line">    insmod part_msdos</div><div class="line">    insmod ext2</div><div class="line">    set root=&apos;(hd0,msdos1)&apos;</div><div class="line">    search --no-floppy --fs-uuid --set=root ed929838-1e80-43fb-ab11-8827e0c3b900</div><div class="line">    # 注意最后的text</div><div class="line">    linux	/boot/vmlinuz-3.2.0-59-generic root=UUID=ed929838-1e80-43fb-ab11-8827e0c3b900 ro text</div><div class="line">    initrd	/boot/initrd.img-3.2.0-59-generic</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果想在CLI下重新进入Desktop, 可以执行</p>
+<p><code>service lightdm start</code></p>
+<p>或者</p>
+<p><code>startx</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://coney.github.io/2014/02/2014-02-06-booting-ubuntu-without-x/" data-id="cj82t2wm7001d4te2c3j0lkdh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/2014-04-07-fixing-arcade-machine/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          西安Office游戏机修复之路
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/01/2014-01-26-hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World from github</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Ruby/">Ruby</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Device-Driver-MAME/">Linux/Device Driver MAME</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Network/">Linux/Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mood/">Mood</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspi-amp-Arduino/">Raspi &amp; Arduino</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/">Ruby</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WinDev/">WinDev</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-mock-mockcpp-gmock/">c++ mock mockcpp gmock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-visual-assist/">c++ visual assist</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interface-虚析构/">Interface 虚析构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/getopt/">getopt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle-java-ssl/">gradle java ssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/">string</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Interface-虚析构/" style="font-size: 10px;">Interface 虚析构</a> <a href="/tags/getopt/" style="font-size: 10px;">getopt</a> <a href="/tags/gradle-java-ssl/" style="font-size: 10px;">gradle java ssl</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/string/" style="font-size: 10px;">string</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">March 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/2015-09-11-gmock-with-const-function/">GMOCK下对const函数重载的处理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/">handle ambiguous overloaded functions in gmock</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/">移除HTTP Proxy的NTLM认证</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/">C++ 源码阅读项目推荐</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Coney Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

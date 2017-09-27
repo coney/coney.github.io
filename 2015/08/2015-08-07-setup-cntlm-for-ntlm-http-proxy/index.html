@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>移除HTTP Proxy的NTLM认证 | Hello Coney</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙. 通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持. 例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移除HTTP Proxy的NTLM认证">
+<meta property="og:url" content="http://coney.github.io/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/index.html">
+<meta property="og:site_name" content="Hello Coney">
+<meta property="og:description" content="某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙. 通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持. 例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择C">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2017-09-27T08:59:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移除HTTP Proxy的NTLM认证">
+<meta name="twitter:description" content="某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙. 通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持. 例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择C">
+  
+    <link rel="alternate" href="/atom.xml" title="Hello Coney" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hello Coney</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://coney.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2015-08-07-setup-cntlm-for-ntlm-http-proxy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/" class="article-date">
+  <time datetime="2015-08-06T16:04:58.000Z" itemprop="datePublished">2015-08-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      移除HTTP Proxy的NTLM认证
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙.</p>
+<p>通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持.</p>
+<p>例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择CNTLM将代理转化为不需要认证的HTTP代理.</p>
+<p>首先从<a href="http://cntlm.sourceforge.net/" target="_blank" rel="external">CNTLM</a>官方网站下载最新版本的CNTLM程序:</p>
+<p><a href="http://sourceforge.net/projects/cntlm/files/" target="_blank" rel="external">http://sourceforge.net/projects/cntlm/files/</a></p>
+<a id="more"></a>
+<p>安装CNTLM后, 我们需要对CNTLM进行一些配置.<br>首先进入CNTLM安装目录, 打开<code>cntlm.ini</code>, 修改代理服务器地址为目前使用的NTLM认证的代理服务器地址:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Proxy     your.proxy.com:8080</div><div class="line">Listen    3128</div></pre></td></tr></table></figure>
+<p>需要注意此处是<strong>修改</strong><code>cntlm.ini</code>中的对应项而不是新增, 需要移除掉原来的<code>Listen</code>和<code>Proxy</code>配置.</p>
+<p>之后运行<code>cmd</code>进入命令行环境, 切换到CNTLM安装目录, 执行如下命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\Cntlm&gt; cntlm -M http://www.baidu.com/ -d your.domain.com -u username</div><div class="line">Password:</div><div class="line">Config profile  1/4... Credentials rejected</div><div class="line">Config profile  2/4... OK (HTTP code: 200)</div><div class="line">----------------------------[ Profile  1 ]------</div><div class="line">Auth            NTLM</div><div class="line">PassNT          6549XXXXXXXXXXXXXXXXXXXXXXXXC0B0</div><div class="line">PassLM          1B1AXXXXXXXXXXXXXXXXXXXXXXXXBFE3</div><div class="line">------------------------------------------------</div></pre></td></tr></table></figure>
+<p>将<code>-u</code>后的参数换成你的域账号, 并且在提示输入Password的地方输入域账号密码.<br>cntlm会尝试使用NTLM认证, 并且输出了认证使用的Key Hash.<br>编辑CNTLM安装目录的<code>cntlm.ini</code>, 根据刚才返回的Key Hash, 修改以下几行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Username  username</div><div class="line">Domain    your.domain.com</div><div class="line"></div><div class="line">Auth      NTLM</div><div class="line">PassNT    6549XXXXXXXXXXXXXXXXXXXXXXXXC0B0</div><div class="line">PassLM    1B1AXXXXXXXXXXXXXXXXXXXXXXXXBFE3</div></pre></td></tr></table></figure>
+<p>最后启动CNTLM服务:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net start cntlm</div></pre></td></tr></table></figure>
+<p>在浏览器中配置代理<code>127.0.0.1:3128</code>, 尝试访问外网, 验证代理是否工作正常.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://coney.github.io/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/" data-id="cj82t2wmd001r4te2k1g5hb8d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          handle ambiguous overloaded functions in gmock
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C++ 源码阅读项目推荐</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Ruby/">Ruby</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Device-Driver-MAME/">Linux/Device Driver MAME</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Network/">Linux/Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mood/">Mood</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspi-amp-Arduino/">Raspi &amp; Arduino</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/">Ruby</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WinDev/">WinDev</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-mock-mockcpp-gmock/">c++ mock mockcpp gmock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-visual-assist/">c++ visual assist</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interface-虚析构/">Interface 虚析构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/getopt/">getopt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle-java-ssl/">gradle java ssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/">string</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Interface-虚析构/" style="font-size: 10px;">Interface 虚析构</a> <a href="/tags/getopt/" style="font-size: 10px;">getopt</a> <a href="/tags/gradle-java-ssl/" style="font-size: 10px;">gradle java ssl</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/string/" style="font-size: 10px;">string</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">March 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/2015-09-11-gmock-with-const-function/">GMOCK下对const函数重载的处理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/">handle ambiguous overloaded functions in gmock</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/">移除HTTP Proxy的NTLM认证</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/">C++ 源码阅读项目推荐</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Coney Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++ 源码阅读项目推荐 | Hello Coney</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Chromium 流行浏览器的Chrome的开发版本 源码符合Google C++ 编程风格规范Google C++ Style Guide 较多人进行阅读, 有一些现有阅读笔记Chrome源码剖析 能够学习到比较全面各种子系统的设计知识, 如网络, 多线程, IO, 内存管理等 其项目中包含了若干Google的子项目, 也很值得阅读, 例如: libv8, gtest, gflags 源码地址:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 源码阅读项目推荐">
+<meta property="og:url" content="http://coney.github.io/2015/08/2015-08-06-cpp-projects-for-source-reading/index.html">
+<meta property="og:site_name" content="Hello Coney">
+<meta property="og:description" content="Chromium 流行浏览器的Chrome的开发版本 源码符合Google C++ 编程风格规范Google C++ Style Guide 较多人进行阅读, 有一些现有阅读笔记Chrome源码剖析 能够学习到比较全面各种子系统的设计知识, 如网络, 多线程, IO, 内存管理等 其项目中包含了若干Google的子项目, 也很值得阅读, 例如: libv8, gtest, gflags 源码地址:">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2017-09-27T08:59:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ 源码阅读项目推荐">
+<meta name="twitter:description" content="Chromium 流行浏览器的Chrome的开发版本 源码符合Google C++ 编程风格规范Google C++ Style Guide 较多人进行阅读, 有一些现有阅读笔记Chrome源码剖析 能够学习到比较全面各种子系统的设计知识, 如网络, 多线程, IO, 内存管理等 其项目中包含了若干Google的子项目, 也很值得阅读, 例如: libv8, gtest, gflags 源码地址:">
+  
+    <link rel="alternate" href="/atom.xml" title="Hello Coney" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hello Coney</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://coney.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2015-08-06-cpp-projects-for-source-reading" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/" class="article-date">
+  <time datetime="2015-08-06T02:25:47.000Z" itemprop="datePublished">2015-08-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++ 源码阅读项目推荐
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Chromium"><a href="#Chromium" class="headerlink" title="Chromium"></a>Chromium</h3><ul>
+<li>流行浏览器的Chrome的开发版本</li>
+<li>源码符合Google C++ 编程风格规范<a href="http://google.github.io/styleguide/cppguide.html" target="_blank" rel="external">Google C++ Style Guide</a></li>
+<li>较多人进行阅读, 有一些现有阅读笔记<a href="http://www.cnblogs.com/duguguiyu/archive/2008/10/02/1303095.html" target="_blank" rel="external">Chrome源码剖析</a></li>
+<li>能够学习到比较全面各种子系统的设计知识, 如网络, 多线程, IO, 内存管理等</li>
+<li>其项目中包含了若干Google的子项目, 也很值得阅读, 例如: libv8, gtest, gflags</li>
+<li>源码地址: <a href="https://code.google.com/p/chromium/" target="_blank" rel="external">https://code.google.com/p/chromium/</a></li>
+</ul>
+<h3 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h3><ul>
+<li>C++标准模板库, 日常开发必备</li>
+<li>通过源码能够学习到模板编程基础, 相对于Boost来说可读性很高, 上手容易</li>
+<li>通过学习STL实现能够更好的掌握STL的开发范式, 例如通过迭代器编程而不是传递容器, 使用或扩展STL中的算法</li>
+<li>通过了解STL常用容器的底层实现也能更好的让我们再不同场景下选择合适的容器, 避免因误用造成时间空间的浪费</li>
+<li>STL实现版本较多, 内部接口的编程风格不是很好, 建议通过SGI STL的源码进行阅读</li>
+<li>源码地址: <a href="https://www.sgi.com/tech/stl/" target="_blank" rel="external">https://www.sgi.com/tech/stl/</a></li>
+</ul>
+<a id="more"></a>
+<h3 id="Poco"><a href="#Poco" class="headerlink" title="Poco"></a>Poco</h3><ul>
+<li>大而全的实用类库, 提供类似于JDK或者.net frameworks的功能, 是stl/boost的强大补充</li>
+<li>通过Poco能够找到大量可以直接应用于项目的组件和库, 即使我们不打算直接使用, 也可以借鉴其架构设计</li>
+<li>设计和编码风格良好, 代码规范偏Java, 同样与M2000的编程风格较为接近</li>
+<li>源码地址: <a href="http://pocoproject.org/" target="_blank" rel="external">http://pocoproject.org/</a></li>
+</ul>
+<h3 id="MFC-amp-Qt"><a href="#MFC-amp-Qt" class="headerlink" title="MFC &amp; Qt"></a>MFC &amp; Qt</h3><ul>
+<li>传统老牌的大型C++框架, 提供UI能力</li>
+<li>类似Poco, 通过阅读源码能够对我们未来开发自己的模块和框架提供参考和指导</li>
+<li>忽略掉MFC中类的C前缀和Qt中类的Q前缀, 其编码规范还是较为良好</li>
+<li>完整的框架结构和继承体系, 有利于我们了解大型SDK的组织结构</li>
+<li>Qt源码地址: <a href="https://wiki.qt.io/Get_the_Source" target="_blank" rel="external">https://wiki.qt.io/Get_the_Source</a></li>
+<li>MFC源码安装完Visual Studio即可获得, 源码使用方法: <a href="https://msdn.microsoft.com/en-us/library/bs046sh0.aspx" target="_blank" rel="external">https://msdn.microsoft.com/en-us/library/bs046sh0.aspx</a></li>
+</ul>
+<h3 id="ACE"><a href="#ACE" class="headerlink" title="ACE"></a>ACE</h3><ul>
+<li>高性能分布式框架</li>
+<li>从中可以学习到一些网络和IO设计模型, 其设计思想即使对于了解其他语言的类似Java的BIO, NIO, AIO也很有帮助</li>
+<li>代码阅读难度稍大, 工程也较为复杂, 上手难度大</li>
+<li>源码地址: <a href="https://github.com/DOCGroup/ATCD" target="_blank" rel="external">https://github.com/DOCGroup/ATCD</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://coney.github.io/2015/08/2015-08-06-cpp-projects-for-source-reading/" data-id="cj82t2wmc001p4te2lc1tdigd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          移除HTTP Proxy的NTLM认证
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/06/2015-06-01-disable-override-keyword-for-visual-assist/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">禁止Visual Assist自动添加Override关键字</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Ruby/">Ruby</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Device-Driver-MAME/">Linux/Device Driver MAME</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Network/">Linux/Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mood/">Mood</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspi-amp-Arduino/">Raspi &amp; Arduino</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/">Ruby</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WinDev/">WinDev</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-mock-mockcpp-gmock/">c++ mock mockcpp gmock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-visual-assist/">c++ visual assist</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interface-虚析构/">Interface 虚析构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/getopt/">getopt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle-java-ssl/">gradle java ssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/">string</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Interface-虚析构/" style="font-size: 10px;">Interface 虚析构</a> <a href="/tags/getopt/" style="font-size: 10px;">getopt</a> <a href="/tags/gradle-java-ssl/" style="font-size: 10px;">gradle java ssl</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/string/" style="font-size: 10px;">string</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">March 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/2015-09-11-gmock-with-const-function/">GMOCK下对const函数重载的处理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/">handle ambiguous overloaded functions in gmock</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/">移除HTTP Proxy的NTLM认证</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/">C++ 源码阅读项目推荐</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Coney Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

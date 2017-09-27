@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>GO CI - 安装配置 | Hello Coney</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么是Go呢? Go是骚窝出品的一款持续交付(CD)产品, 类似于Hudson, Bamboo等CI服务. 作为一家专业的敏捷和持续交付咨询公司,  Go从定位上就已经拉开了与其他同类产品的距离, 当别人还在搞CI的时候, 骚窝已经在玩CD了. 下面简单贴下安装和配置流程, 以及试用体验. 安装Go Server">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GO CI - 安装配置">
+<meta property="og:url" content="http://coney.github.io/2013/10/2013-10-02-go-ci-setup/index.html">
+<meta property="og:site_name" content="Hello Coney">
+<meta property="og:description" content="什么是Go呢? Go是骚窝出品的一款持续交付(CD)产品, 类似于Hudson, Bamboo等CI服务. 作为一家专业的敏捷和持续交付咨询公司,  Go从定位上就已经拉开了与其他同类产品的距离, 当别人还在搞CI的时候, 骚窝已经在玩CD了. 下面简单贴下安装和配置流程, 以及试用体验. 安装Go Server">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="http://coney.github.io/images/2013/10/Screen-Shot-2013-10-04-at-下午11.43.37.png">
+<meta property="og:image" content="http://coney.github.io/images/2013/10/Screen-Shot-2013-10-05-at-上午12.24.32.png">
+<meta property="og:image" content="http://coney.github.io/images/2013/10/Screen-Shot-2013-10-05-at-上午12.31.39.png">
+<meta property="og:image" content="http://coney.github.io/images/2013/10/Screen-Shot-2013-10-05-at-上午12.49.56.png">
+<meta property="og:image" content="http://coney.github.io/images/2013/10/Screen-Shot-2013-10-05-at-上午1.03.41.png">
+<meta property="og:updated_time" content="2017-09-27T08:59:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GO CI - 安装配置">
+<meta name="twitter:description" content="什么是Go呢? Go是骚窝出品的一款持续交付(CD)产品, 类似于Hudson, Bamboo等CI服务. 作为一家专业的敏捷和持续交付咨询公司,  Go从定位上就已经拉开了与其他同类产品的距离, 当别人还在搞CI的时候, 骚窝已经在玩CD了. 下面简单贴下安装和配置流程, 以及试用体验. 安装Go Server">
+<meta name="twitter:image" content="http://coney.github.io/images/2013/10/Screen-Shot-2013-10-04-at-下午11.43.37.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hello Coney" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hello Coney</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://coney.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2013-10-02-go-ci-setup" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/10/2013-10-02-go-ci-setup/" class="article-date">
+  <time datetime="2013-10-02T05:46:56.000Z" itemprop="datePublished">2013-10-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux-Network/">Linux/Network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      GO CI - 安装配置
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>什么是Go呢? Go是骚窝出品的一款持续交付(CD)产品, 类似于Hudson, Bamboo等CI服务. 作为一家专业的敏捷和持续交付咨询公司,  Go从定位上就已经拉开了与其他同类产品的距离, 当别人还在搞CI的时候, 骚窝已经在玩CD了. 下面简单贴下安装和配置流程, 以及试用体验.</p>
+<h1 id="安装Go-Server"><a href="#安装Go-Server" class="headerlink" title="安装Go Server"></a>安装Go Server</h1><a id="more"></a>
+<p>首先我们要到Go的产品页面去下载安装包(<a href="http://www.thoughtworks.com/products/go-continuous-delivery" target="_blank" rel="external">请猛击此处</a>). 目前Go提供一个免费的社区版, 限制是最多10个用户, 3个远程Agent. 这个对个人使用感觉已经足够了. 来到Go的下载页面, 能看到Go提供了多种安装包, 针对不同的系统, 因为我的VPS是Ubuntu的, 所以点击Linux(Debian/Ubuntu)下载了deb包, 如果使用的是CentOS等使用RPM的发行版, 可以点击Linux(Redhat/Suse)这一项下载rpm包. 当然如果您使用非linux系统可以选择其他类型的安装包:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-04-at-下午11.43.37.png" alt="img"><br>来进行操作管理的服务, 而Go Agent则是执行Go Server下发的工作的苦力. 要实现完整的CI系统, 我们需要同时安装和配置Server以及Agent. 一个Go Server可以拥有多个Agent, 而且这些Agent可以跟Server安装在一起, 也可以安装在其他服务器上.</p>
+<p>下载好安装包后, 我们首先来安装Go Server. 以我使用的Ubuntu Server为例, 首先通过Dpkg来进行安装:</p>
+<pre><code>╭─coney@UServer-Laptop  ~
+╰─% sudo dpkg -i go-server-13.2.2-17585.deb
+Selecting previously unselected package go-server.
+(Reading database ... 102421 files and directories currently installed.)
+Unpacking go-server (from go-server-13.2.2-17585.deb) ...
+No packages found matching cruise-server.
+Adding system user `go&apos; (UID 108) ...
+Adding new group `go&apos; (GID 118) ...
+Adding new user `go&apos; (UID 108) with group `go&apos; ...
+Creating home directory `/var/go&apos; ...
+Setting up go-server (13.2.2-17585) ...
+Found Java /usr/lib/jvm/java-7-openjdk-amd64/jre in PATH, using it.
+chown: cannot access `/var/lib/go-server/**&apos;: No such file or directory
+Installation of Go Server completed.
+using default settings from /etc/default/go-server
+nohup: redirecting stderr to stdout
+Started Go Server on http://UServer-Laptop:8153/go
+Processing triggers for ureadahead ...
+ureadahead will be reprofiled on next reboot
+</code></pre><p>虽然看起来像是有些错误, 但实际还是安装成功了, 根据提示, 我们访问一下服务器的8153端口, It works!</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午12.24.32.png" alt="img"></p>
+<h1 id="配置用户认证"><a href="#配置用户认证" class="headerlink" title="配置用户认证"></a>配置用户认证</h1><p>初次进入Go, 并没有见到登录验证之类的页面, 而是直接跳转到Admin下让我们构建pipeline. 如果只是个人使用的话, 这样还是挺方便的, 但是如果发布到公网或者有多个用户时, 这样就太不安全啦,  所以首要任务是加入登录验证, 在[Admin][Server Configuration]标签下, 能够找到User Management相关的配置选项:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午12.31.39.png" alt="img"></p>
+<p>参考配置文档的说明, 支持LDAP和密码文件认证. 因为没有AD服务器, 所以这里使用的第二种方式. Go要求密码要通过sha1哈希后在通过base64编码一次. 手动操作比较繁琐, 这里用apache提供的htpasswd命令生成和修改密码:</p>
+<pre><code>╭─coney@UServer-Laptop  /var/lib/go-server
+╰─% sudo htpasswd -s -c passwd coney
+New password:
+Re-type new password:
+Adding password for user coney
+</code></pre><p>参数-c表示创建新的密码文件, passwd是文件名, coney是要添加的第一个用户, 命令执行后会提示输入和确认密码. 输入无误便会创建用户. 之后将新创建的文件路径填入”Password File Path”一栏中提交. 提交后便会跳转到登陆页面, 此时通过刚才创建的用户名密码登陆, 重新进入Go主页.</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午12.49.56.png" alt="img"></p>
+<h1 id="安装Go-Agent"><a href="#安装Go-Agent" class="headerlink" title="安装Go Agent"></a>安装Go Agent</h1><p>在下载Go Server时, 大家应该看到了Go Agent的下载链接. 如果没有Agent的话, 在Go上配置的Pipeline将都不能执行. 现在我们用类似的方法安装Agent, 同样我这里下载的是Go Agent的deb包:</p>
+<pre><code>─coney@UServer-Laptop  ~
+╰─% sudo dpkg -i go-agent-13.2.2-17585.deb
+Selecting previously unselected package go-agent.
+(Reading database ... 102435 files and directories currently installed.)
+Unpacking go-agent (from go-agent-13.2.2-17585.deb) ...
+No packages found matching cruise-agent.
+&apos;Go Agent&apos; installation will now use group &apos;go&apos;
+&apos;Go Agent&apos; installation will now use user &apos;go&apos;
+Setting up go-agent (13.2.2-17585) ...
+Found Java /usr/lib/jvm/java-7-openjdk-amd64/jre in PATH, using it.
+Installation of Go Agent completed.
+Now please edit /etc/default/go-agent and set GO_SERVER to the IP address of your Go Server.
+Once that is done start the Go Agent with &apos;/etc/init.d/go-agent start&apos;
+Processing triggers for ureadahead ...
+</code></pre><p>Agent的安装速度相当快, 根据安装的提示, 我们要编辑/etc/default/go-agent这个配置文件, 并设置GO_SERVER的地址. 打开go-agent配置, 发现GO_SERVER当前的值为127.0.0.1, 因为我在同一台服务器上安装的Go Server和Go Agent, 所以又可以偷个懒直接使用啦. 如果在不同的主机上安装Agent, 需要将GO_SERVER指向真实的Go Server地址, 并且保证Server和Agent间的网络互通.</p>
+<p>需要注意的是默认安装完后Go Agent是没有启动的, 我们需要手动启动它:</p>
+<pre><code>coney@UServer-Laptop  ~
+╰─% /etc/init.d/go-agent status
+Go Agent is stopped.
+╭─coney@UServer-Laptop  ~
+╰─% sudo /etc/init.d/go-agent start
+[Sat Oct  5 00:59:13 CST 2013] using default settings from /etc/default/go-agent
+nohup: redirecting stderr to stdout
+Started Go Agent.
+</code></pre><p>启动成功后, 我们在Go Server Agent面板下能够看到现在可用的Agents列表:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午1.03.41.png" alt="img"></p>
+<p>到此为止, 一个基本可用的Go就算搭建完成.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://coney.github.io/2013/10/2013-10-02-go-ci-setup/" data-id="cj82t2wly000o4te2xuhu62yw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/10/2013-10-04-go-ci-pipeline/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          GO CI - 创建Pipeline
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/07/2013-07-01-parse-cli-arguments-in-shell-script/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">命令行参数解析 - Shell 脚本</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Ruby/">Ruby</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Device-Driver-MAME/">Linux/Device Driver MAME</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Network/">Linux/Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mood/">Mood</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspi-amp-Arduino/">Raspi &amp; Arduino</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/">Ruby</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WinDev/">WinDev</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-mock-mockcpp-gmock/">c++ mock mockcpp gmock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-visual-assist/">c++ visual assist</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interface-虚析构/">Interface 虚析构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/getopt/">getopt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle-java-ssl/">gradle java ssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/">string</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Interface-虚析构/" style="font-size: 10px;">Interface 虚析构</a> <a href="/tags/getopt/" style="font-size: 10px;">getopt</a> <a href="/tags/gradle-java-ssl/" style="font-size: 10px;">gradle java ssl</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/string/" style="font-size: 10px;">string</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">March 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/2015-09-11-gmock-with-const-function/">GMOCK下对const函数重载的处理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/">handle ambiguous overloaded functions in gmock</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/">移除HTTP Proxy的NTLM认证</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/">C++ 源码阅读项目推荐</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Coney Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

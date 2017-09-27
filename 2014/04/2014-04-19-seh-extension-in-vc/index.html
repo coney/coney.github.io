@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>VC中对SEH的扩展 | Hello Coney</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这篇文章是早前跟某同事探讨Windows SEH中__finally实现时研究的内容, 根据某书介绍, 异常处理函数都是通过_EXCEPTION_REGISTRATION_RECORD内的回调函数Handler实现的: 123456789101112131415typedef struct _EXCEPTION_REGISTRATION_RECORD&amp;#123;   struct _EXCEPTI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VC中对SEH的扩展">
+<meta property="og:url" content="http://coney.github.io/2014/04/2014-04-19-seh-extension-in-vc/index.html">
+<meta property="og:site_name" content="Hello Coney">
+<meta property="og:description" content="这篇文章是早前跟某同事探讨Windows SEH中__finally实现时研究的内容, 根据某书介绍, 异常处理函数都是通过_EXCEPTION_REGISTRATION_RECORD内的回调函数Handler实现的: 123456789101112131415typedef struct _EXCEPTION_REGISTRATION_RECORD&amp;#123;   struct _EXCEPTI">
+<meta property="og:locale" content="zh">
+<meta property="og:image" content="http://coney.github.io/images/2014/04/seh-memory-dump.png">
+<meta property="og:updated_time" content="2017-09-27T08:59:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VC中对SEH的扩展">
+<meta name="twitter:description" content="这篇文章是早前跟某同事探讨Windows SEH中__finally实现时研究的内容, 根据某书介绍, 异常处理函数都是通过_EXCEPTION_REGISTRATION_RECORD内的回调函数Handler实现的: 123456789101112131415typedef struct _EXCEPTION_REGISTRATION_RECORD&amp;#123;   struct _EXCEPTI">
+<meta name="twitter:image" content="http://coney.github.io/images/2014/04/seh-memory-dump.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hello Coney" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hello Coney</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://coney.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2014-04-19-seh-extension-in-vc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/04/2014-04-19-seh-extension-in-vc/" class="article-date">
+  <time datetime="2014-04-19T08:30:54.000Z" itemprop="datePublished">2014-04-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      VC中对SEH的扩展
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这篇文章是早前跟某同事探讨Windows SEH中<code>__finally</code>实现时研究的内容, 根据某书介绍, 异常处理函数都是通过<code>_EXCEPTION_REGISTRATION_RECORD</code>内的回调函数<code>Handler</code>实现的:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">EXCEPTION_REGISTRATION_RECORD</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line">   <span class="class"><span class="keyword">struct</span> _<span class="title">EXCEPTION_REGISTRATION_RECORD</span> *<span class="title">Next</span>;</span></div><div class="line">   PEXCEPTION_ROUTINE                     Handler;</div><div class="line">&#125; EXCEPTION_REGISTRATION_RECORD, *PEXCEPTION_REGISTRATION_RECORD;</div><div class="line"></div><div class="line">__try</div><div class="line">&#123;</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line">__except( XXX )</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 这里是对应那个_EXCEPTION_REGISTRATION_RECORD 的第二个成员Handler</span></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是对于<code>__finally</code>却没有介绍具体的实现方式. 通过调试器trace不到<code>__finally</code>的调用路径.<br><a id="more"></a></p>
+<p>限于当时搜商有限, 没有找到比较好的资料, 只能结合&lt;&lt;软件调试&gt;&gt;中介绍的内容自己进行摸索实验.<br>写了一段包含<code>__try</code>, <code>__finally</code>的简单代码进行反汇编, 发现VC对SEH做了些扩展, 往ExceptionList中添加的链表节点并不是书上描述的<code>_EXCEPTION_REGISTRATION_RECORD</code>,而是<code>_EH3_EXCEPTION_REGISTRATION</code>, 并且多向栈里压了8个字节. 同时异常处理函数也不是<code>__except</code>或者<code>__finally</code>里面的代码,而是统一的<code>__except_handler3</code>(老的编译器可能是<code>__except_handler2</code>, 还有那个某网站上贴的代码是<code>__except_handler4</code>, 不同版本VC扩展的结构不太一样, 但基本原理都差不多), 真正的<code>__finally</code>和<code>__except</code>中的处理代码放在<code>_EXCEPTION_REGISTRATION_RECORD</code>里的<code>_SCOPETABLE_ENTRY</code>中:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">EH3_EXCEPTION_REGISTRATION</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line">    <span class="comment">// 前两个字段同_EXCEPTION_REGISTRATION_RECORD</span></div><div class="line">	_EH3_EXCEPTION_REGISTRATION * Next;</div><div class="line">	<span class="keyword">void</span> * ExceptionHandler;</div><div class="line">	_SCOPETABLE_ENTRY * ScopeTable;</div><div class="line">	DWORD TryLevel;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">SCOPETABLE_ENTRY</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line">	DWORD EnclosingLevel;</div><div class="line"></div><div class="line">    <span class="comment">// 这个是过滤函数的地址, 就是__except(xxx)括号中得那部分代码.</span></div><div class="line">    <span class="comment">// 可以是函数指针或者一个常数, 如果是常数的话一般是mov + ret这两条指令</span></div><div class="line">    <span class="comment">// 另外如果FilterFunc是NULL, 那下面HandlerFunc中指向的就是__finally而不是__except</span></div><div class="line">	PVOID FilterFunc;</div><div class="line"></div><div class="line">    <span class="comment">// 这里保存的是__finally或__except包含的代码块</span></div><div class="line">	PVOID HandlerFunc;</div><div class="line">&#125; SCOPETABLE_ENTRY, *PSCOPETABLE_ENTRY;</div></pre></td></tr></table></figure>
+<p>下面整段 <code>__try</code>, <code>__finally</code>的反汇编:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">func_in</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line"><span class="number">009F</span>13C0  push        ebp  </div><div class="line"><span class="number">009F</span>13C1  mov         ebp,esp</div><div class="line">                      <span class="comment">// 从这里开始向ExceptionList加入新的节点, 先压栈的是TryLevel</span></div><div class="line"><span class="number">009F</span>13C3  push        <span class="number">0F</span>FFFFFFFh</div><div class="line">                      <span class="comment">// 接着压栈ScopeTable,保存了__finally里的代码段</span></div><div class="line"><span class="number">009F</span>13C5  push        offset ___rtc_tzz+<span class="number">108</span>h (<span class="number">9F</span>6B40h)</div><div class="line">                      <span class="comment">// 后面压入的就是_EXCEPTION_REGISTRATION_RECORD里的两个字段, 首先是回调函数, 一直是__except_handler3</span></div><div class="line"><span class="number">009F</span>13CA  push        offset @ILT+<span class="number">115</span>(__except_handler3) (<span class="number">9F</span>1078h)  </div><div class="line">                      <span class="comment">// 最后压入的是ExceptionList的头结点</span></div><div class="line"><span class="number">009F</span>13CF  mov         eax,dword ptr fs:[<span class="number">00000000</span>h]</div><div class="line"><span class="number">009F</span>13D5  push        eax  </div><div class="line"><span class="number">009F</span>13D6  mov         dword ptr fs:[<span class="number">0</span>],esp  </div><div class="line"><span class="number">009F</span>13DD  add         esp,<span class="number">0F</span>FFFFF38h  </div><div class="line"><span class="number">009F</span>13E3  push        ebx  </div><div class="line"><span class="number">009F</span>13E4  push        esi  </div><div class="line"><span class="number">009F</span>13E5  push        edi  </div><div class="line"><span class="number">009F</span>13E6  lea         edi,[ebp<span class="number">-0</span>D8h]  </div><div class="line"><span class="number">009F</span>13EC  mov         ecx,<span class="number">30</span>h  </div><div class="line"><span class="number">009F</span>13F1  mov         eax,<span class="number">0</span>CCCCCCCCh  </div><div class="line"><span class="number">009F</span>13F6  rep stos    dword ptr es:[edi]  </div><div class="line">	__try</div><div class="line"><span class="number">009F</span>13F8  mov         dword ptr [ebp<span class="number">-4</span>],<span class="number">0</span>  </div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"fin try!\n"</span>);</div><div class="line"><span class="number">009F</span>13FF  mov         esi,esp  </div><div class="line"><span class="number">009F</span>1401  push        offset <span class="built_in">string</span> <span class="string">"fin try!\n"</span> (<span class="number">9F</span>574Ch)  </div><div class="line"><span class="number">009F</span>1406  call        dword ptr [__imp__printf (<span class="number">9F</span>82C0h)]  </div><div class="line"><span class="number">009F</span>140C  add         esp,<span class="number">4</span>  </div><div class="line"><span class="number">009F</span>140F  cmp         esi,esp  </div><div class="line"><span class="number">009F</span>1411  call        @ILT+<span class="number">320</span>(__RTC_CheckEsp) (<span class="number">9F</span>1145h)  </div><div class="line">		__leave;</div><div class="line"><span class="number">009F</span>1416  jmp         func_in+<span class="number">62</span>h (<span class="number">9F</span>1422h)  </div><div class="line">		*(<span class="keyword">int</span>*)<span class="number">0</span>=<span class="number">0</span>;</div><div class="line"><span class="number">009F</span>1418  mov         dword ptr ds:[<span class="number">0</span>],<span class="number">0</span>  </div><div class="line">	&#125;</div><div class="line">	__finally</div><div class="line"><span class="number">009F</span>1422  mov         dword ptr [ebp<span class="number">-4</span>],<span class="number">0F</span>FFFFFFFh</div><div class="line"><span class="number">009F</span>1429  call        $LN5 (<span class="number">9F</span>1430h)  </div><div class="line"><span class="number">009F</span>142E  jmp         $LN8 (<span class="number">9F</span>1448h)  </div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"fin finally!\n"</span>);</div><div class="line">		              <span class="comment">// 从这里开始是__finally中代码块的起始地址, 注意地址是0x9F1430</span></div><div class="line"><span class="number">009F</span>1430  mov         esi,esp</div><div class="line"><span class="number">009F</span>1432  push        offset <span class="built_in">string</span> <span class="string">"fin finally!\n"</span> (<span class="number">9F</span>573Ch)  </div><div class="line"><span class="number">009F</span>1437  call        dword ptr [__imp__printf (<span class="number">9F</span>82C0h)]  </div><div class="line"><span class="number">009F</span>143D  add         esp,<span class="number">4</span>  </div><div class="line"><span class="number">009F</span>1440  cmp         esi,esp  </div><div class="line"><span class="number">009F</span>1442  call        @ILT+<span class="number">320</span>(__RTC_CheckEsp) (<span class="number">9F</span>1145h)  </div><div class="line">$LN6:</div><div class="line"><span class="number">009F</span>1447  ret  </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"><span class="number">009F</span>1448  xor         eax,eax  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>函数在进入<code>__try</code>块前, 首先在栈上安装了自己的异常处理函数, 并把<code>__finally</code>或者<code>__except</code>的放入ScopeTable做为参数同样压栈, 通过调试器分析压入的ScopeTable地址<code>0x9F6B40</code>处的内容:</p>
+<p><img src="/images/2014/04/seh-memory-dump.png" alt="SEH Memory Dump"></p>
+<p><code>0x9F6B40 + 8</code>也就是<code>_SCOPETABLE_ENTRY::HandlerFunc</code>正好指向<code>0x009f1430</code>, 对应<code>__finally</code>里代码段的地址. 如果是<code>__except</code>, 那这里对应的就是<code>__except</code>中的代码段.</p>
+<p>&lt;&lt;软件调试&gt;&gt;中有一部分对SEH的分析, 该书的确是本好书, 即使不做Windows开发拿来学习操作系统也是相当不错的. 并且作者十分负责, 出版之后发布了一个电子版的补编, 补全了很多没有写入书中的内容(包括该<code>__finally</code>的实现).</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://coney.github.io/2014/04/2014-04-19-seh-extension-in-vc/" data-id="cj82t2wm9001h4te2st5kp2jj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/05/2015-05-06-mock-static-function-with-mockcpp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用Mockcpp Mock C++静态函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/2014-04-07-fixing-arcade-machine/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">西安Office游戏机修复之路</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Ruby/">Ruby</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Device-Driver-MAME/">Linux/Device Driver MAME</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux-Network/">Linux/Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mood/">Mood</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OOP/">OOP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Raspi-amp-Arduino/">Raspi &amp; Arduino</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ruby/">Ruby</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WinDev/">WinDev</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-mock-mockcpp-gmock/">c++ mock mockcpp gmock</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c-visual-assist/">c++ visual assist</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interface-虚析构/">Interface 虚析构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/getopt/">getopt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle-java-ssl/">gradle java ssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/string/">string</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Interface-虚析构/" style="font-size: 10px;">Interface 虚析构</a> <a href="/tags/getopt/" style="font-size: 10px;">getopt</a> <a href="/tags/gradle-java-ssl/" style="font-size: 10px;">gradle java ssl</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/string/" style="font-size: 10px;">string</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">January 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12/">December 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/07/">July 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/06/">June 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">March 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/2015-09-11-gmock-with-const-function/">GMOCK下对const函数重载的处理</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/">handle ambiguous overloaded functions in gmock</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/">移除HTTP Proxy的NTLM认证</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/">C++ 源码阅读项目推荐</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Coney Wu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
