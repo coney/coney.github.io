@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hello Coney</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://coney.github.io/"/>
+  <updated>2017-09-27T08:59:04.000Z</updated>
+  <id>http://coney.github.io/</id>
+  
+  <author>
+    <name>Coney Wu</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GMOCK下对const函数重载的处理</title>
+    <link href="http://coney.github.io/2015/09/2015-09-11-gmock-with-const-function/"/>
+    <id>http://coney.github.io/2015/09/2015-09-11-gmock-with-const-function/</id>
+    <published>2015-09-10T20:32:00.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在C++中我们可能会遇到函数名, 函数签名, 返回值都相同的重载, 唯一的区别是const和non-const, 例如:&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;SomeClass&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt;:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;virtual&lt;/span&gt; ~SomeClass() &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt;() &amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;virtual&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; get() = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;virtual&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;/span&gt;= &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这种类我们在使用时编译器会根据我们的传入对象是否带有const属性自动调用对应的版本, 但是通过GMOCK的编写Mock调用时, 很多人对如何设置const函数的EXPECT_ALL和调用产生了疑问.&lt;br&gt;其实处理方式也比较简单, 在使用EXPECT_CALL或者调用mock对象的方法时, 我们可以显示通过const_cast将mock对象的转为const版本.&lt;br&gt;例如对于上面的类, 我们可以这么去写Mock, 设置期望和调用:&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>handle ambiguous overloaded functions in gmock</title>
+    <link href="http://coney.github.io/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/"/>
+    <id>http://coney.github.io/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/</id>
+    <published>2015-08-20T23:44:24.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>移除HTTP Proxy的NTLM认证</title>
+    <link href="http://coney.github.io/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/"/>
+    <id>http://coney.github.io/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/</id>
+    <published>2015-08-06T08:04:58.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙.&lt;/p&gt;
+&lt;p&gt;通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持.&lt;/p&gt;
+&lt;p&gt;例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择CNTLM将代理转化为不需要认证的HTTP代理.&lt;/p&gt;
+&lt;p&gt;首先从&lt;a href=&quot;http://cntlm.sourceforge.net/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CNTLM&lt;/a&gt;官方网站下载最新版本的CNTLM程序:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://sourceforge.net/projects/cntlm/files/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://sourceforge.net/projects/cntlm/files/&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>C++ 源码阅读项目推荐</title>
+    <link href="http://coney.github.io/2015/08/2015-08-06-cpp-projects-for-source-reading/"/>
+    <id>http://coney.github.io/2015/08/2015-08-06-cpp-projects-for-source-reading/</id>
+    <published>2015-08-05T18:25:47.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Chromium&quot;&gt;&lt;a href=&quot;#Chromium&quot; class=&quot;headerlink&quot; title=&quot;Chromium&quot;&gt;&lt;/a&gt;Chromium&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;流行浏览器的Chrome的开发版本&lt;/li&gt;
+&lt;li&gt;源码符合Google C++ 编程风格规范&lt;a href=&quot;http://google.github.io/styleguide/cppguide.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Google C++ Style Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;较多人进行阅读, 有一些现有阅读笔记&lt;a href=&quot;http://www.cnblogs.com/duguguiyu/archive/2008/10/02/1303095.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Chrome源码剖析&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;能够学习到比较全面各种子系统的设计知识, 如网络, 多线程, IO, 内存管理等&lt;/li&gt;
+&lt;li&gt;其项目中包含了若干Google的子项目, 也很值得阅读, 例如: libv8, gtest, gflags&lt;/li&gt;
+&lt;li&gt;源码地址: &lt;a href=&quot;https://code.google.com/p/chromium/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://code.google.com/p/chromium/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;STL&quot;&gt;&lt;a href=&quot;#STL&quot; class=&quot;headerlink&quot; title=&quot;STL&quot;&gt;&lt;/a&gt;STL&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;C++标准模板库, 日常开发必备&lt;/li&gt;
+&lt;li&gt;通过源码能够学习到模板编程基础, 相对于Boost来说可读性很高, 上手容易&lt;/li&gt;
+&lt;li&gt;通过学习STL实现能够更好的掌握STL的开发范式, 例如通过迭代器编程而不是传递容器, 使用或扩展STL中的算法&lt;/li&gt;
+&lt;li&gt;通过了解STL常用容器的底层实现也能更好的让我们再不同场景下选择合适的容器, 避免因误用造成时间空间的浪费&lt;/li&gt;
+&lt;li&gt;STL实现版本较多, 内部接口的编程风格不是很好, 建议通过SGI STL的源码进行阅读&lt;/li&gt;
+&lt;li&gt;源码地址: &lt;a href=&quot;https://www.sgi.com/tech/stl/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.sgi.com/tech/stl/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>禁止Visual Assist自动添加Override关键字</title>
+    <link href="http://coney.github.io/2015/05/2015-06-01-disable-override-keyword-for-visual-assist/"/>
+    <id>http://coney.github.io/2015/05/2015-06-01-disable-override-keyword-for-visual-assist/</id>
+    <published>2015-05-31T22:32:21.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;Visual Assist是一款历史悠久的Visual Studio插件, 能够极大的提升C++开发效率. 但是某些时候智能过了头, 反倒成了开发效率的绊脚石, 例如在实现虚方法(Implement Virtual Methods)时自动添加的&lt;code&gt;override&lt;/code&gt;关键字.&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;SomeInterface&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt;:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;virtual&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;= &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;使用Implement Virtual Methods后, Visual Assist帮我们生成如下代码:&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;SomeImplementation&lt;/span&gt; :&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; SomeInterface &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt;:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;virtual&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; override&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;    &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;std&lt;/span&gt;::logic_error(&lt;span class=&quot;string&quot;&gt;&quot;The method or operation is not implemented.&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Visual Assist在&lt;code&gt;virtual void doSomething()&lt;/code&gt;后面帮我们添加了一个&lt;code&gt;override&lt;/code&gt;关键字, 这个关键是符合c++11标准的. 但是一些老旧的编译器并不支持&lt;code&gt;override&lt;/code&gt;, 因此导致编译错误. 这使我们不得不手动删除所有生成方法后的&lt;code&gt;override&lt;/code&gt;关键字.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="c++ visual assist" scheme="http://coney.github.io/categories/c-visual-assist/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用Mockcpp Mock C++静态函数</title>
+    <link href="http://coney.github.io/2015/05/2015-05-06-mock-static-function-with-mockcpp/"/>
+    <id>http://coney.github.io/2015/05/2015-05-06-mock-static-function-with-mockcpp/</id>
+    <published>2015-05-05T23:22:10.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;传统测试中的Mock, 都是基于多态实现的, 也就是Mock面向接口的虚函数. 但是在C++的代码中, 经常会混入大量的C函数或是静态成员函数.&lt;br&gt;例如工厂函数, 单例函数, 或是C库中的函数甚至STL的算法等.&lt;/p&gt;
+&lt;p&gt;对于这些静态函数, 比较传统的做法是创建一个Wrapper, 用虚方法对这些静态函数进行包裹. 在测试的时候对Wrapper进行Mock便可控制被包裹的静态函数的行为:&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; x, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; y)&lt;/span&gt;&lt;/span&gt;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可以通过Wrapper包裹为:&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Calc&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt;:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;virtual&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; x, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; y)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; ::add(x, y);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;但是对于存量代码, 这种重构并不现实(工作量及流程问题). 正当我们束手无策时, 我们发现mockcpp可以帮助我们解决一部分静态方法Mock的需求.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="c++ mock mockcpp gmock" scheme="http://coney.github.io/categories/c-mock-mockcpp-gmock/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>VC中对SEH的扩展</title>
+    <link href="http://coney.github.io/2014/04/2014-04-19-seh-extension-in-vc/"/>
+    <id>http://coney.github.io/2014/04/2014-04-19-seh-extension-in-vc/</id>
+    <published>2014-04-19T00:30:54.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章是早前跟某同事探讨Windows SEH中&lt;code&gt;__finally&lt;/code&gt;实现时研究的内容, 根据某书介绍, 异常处理函数都是通过&lt;code&gt;_EXCEPTION_REGISTRATION_RECORD&lt;/code&gt;内的回调函数&lt;code&gt;Handler&lt;/code&gt;实现的:&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; _&lt;span class=&quot;title&quot;&gt;EXCEPTION_REGISTRATION_RECORD&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; _&lt;span class=&quot;title&quot;&gt;EXCEPTION_REGISTRATION_RECORD&lt;/span&gt; *&lt;span class=&quot;title&quot;&gt;Next&lt;/span&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   PEXCEPTION_ROUTINE                     Handler;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125; EXCEPTION_REGISTRATION_RECORD, *PEXCEPTION_REGISTRATION_RECORD;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;__try&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;__except( XXX )&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 这里是对应那个_EXCEPTION_REGISTRATION_RECORD 的第二个成员Handler&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;但是对于&lt;code&gt;__finally&lt;/code&gt;却没有介绍具体的实现方式. 通过调试器trace不到&lt;code&gt;__finally&lt;/code&gt;的调用路径.&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>西安Office游戏机修复之路</title>
+    <link href="http://coney.github.io/2014/04/2014-04-07-fixing-arcade-machine/"/>
+    <id>http://coney.github.io/2014/04/2014-04-07-fixing-arcade-machine/</id>
+    <published>2014-04-07T00:33:24.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;加入Thoughtworks前参观西安Office时就已经注意到餐厅的游戏机, 但入职后才知道游戏机已经坏了有些年月. 机缘巧合, 加入硬件小组后了解到有修复游戏机的计划, 所以便有了以下的经历.&lt;/p&gt;
+&lt;p&gt;#方案选择#&lt;br&gt;开搞之前, 新宇和高亮已经把游戏机肚里的东西摸得一清二楚. 游戏机主板寄给某个淘宝店家后已杳无音讯, 屏幕则是一块接受RGBS信号的25寸显像管, 摇杆和按钮是最直接的按键开关, 闭合后会跟GND连通. 有了这些基本输入输出信息, 下一步就是选择合适的软硬件来重建主板.&lt;/p&gt;
+&lt;p&gt;回想曾经的街机经历, 无非也就两种选择: 一是到游戏厅玩真机, 第二种便是通过PC上的模拟器. 重买一个街机主板放进去肯定不是我们想要的方案, 所以我们基本确定思路就是通过PC主机+模拟器的方式. 比较常见的街机模拟器有winkawaks, nebula和MAME等, 相信不少人都有玩过:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2014/04/MAME.jpg&quot; alt=&quot;MAME&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Linux/Device Driver MAME" scheme="http://coney.github.io/categories/Linux-Device-Driver-MAME/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>防止Ubuntu启动时自动进入GUI</title>
+    <link href="http://coney.github.io/2014/02/2014-02-06-booting-ubuntu-without-x/"/>
+    <id>http://coney.github.io/2014/02/2014-02-06-booting-ubuntu-without-x/</id>
+    <published>2014-02-06T05:56:15.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;为了实验几个需要X的小程序, 很不情愿的在Ubuntu Server上安装了Ubuntu-Desktop, 但是Ubuntu每次引导后自动进入Gnome实在是烦.&lt;/p&gt;
+&lt;p&gt;一般情况下想默认进入CLI的话只需要修改下runlevel, 可是我安装的Ubuntu(Server 12.04 LTS)默认的runlevel是2, Gnome也跑在level 2上. 貌似不能像往常一样通过修改&lt;code&gt;inittab&lt;/code&gt;来禁用X.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux/Network" scheme="http://coney.github.io/categories/Linux-Network/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World from github</title>
+    <link href="http://coney.github.io/2014/01/2014-01-26-hello-world/"/>
+    <id>http://coney.github.io/2014/01/2014-01-26-hello-world/</id>
+    <published>2014-01-26T00:52:46.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Hello Kitty&lt;/li&gt;
+&lt;li&gt;Hello Kitty&lt;/li&gt;
+&lt;li&gt;Hello
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>让mac下rvm支持更多的编译器</title>
+    <link href="http://coney.github.io/2013/12/2013-12-13-make_rvm_support_more_gcc_versions/"/>
+    <id>http://coney.github.io/2013/12/2013-12-13-make_rvm_support_more_gcc_versions/</id>
+    <published>2013-12-13T03:50:40.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;通过rvm安装ruby-1.9.3-p484时, 发现rvm会尝试通过brew安装gcc46, 但在编译gcc46依赖的ppl011时产生错误, 导致整个安装流程失败. 我的机器上已经通过brew安装了更高版本的gcc49, rvm看起来还不够聪明去自动使用更新的编译器.&lt;/p&gt;
+&lt;p&gt;从网上搜索解决方案时看到这个commit:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2013/12/QQ20131210-1.png&quot; alt=&quot;img&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Ruby" scheme="http://coney.github.io/categories/Ruby/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java下&quot;Failure initializing default system SSL context&quot;的修复</title>
+    <link href="http://coney.github.io/2013/12/2013-12-08-fix_java_ssl_problem/"/>
+    <id>http://coney.github.io/2013/12/2013-12-08-fix_java_ssl_problem/</id>
+    <published>2013-12-08T01:21:09.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今日准备用java + gradle体验下hello world, 结果在download jar包时卡了很久. 错误信息像这个样子:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;gt; Could not resolve org.eclipse.jetty:jetty-server:9.1.0.v20131115.&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Required by:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;:blog-search:1.0&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;gt; Failure initializing default system SSL context&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;从网上查了很多内容, 大部分都没有什么帮助, 后来发现并不是gradle的问题, 而是在使用java的https时证书有问题导致. 参考网上的资料, 要对keystore进行一些处理:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://publib.boulder.ibm.com/infocenter/javasdk/v6r0/index.jsp?topic=%2Fcom.ibm.java.security.component.60.doc%2Fsecurity-component%2Fjsse2Docs%2Fcustomizingstores.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://publib.boulder.ibm.com/infocenter/javasdk/v6r0/index.jsp?topic=%2Fcom.ibm.java.security.component.60.doc%2Fsecurity-component%2Fjsse2Docs%2Fcustomizingstores.html&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://coney.github.io/categories/Java/"/>
+    
+    
+      <category term="gradle java ssl" scheme="http://coney.github.io/tags/gradle-java-ssl/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Funny Commands</title>
+    <link href="http://coney.github.io/2013/11/2013-11-30-funny-commands/"/>
+    <id>http://coney.github.io/2013/11/2013-11-30-funny-commands/</id>
+    <published>2013-11-30T02:30:32.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近总是能够从其他同事那里学来一些有趣的命令, 害怕时间长忘记了, 所以开个帖子记录下.&lt;/p&gt;
+&lt;h1 id=&quot;ipcalc&quot;&gt;&lt;a href=&quot;#ipcalc&quot; class=&quot;headerlink&quot; title=&quot;ipcalc:&quot;&gt;&lt;/a&gt;ipcalc:&lt;/h1&gt;&lt;p&gt;这个命令是用来计算IP或者子网的, 能够以漂亮的色彩分析ip或者子网的范围, 掩码等信息. 我比较喜欢用这个东西来查看类似192.168.0.0/22这种子网的范围.&lt;br&gt;&lt;img src=&quot;/images/2013/11/QQ20131130-2.png&quot; alt=&quot;img&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>命令行编译arduino源码及上传执行</title>
+    <link href="http://coney.github.io/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/"/>
+    <id>http://coney.github.io/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/</id>
+    <published>2013-11-09T02:34:49.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Arduino官方提供了一个IDE, 集成了编辑, 编译, 上传和串口监视等功能, 但是这个基于java的IDE的编辑功能略弱. 所以想是否能使用其他的c++ IDE外加类似Makefile的命令行方式编译执行. 这样也能够在类似树莓派之类的设备上直接编译和烧录程序至arduino.&lt;/p&gt;
+&lt;p&gt;首先尝试带参启动arduino的IDE, 没有发现类似devenv.exe带参直接编译工程的功能. 之后在arduino主站搜索一番, 倒是发现了一个通过makefile的方法(&lt;a href=&quot;http://playground.arduino.cc/Learning/CommandLine&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://playground.arduino.cc/Learning/CommandLine&lt;/a&gt;), 不过提供的库略坑爹. 折腾了半天后发现提供的uart.h里面没有mega2560的定义. 从IDE中提取的库也找不到这个定义. 只能搞一些较老的芯片, 遂放弃.&lt;/p&gt;
+&lt;p&gt;继续google, 发现另外一套基于python的命令行工具ino, 试用了下, 还是比较稳定的. ino的介绍可以看这里:&lt;a href=&quot;http://inotool.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://inotool.org/&lt;/a&gt; 网站上提供了多种安装方式, 因为我的树莓派是debian的系统,  所以相关的东西基本都是通过apt安装的.&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Raspi &amp;amp; Arduino" scheme="http://coney.github.io/categories/Raspi-amp-Arduino/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>GO CI - 创建Pipeline</title>
+    <link href="http://coney.github.io/2013/10/2013-10-04-go-ci-pipeline/"/>
+    <id>http://coney.github.io/2013/10/2013-10-04-go-ci-pipeline/</id>
+    <published>2013-10-04T09:44:54.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;创建Pipeline&quot;&gt;&lt;a href=&quot;#创建Pipeline&quot; class=&quot;headerlink&quot; title=&quot;创建Pipeline&quot;&gt;&lt;/a&gt;创建Pipeline&lt;/h1&gt;&lt;p&gt;装完了Go肯定要拿来试试效果, 这里使用了过去写过的一个C++小程序来测试整套Build Pipeline系统. 因为这个小程序比较简单, 就分成了两个Stages. 一个是测试, 另一个是编译App.&lt;/p&gt;
+&lt;p&gt;首先我们给Pipeline起一个名字:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2013/10/Screen-Shot-2013-10-05-at-上午1.08.42.png&quot; alt=&quot;img&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Linux/Network" scheme="http://coney.github.io/categories/Linux-Network/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>GO CI - 安装配置</title>
+    <link href="http://coney.github.io/2013/10/2013-10-02-go-ci-setup/"/>
+    <id>http://coney.github.io/2013/10/2013-10-02-go-ci-setup/</id>
+    <published>2013-10-02T05:46:56.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;什么是Go呢? Go是骚窝出品的一款持续交付(CD)产品, 类似于Hudson, Bamboo等CI服务. 作为一家专业的敏捷和持续交付咨询公司,  Go从定位上就已经拉开了与其他同类产品的距离, 当别人还在搞CI的时候, 骚窝已经在玩CD了. 下面简单贴下安装和配置流程, 以及试用体验.&lt;/p&gt;
+&lt;h1 id=&quot;安装Go-Server&quot;&gt;&lt;a href=&quot;#安装Go-Server&quot; class=&quot;headerlink&quot; title=&quot;安装Go Server&quot;&gt;&lt;/a&gt;安装Go Server&lt;/h1&gt;
+    
+    </summary>
+    
+      <category term="Linux/Network" scheme="http://coney.github.io/categories/Linux-Network/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>命令行参数解析 - Shell 脚本</title>
+    <link href="http://coney.github.io/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/"/>
+    <id>http://coney.github.io/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/</id>
+    <published>2013-06-30T21:05:46.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;平时多少会用shell写点小工具, 而这些小工具运行后的第一件事就是解析参数, 这里总结了下shell脚本几种处理命令行参数的方法.&lt;/p&gt;
+&lt;p&gt;比较常见的做法就是解析bash内置的几个特殊变量, 例如直接遍历$*或者$@:&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#/bin/sh&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;args from \$*&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; arg &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; $*; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$arg&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;done&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;args from \$@&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; arg &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$@&lt;/span&gt;; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$arg&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;done&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;args from &quot;\$*&quot;&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; arg &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;$*&quot;&lt;/span&gt;; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$arg&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;done&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;args from &quot;\$@&quot;&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; arg &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;&lt;span class=&quot;variable&quot;&gt;$@&lt;/span&gt;&quot;&lt;/span&gt;; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$arg&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;done&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="Linux/Network" scheme="http://coney.github.io/categories/Linux-Network/"/>
+    
+    
+      <category term="getopt" scheme="http://coney.github.io/tags/getopt/"/>
+    
+      <category term="shell" scheme="http://coney.github.io/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mac下gem install mysql和libv8时编译错误的处理</title>
+    <link href="http://coney.github.io/2013/06/2013-06-28-issuses-of-installing-mysql-and-libv8-on-mac/"/>
+    <id>http://coney.github.io/2013/06/2013-06-28-issuses-of-installing-mysql-and-libv8-on-mac/</id>
+    <published>2013-06-28T09:32:12.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天通过gem安装mysql和libv8时, 均遇到了编译错误, 尤其是mysql的比较晦涩:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;coney:cp-agentadmin$gem install mysql
+Building native extensions.  This could take a while...
+ERROR:  Error installing mysql:
+    ERROR: Failed to build gem native extension.
+
+        /Users/coney/.rvm/rubies/ree-1.8.7-2012.02/bin/ruby extconf.rb
+checking for mysql_ssl_set()... no
+checking for rb_str_set_len()... no
+checking for rb_thread_start_timer()... no
+checking for mysql.h... no
+checking for mysql/mysql.h... no
+*** extconf.rb failed ***
+
+...
+
+Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gems/mysql-2.9.1/ext/mysql_api/gem_make.out
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+      <category term="C/C++" scheme="http://coney.github.io/categories/C-C/"/>
+    
+      <category term="Ruby" scheme="http://coney.github.io/categories/C-C/Ruby/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>直接改写std::string内存导致的问题</title>
+    <link href="http://coney.github.io/2013/03/2013-03-27-invalid-writing-std-string-cstr/"/>
+    <id>http://coney.github.io/2013/03/2013-03-27-invalid-writing-std-string-cstr/</id>
+    <published>2013-03-26T21:24:43.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天帮一个同事查问题: 他写了一个全局的string变量, 在程序运行过程中可能会对该变量进行解析操作, 但是在持续运行过程中第二次访问到这个全局变量的时候, string的内容发生了改变. 他代码大体逻辑类似下面这样:&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; &amp;amp;rawstr)&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; delim = &lt;span class=&quot;string&quot;&gt;&quot;,&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; newstr = rawstr;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 认为这里会复制文本内容&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;rawstr:%p newstr:%p\n&quot;&lt;/span&gt;, rawstr.c_str(), newstr.c_str());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; *ptoken = strtok(&lt;span class=&quot;keyword&quot;&gt;const_cast&lt;/span&gt;&amp;lt;&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; *&amp;gt;(newstr.c_str()), delim.c_str());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; (ptoken)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// process ptoken&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        ptoken = strtok(&lt;span class=&quot;literal&quot;&gt;NULL&lt;/span&gt;, delim.c_str());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; **argv)&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt; str = &lt;span class=&quot;string&quot;&gt;&quot;1,2,3,4&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;before:&#39;%s&#39;\n&quot;&lt;/span&gt;, str.c_str());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    process(str);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;after:&#39;%s&#39;\n&quot;&lt;/span&gt;, str.c_str());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="C/C++" scheme="http://coney.github.io/categories/C-C/"/>
+    
+    
+      <category term="string" scheme="http://coney.github.io/tags/string/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>c++声明接口未提供虚析构函数的后果</title>
+    <link href="http://coney.github.io/2013/03/2013-03-23-what-happens-when-cpp-destructor-is-not-virtual/"/>
+    <id>http://coney.github.io/2013/03/2013-03-23-what-happens-when-cpp-destructor-is-not-virtual/</id>
+    <published>2013-03-23T01:13:30.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是一个比较低级的错误, 用C++模拟C#提供接口, 声明了纯虚函数, 看起来像这样:&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ITestable&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&amp;#123;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt;:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;virtual&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;= &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="C/C++" scheme="http://coney.github.io/categories/C-C/"/>
+    
+    
+      <category term="Interface 虚析构" scheme="http://coney.github.io/tags/Interface-%E8%99%9A%E6%9E%90%E6%9E%84/"/>
+    
+  </entry>
+  
+</feed>
