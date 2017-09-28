@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="命令行参数解析 - Shell 脚本"/>
+
+
+
+
+  <meta name="keywords" content="getopt, shell, Hello Coney" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="Hello Coney">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://coney.github.io/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 命令行参数解析 - Shell 脚本 - Hello Coney </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hello Coney</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hello Coney</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          命令行参数解析 - Shell 脚本
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2013-07-01
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/Linux-Network/">Linux/Network</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        <p>平时多少会用shell写点小工具, 而这些小工具运行后的第一件事就是解析参数, 这里总结了下shell脚本几种处理命令行参数的方法.</p>
+<p>比较常见的做法就是解析bash内置的几个特殊变量, 例如直接遍历$*或者$@:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#/bin/sh</span></div><div class="line"><span class="built_in">echo</span> <span class="string">'args from \$*'</span></div><div class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> $*; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">'args from \$@'</span></div><div class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="variable">$@</span>; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">'args from "\$*"'</span></div><div class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="string">"$*"</span>; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">'args from "\$@"'</span></div><div class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="string">"<span class="variable">$@</span>"</span>; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>上面总共列出了4种遍历的格式, 分别对$@和$<em>进行遍历, 这两个变量的区别是$</em>将所有的参数合为一个字符串, 而$@将输入的参数分别保存不同的字符串, 例如执行get-args.sh a “b c” d的结果如下:<br>    coney:temp$./get-args.sh a “b c” d<br>    args from $<em><br>    a<br>    b<br>    c<br>    d<br>    args from $@<br>    a<br>    b<br>    c<br>    d<br>    args from “$</em>“<br>    a b c d<br>    args from “$@”<br>    a<br>    b c<br>    d<br>还有一种方法就是通过shift方法来将处理过的参数移除, 从而完成遍历:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="keyword">while</span> [ <span class="variable">$#</span> != 0 ]; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$1</span></div><div class="line">    <span class="built_in">shift</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<p>其中$1代表第一个参数, 类似的$2, $3…分别代表第二个 第三个参数. $#是参数的总个数, 每次调用shift后, 会将所有的参数左移, 并将第一个参数移除, 所以在脚本里面我们只要一直访问$1即可, 这种方式比较适合解析类似-p 80这种类型的参数, 可以在解析到-p后, shift一下, 然后再解析该参数附带的内容. 执行shift-args.sh a “b c” d的结果类似遍历”$@”:<br>    coney:temp$./shift-args.sh a “b c” d<br>    a<br>    b c<br>    d<br>以上是使用shell内建变量处理的方式, 虽然遍历较为简单, 但是解析参数的时候很复杂, 尤其是要对参数的合法性做校验时, 需要大量逻辑.<br>所以我们有更好的选择: getopt. getopt命令可以将根据格式化字符串将输入参数重新整理排序, 方便我们进行处理, 并且对输入的参数格式进行校验, 判断参数格式是否正确以及符合规范. 下面是一个getopt的使用示例:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line">args=`getopt abc: <span class="string">"<span class="variable">$@</span>"</span>`</div><div class="line"></div><div class="line"><span class="comment"># check arguments, exit on fail</span></div><div class="line"><span class="keyword">if</span> [ $? != 0 ]; <span class="keyword">then</span></div><div class="line">    <span class="built_in">exit</span> $?</div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="comment"># reorder arguments</span></div><div class="line"><span class="built_in">echo</span> before reorder, args : $*</div><div class="line"><span class="built_in">set</span> -- <span class="variable">$args</span></div><div class="line"><span class="built_in">echo</span> after reorder, args : $*</div><div class="line"></div><div class="line"><span class="comment"># parse arguments</span></div><div class="line"><span class="keyword">while</span> :; <span class="keyword">do</span></div><div class="line">    opt=<span class="variable">$1</span>; <span class="built_in">shift</span></div><div class="line">    <span class="keyword">case</span> <span class="variable">$opt</span> <span class="keyword">in</span></div><div class="line">        -a|-b)</div><div class="line">            <span class="built_in">echo</span> <span class="variable">$opt</span> is <span class="built_in">set</span>;;</div><div class="line">        -c)</div><div class="line">            <span class="built_in">echo</span> found <span class="variable">$opt</span> with <span class="variable">$1</span>; <span class="built_in">shift</span>;;</div><div class="line">        --)</div><div class="line">            <span class="built_in">break</span>;;</div><div class="line">    <span class="keyword">esac</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="comment"># print rest arguments</span></div><div class="line"><span class="keyword">if</span> [ -n <span class="string">"$*"</span> ]; <span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> arguments : $*</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+<p>脚本一开始将格式化字符串和脚本接受的所有参数传递给getopt, getopt执行后将重新排序后的参数存储在args中. 当然getopt会对参数进行校验, 如果校验失败会直接在stderr上输出错误信息, 并且将返回码设为非0, 这样我们就能够及时终止脚本执行.<br>我们传入的格式化字符串”abc:”的含义是, 接收-a -b -c三种开关参数, 并且-c开关有附加参数, 例如”-c file”.<br>在拿到getopt重新排序的参数后, 我们要通过”set – $args”替换脚本接收的参数, 这样$* $@ $1 $2等变量就可以使用排序后的参数, 先看下这个命令的运行效果:<br>    coney@UServer:~/temp$ ./getopt.sh file1 -ab -c “haha” file2<br>    before reorder, args : file1 -ab -c haha file2<br>    after reorder, args : -a -b -c haha – file1 file2<br>    -a is set<br>    -b is set<br>    found -c with haha<br>    arguments : file1 file2<br>getopt将参数通过–分隔为两部分, 前面是控制开关, 后面是其他传入的参数内容, 并且支持”-ab”这种格式的参数, 并自动分解为”-a -b”. 这样我们就能顺序遍历所有的开关, 然后再处理其他参数. 如果是”-c haha”这种类型的参数, 我们只需要在遍历的过程中多shift一次, 取出附加的参数即可. 在遍历到”–”后, 剩下的参数便都是非开关的参数了.<br>再来看下getopt对参数校验的效果:<br>    coney@UServer:~/temp$ ./getopt.sh -d -a -b<br>    getopt: invalid option – ‘d’<br>    coney@UServer:~/temp$ ./getopt.sh -a -b -c<br>    getopt: option requires an argument – ‘c’<br>    coney@UServer:~/temp$ ./getopt.sh -a –b<br>    getopt: unrecognized option ‘–b’<br>所以通过getopt进行参数, 不但极大的提升开发效率, 还能够完美的支持标准的参数格式, 以及获得健壮的错误处理¤</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://coney.github.io">Coney Wu</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://coney.github.io/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/">http://coney.github.io/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/getopt/">getopt</a>
+            
+              <a href="/tags/shell/">shell</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2013/10/2013-10-02-go-ci-setup/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">GO CI - 安装配置</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2013/06/2013-06-28-issuses-of-installing-mysql-and-libv8-on-mac/">
+        <span class="next-text nav-default">mac下gem install mysql和libv8时编译错误的处理</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Coney Wu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
