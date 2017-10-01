@@ -176,12 +176,12 @@
     <link href="http://coney.github.io/2014/04/fixing-arcade-machine/"/>
     <id>http://coney.github.io/2014/04/fixing-arcade-machine/</id>
     <published>2014-04-07T08:33:24.000Z</published>
-    <updated>2017-10-01T15:21:53.707Z</updated>
+    <updated>2017-10-01T15:24:11.277Z</updated>
     
     <summary type="html">
     
       &lt;p&gt;加入Thoughtworks前参观西安Office时就已经注意到办公室角落的一台街机, 在入职后才知道此街机已经坏了有些年月. 机缘巧合, 加入硬件小组后了解到有修复游戏机的计划, 所以便有了以下的经历.&lt;/p&gt;
-&lt;p&gt;#方案选择#&lt;br&gt;开搞之前, 新宇和高亮已经把游戏机肚里的东西摸得一清二楚. 游戏机主板寄给某个淘宝店家后已杳无音讯, 屏幕则是一块接受RGBS信号的25寸显像管, 摇杆和按钮是最直接的按键开关, 闭合后会跟GND连通. 有了这些基本输入输出信息, 下一步就是选择合适的软硬件来重建主板.&lt;/p&gt;
+&lt;h2 id=&quot;方案选择&quot;&gt;&lt;a href=&quot;#方案选择&quot; class=&quot;headerlink&quot; title=&quot;方案选择&quot;&gt;&lt;/a&gt;方案选择&lt;/h2&gt;&lt;p&gt;开搞之前, 新宇和高亮已经把游戏机肚里的东西摸得一清二楚. 游戏机主板寄给某个淘宝店家后已杳无音讯, 屏幕则是一块接受RGBS信号的25寸显像管, 摇杆和按钮是最直接的按键开关, 闭合后会跟GND连通. 有了这些基本输入输出信息, 下一步就是选择合适的软硬件来重建主板.&lt;/p&gt;
 &lt;p&gt;回想曾经的街机经历, 无非也就两种选择: 一是到游戏厅玩真机, 第二种便是通过PC上的模拟器. 重买一个街机主板放进去肯定不是我们想要的方案, 所以我们基本确定思路就是通过PC主机+模拟器的方式. 比较常见的街机模拟器有winkawaks, nebula和MAME等, 相信不少人都有玩过:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/2014/04/MAME.jpg&quot; alt=&quot;MAME&quot;&gt;&lt;br&gt;
     
