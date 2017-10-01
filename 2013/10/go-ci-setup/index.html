@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="GO CI - 安装配置"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello Coney">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://coney.github.io/2013/10/go-ci-setup/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> GO CI - 安装配置 - Hello Coney </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hello Coney</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hello Coney</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          GO CI - 安装配置
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2013-10-02
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/Linux-Network/">Linux/Network</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Go-Server"><span class="toc-text">安装Go Server</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置用户认证"><span class="toc-text">配置用户认证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Go-Agent"><span class="toc-text">安装Go Agent</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <p>什么是Go呢? Go是骚窝出品的一款持续交付(CD)产品, 类似于Hudson, Bamboo等CI服务. 作为一家专业的敏捷和持续交付咨询公司,  Go从定位上就已经拉开了与其他同类产品的距离, 当别人还在搞CI的时候, 骚窝已经在玩CD了. 下面简单贴下安装和配置流程, 以及试用体验.</p>
+<h1 id="安装Go-Server"><a href="#安装Go-Server" class="headerlink" title="安装Go Server"></a>安装Go Server</h1><a id="more"></a>
+<p>首先我们要到Go的产品页面去下载安装包(<a href="http://www.thoughtworks.com/products/go-continuous-delivery" target="_blank" rel="external">请猛击此处</a>). 目前Go提供一个免费的社区版, 限制是最多10个用户, 3个远程Agent. 这个对个人使用感觉已经足够了. 来到Go的下载页面, 能看到Go提供了多种安装包, 针对不同的系统, 因为我的VPS是Ubuntu的, 所以点击Linux(Debian/Ubuntu)下载了deb包, 如果使用的是CentOS等使用RPM的发行版, 可以点击Linux(Redhat/Suse)这一项下载rpm包. 当然如果您使用非linux系统可以选择其他类型的安装包:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-04-at-下午11.43.37.png" alt="img"><br>来进行操作管理的服务, 而Go Agent则是执行Go Server下发的工作的苦力. 要实现完整的CI系统, 我们需要同时安装和配置Server以及Agent. 一个Go Server可以拥有多个Agent, 而且这些Agent可以跟Server安装在一起, 也可以安装在其他服务器上.</p>
+<p>下载好安装包后, 我们首先来安装Go Server. 以我使用的Ubuntu Server为例, 首先通过Dpkg来进行安装:</p>
+<pre><code>╭─coney@UServer-Laptop  ~
+╰─% sudo dpkg -i go-server-13.2.2-17585.deb
+Selecting previously unselected package go-server.
+(Reading database ... 102421 files and directories currently installed.)
+Unpacking go-server (from go-server-13.2.2-17585.deb) ...
+No packages found matching cruise-server.
+Adding system user `go&apos; (UID 108) ...
+Adding new group `go&apos; (GID 118) ...
+Adding new user `go&apos; (UID 108) with group `go&apos; ...
+Creating home directory `/var/go&apos; ...
+Setting up go-server (13.2.2-17585) ...
+Found Java /usr/lib/jvm/java-7-openjdk-amd64/jre in PATH, using it.
+chown: cannot access `/var/lib/go-server/**&apos;: No such file or directory
+Installation of Go Server completed.
+using default settings from /etc/default/go-server
+nohup: redirecting stderr to stdout
+Started Go Server on http://UServer-Laptop:8153/go
+Processing triggers for ureadahead ...
+ureadahead will be reprofiled on next reboot
+</code></pre><p>虽然看起来像是有些错误, 但实际还是安装成功了, 根据提示, 我们访问一下服务器的8153端口, It works!</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午12.24.32.png" alt="img"></p>
+<h1 id="配置用户认证"><a href="#配置用户认证" class="headerlink" title="配置用户认证"></a>配置用户认证</h1><p>初次进入Go, 并没有见到登录验证之类的页面, 而是直接跳转到Admin下让我们构建pipeline. 如果只是个人使用的话, 这样还是挺方便的, 但是如果发布到公网或者有多个用户时, 这样就太不安全啦,  所以首要任务是加入登录验证, 在[Admin][Server Configuration]标签下, 能够找到User Management相关的配置选项:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午12.31.39.png" alt="img"></p>
+<p>参考配置文档的说明, 支持LDAP和密码文件认证. 因为没有AD服务器, 所以这里使用的第二种方式. Go要求密码要通过sha1哈希后在通过base64编码一次. 手动操作比较繁琐, 这里用apache提供的htpasswd命令生成和修改密码:</p>
+<pre><code>╭─coney@UServer-Laptop  /var/lib/go-server
+╰─% sudo htpasswd -s -c passwd coney
+New password:
+Re-type new password:
+Adding password for user coney
+</code></pre><p>参数-c表示创建新的密码文件, passwd是文件名, coney是要添加的第一个用户, 命令执行后会提示输入和确认密码. 输入无误便会创建用户. 之后将新创建的文件路径填入”Password File Path”一栏中提交. 提交后便会跳转到登陆页面, 此时通过刚才创建的用户名密码登陆, 重新进入Go主页.</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午12.49.56.png" alt="img"></p>
+<h1 id="安装Go-Agent"><a href="#安装Go-Agent" class="headerlink" title="安装Go Agent"></a>安装Go Agent</h1><p>在下载Go Server时, 大家应该看到了Go Agent的下载链接. 如果没有Agent的话, 在Go上配置的Pipeline将都不能执行. 现在我们用类似的方法安装Agent, 同样我这里下载的是Go Agent的deb包:</p>
+<pre><code>─coney@UServer-Laptop  ~
+╰─% sudo dpkg -i go-agent-13.2.2-17585.deb
+Selecting previously unselected package go-agent.
+(Reading database ... 102435 files and directories currently installed.)
+Unpacking go-agent (from go-agent-13.2.2-17585.deb) ...
+No packages found matching cruise-agent.
+&apos;Go Agent&apos; installation will now use group &apos;go&apos;
+&apos;Go Agent&apos; installation will now use user &apos;go&apos;
+Setting up go-agent (13.2.2-17585) ...
+Found Java /usr/lib/jvm/java-7-openjdk-amd64/jre in PATH, using it.
+Installation of Go Agent completed.
+Now please edit /etc/default/go-agent and set GO_SERVER to the IP address of your Go Server.
+Once that is done start the Go Agent with &apos;/etc/init.d/go-agent start&apos;
+Processing triggers for ureadahead ...
+</code></pre><p>Agent的安装速度相当快, 根据安装的提示, 我们要编辑/etc/default/go-agent这个配置文件, 并设置GO_SERVER的地址. 打开go-agent配置, 发现GO_SERVER当前的值为127.0.0.1, 因为我在同一台服务器上安装的Go Server和Go Agent, 所以又可以偷个懒直接使用啦. 如果在不同的主机上安装Agent, 需要将GO_SERVER指向真实的Go Server地址, 并且保证Server和Agent间的网络互通.</p>
+<p>需要注意的是默认安装完后Go Agent是没有启动的, 我们需要手动启动它:</p>
+<pre><code>coney@UServer-Laptop  ~
+╰─% /etc/init.d/go-agent status
+Go Agent is stopped.
+╭─coney@UServer-Laptop  ~
+╰─% sudo /etc/init.d/go-agent start
+[Sat Oct  5 00:59:13 CST 2013] using default settings from /etc/default/go-agent
+nohup: redirecting stderr to stdout
+Started Go Agent.
+</code></pre><p>启动成功后, 我们在Go Server Agent面板下能够看到现在可用的Agents列表:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午1.03.41.png" alt="img"></p>
+<p>到此为止, 一个基本可用的Go就算搭建完成.</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2013/10/go-ci-pipeline/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">GO CI - 创建Pipeline</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2013/07/parse-cli-arguments-in-shell-script/">
+        <span class="next-text nav-default">命令行参数解析 - Shell 脚本</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://www.linkedin.com/in/kun-wu-102636113/" class="iconfont icon-linkedin" title="linkedin"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://www.github.com/coney" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Coney Wu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

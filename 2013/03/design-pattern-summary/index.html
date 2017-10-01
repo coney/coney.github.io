@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="设计模式一句话总结"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello Coney">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://coney.github.io/2013/03/design-pattern-summary/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 设计模式一句话总结 - Hello Coney </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hello Coney</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hello Coney</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          设计模式一句话总结
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2013-03-17
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/OOP/">OOP</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        <p>可能理解有偏差, 望指正, 勿参考</p>
+<ol>
+<li><p>Factory: 将创建者和调用者分开(创建者, 调用者)</p>
+</li>
+<li><p>Factory Method: 创建者的创建行为交由子类完成</p>
+</li>
+<li><p>Abstract Method: 将有共性的类型的创建行为抽象出来</p>
+</li>
+<li><p>Builder: 将复杂对象的组装过程与调用者分离(创建者, 组装者, 调用者)</p>
+<a id="more"></a>
+</li>
+<li><p>Prototype: 基于现有对象复制修改</p>
+</li>
+<li><p>Singleton: 全局唯一实例</p>
+</li>
+<li><p>Facade: 提供对外调用接口</p>
+</li>
+<li><p>Adapter: 兼用不同的接口</p>
+</li>
+<li><p>Proxy: 接口调用增加一个代理层, 不改变原有逻辑的情况下加入额外调用</p>
+</li>
+<li><p>Decorator: 动态增加原有接口的功能, 并能自由组合(使用组合扩展而不是继承)</p>
+</li>
+<li><p>Bridge: 将抽象和实现分开(作为参数传入?)</p>
+</li>
+<li><p>Composite: 类的组合关系(包含)</p>
+</li>
+<li><p>Flyweight: 复用已有的重复对象(线程池, 连接池)</p>
+</li>
+<li><p>Template: 定义框架, 将行为延迟到子类中实现</p>
+</li>
+<li><p>Observer: 将一个对象的行为通知到多个对象(回调注册)</p>
+</li>
+<li><p>State: 根据不同的状态实现不同的行为</p>
+</li>
+<li><p>Strategy: 抽象行为, 根据场景使用(ca)</p>
+</li>
+<li><p>Chain of Responsibility: 使多个对象都有机会处理请求(按需处理)</p>
+</li>
+<li><p>Command: 将操作抽象, 独立于调用者和接收者</p>
+</li>
+<li><p>Visitor: 不改变元素和类的情况下提供对元素的新操作</p>
+</li>
+<li><p>Mediator: 将各个对象解耦, 将多对象间的行为关联</p>
+</li>
+<li><p>Memento: 备份恢复类对象(有啥用? 相对于Prototype)</p>
+</li>
+<li><p>Iterator: 不暴露内部接口的情况下提供对内部元素的访问方法(对比Visitor)</p>
+</li>
+<li><p>Interpreter: 对语言进行解析, 抽象语法树(毛用?)</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2013/03/file-locked-issue-under-visual-studio/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">VS编译运行后可执行文件不能再次写入的问题</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2013/03/bash-control-statements/">
+        <span class="next-text nav-default">Bash控制语句总结</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://www.linkedin.com/in/kun-wu-102636113/" class="iconfont icon-linkedin" title="linkedin"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://www.github.com/coney" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Coney Wu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

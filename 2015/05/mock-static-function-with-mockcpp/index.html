@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="使用Mockcpp Mock C++静态函数"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello Coney">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://coney.github.io/2015/05/mock-static-function-with-mockcpp/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 使用Mockcpp Mock C++静态函数 - Hello Coney </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hello Coney</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hello Coney</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          使用Mockcpp Mock C++静态函数
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2015-05-06
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/c-mock-mockcpp-gmock/">c++ mock mockcpp gmock</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mock静态函数"><span class="toc-text">Mock静态函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mockcpp对静态函数的副作用"><span class="toc-text">Mockcpp对静态函数的副作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Google-Mock语法Mock静态函数"><span class="toc-text">使用Google Mock语法Mock静态函数</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <p>传统测试中的Mock, 都是基于多态实现的, 也就是Mock面向接口的虚函数. 但是在C++的代码中, 经常会混入大量的C函数或是静态成员函数.<br>例如工厂函数, 单例函数, 或是C库中的函数甚至STL的算法等.</p>
+<p>对于这些静态函数, 比较传统的做法是创建一个Wrapper, 用虚方法对这些静态函数进行包裹. 在测试的时候对Wrapper进行Mock便可控制被包裹的静态函数的行为:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>;</div></pre></td></tr></table></figure>
+<p>可以通过Wrapper包裹为:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calc</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> ::add(x, y);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是对于存量代码, 这种重构并不现实(工作量及流程问题). 正当我们束手无策时, 我们发现mockcpp可以帮助我们解决一部分静态方法Mock的需求.</p>
+<a id="more"></a>
+<h3 id="Mock静态函数"><a href="#Mock静态函数" class="headerlink" title="Mock静态函数"></a>Mock静态函数</h3><p>虽然mockcpp主要提供面向虚方法的Mock, 但是mockcpp同时通过inline hooking提供了对静态方法的Mock, 更为强大的是它的inline hooking支持32位和64位的Windows及Linux环境.</p>
+<p>抛开实现, 我们来看两个mockcpp的应用实例:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Mock C Function</span></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> x + y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">TEST(Mockcpp, ShouldAbleToMockCFunction) &#123;</div><div class="line">    MOCKER(add)</div><div class="line">        .expects(once())</div><div class="line">        .with(eq(<span class="number">1</span>), eq(<span class="number">2</span>))</div><div class="line">        .will(returnValue(<span class="number">0</span>));</div><div class="line">    ASSERT_EQ(<span class="number">0</span>, add(<span class="number">1</span>, <span class="number">2</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Mock Static Member Function</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calc</span> &#123;</span></div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Calc</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> x + y;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">TEST(Mockcpp, ShouldAbleToMockStaticFunction) &#123;</div><div class="line">    MOCKER(&amp;Calc::add)</div><div class="line">        .expects(once())</div><div class="line">        .with(eq(<span class="number">1</span>), eq(<span class="number">2</span>))</div><div class="line">        .will(returnValue(<span class="number">0</span>));</div><div class="line">    ASSERT_EQ(<span class="number">0</span>, Calc::add(<span class="number">1</span>, <span class="number">2</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>mockcpp通过<code>MOCKER</code>宏改变了C函数<code>add</code>及静态成员函数<code>Calc::add</code>的行为. 并且对这两个函数的调用设置了期望.<br>对于mockcpp的详细用法可以查看这个文档: <a href="https://code.google.com/p/mockcpp/wiki/SimpleUserInstruction_zh" target="_blank" rel="external">mockcpp使用方法简明指导</a></p>
+<h3 id="Mockcpp对静态函数的副作用"><a href="#Mockcpp对静态函数的副作用" class="headerlink" title="Mockcpp对静态函数的副作用"></a>Mockcpp对静态函数的副作用</h3><p>前面提到, mockcpp对静态函数的Mock是通过inline hooking实现的. 我们来简单看下这个inline hook的过程.</p>
+<p>首先是<code>int add(int, int)</code>在x64下生成的汇编指令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Dump of assembler code for function _ZL3addii:</div><div class="line">   0x00000000004060a4 &lt;+0&gt;:     push   %rbp</div><div class="line">   0x00000000004060a5 &lt;+1&gt;:     mov    %rsp,%rbp</div><div class="line">   0x00000000004060a8 &lt;+4&gt;:     mov    %edi,-0x4(%rbp)</div><div class="line">   0x00000000004060ab &lt;+7&gt;:     mov    %esi,-0x8(%rbp)</div><div class="line">   0x00000000004060ae &lt;+10&gt;:    mov    -0x8(%rbp),%eax</div><div class="line">   0x00000000004060b1 &lt;+13&gt;:    mov    -0x4(%rbp),%edx</div><div class="line">   0x00000000004060b4 &lt;+16&gt;:    add    %edx,%eax</div><div class="line">   0x00000000004060b6 &lt;+18&gt;:    pop    %rbp</div><div class="line">   0x00000000004060b7 &lt;+19&gt;:    retq</div><div class="line">End of assembler dump.</div></pre></td></tr></table></figure>
+<p>通过mockcpp Mock之后, 开头的一段指令让逻辑跳转到了<code>&lt;_ZN38Mockcpp_ShouldAbleToMockCFunction_Test8TestBodyEv+53&gt;</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Dump of assembler code for function _ZL3addii:</div><div class="line">   0x00000000004060a4 &lt;+0&gt;:     jmpq   *0x0(%rip)        # 0x4060aa &lt;_ZL3addii+6&gt;</div><div class="line">   0x00000000004060aa &lt;+6&gt;:     sahf</div><div class="line">   0x00000000004060ab &lt;+7&gt;:     js     0x4060ed &lt;_ZN38Mockcpp_ShouldAbleToMockCFunction_Test8TestBodyEv+53&gt;</div><div class="line">   0x00000000004060ad &lt;+9&gt;:     add    %al,(%rax)</div><div class="line">   0x00000000004060af &lt;+11&gt;:    add    %al,(%rax)</div><div class="line">   0x00000000004060b1 &lt;+13&gt;:    add    %dl,-0x4(%rbp)</div><div class="line">   0x00000000004060b4 &lt;+16&gt;:    add    %edx,%eax</div><div class="line">   0x00000000004060b6 &lt;+18&gt;:    pop    %rbp</div><div class="line">   0x00000000004060b7 &lt;+19&gt;:    retq</div><div class="line">End of assembler dump.</div></pre></td></tr></table></figure>
+<p>而跳转到的<code>&lt;_ZN38Mockcpp_ShouldAbleToMockCFunction_Test8TestBodyEv+53&gt;</code>正是我们通过mockcpp设置的expects:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Dump of assembler code for function _ZN38Mockcpp_ShouldAbleToMockCFunction_Test8TestBodyEv:</div><div class="line">   ...</div><div class="line">   0x00000000004060ed &lt;+53&gt;:    lea    -0x60(%rbp),%rax</div><div class="line">   0x00000000004060f1 &lt;+57&gt;:    mov    %rax,%rdi</div><div class="line">   0x00000000004060f4 &lt;+60&gt;:    callq  0x449396 &lt;_ZN7mockcpp11returnValueERKNS_3AnyE&gt;</div><div class="line">   ...</div><div class="line">End of assembler dump.</div></pre></td></tr></table></figure>
+<p>然后问题来了, mockcpp的inline hooking只会对原函数做一次, 如果发现原来的函数已经被hook过, 就会忽略后续的MOCKER.<br>这会导致:</p>
+<ul>
+<li>被Mock的函数在脱离MOCKER作用域后依旧生效</li>
+<li>被Mock的函数后续不能继续通过MOCKER更改行为</li>
+</ul>
+<p>对于第一个问题, 暂时没有发现什么比较好的方法, mockcpp在做inline hooking的时候已经破坏了函数入口的汇编逻辑.</p>
+<p>而对于第二种情况, 我么则可以通过一种proxy的方法, 通过mockcpp将静态函数转发到某个被Mock的成员函数上, 然后再通过控制这个成员函数改变原来静态函数的行为.<br>具体的实现可以参考下面一节的示例.</p>
+<h3 id="使用Google-Mock语法Mock静态函数"><a href="#使用Google-Mock语法Mock静态函数" class="headerlink" title="使用Google Mock语法Mock静态函数"></a>使用Google Mock语法Mock静态函数</h3><p>mockcpp虽然能够对静态函数进行Mock, 但mockcpp出现的年代比较久远, 限于当时的编译器能力, 语法不是很友好.</p>
+<p>在目前的环境中, Google Mock无疑是一个更好的选择(编译器允许的话也可以尝试FakeIt). 但是Google Mock并不具备对静态方法进行Mock的能力.</p>
+<p>通过mockcpp做为proxy, 我们可以在不学习新的mockcpp语法的情况下对静态函数进行Mock(同时解决了mockcpp不能多次Mock同一个静态函数的问题).</p>
+<p>我们先来看一个示例:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calc</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> x + y;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CalcMock</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">static</span> CalcMock &amp;<span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">static</span> CalcMock calcMock;</div><div class="line">        <span class="keyword">return</span> calcMock;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    MOCK_METHOD2(add, <span class="keyword">int</span>(<span class="keyword">int</span>, <span class="keyword">int</span>));</div><div class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">addProxy</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> getInstance().add(x, y);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">TEST(Mockcpp, ShouldAbleToMockStaticFunctionWithGoogleMock) &#123;</div><div class="line">    MOCKER(Calc::add)</div><div class="line">        .defaults()</div><div class="line">        .with(any(), any())</div><div class="line">        .will(invoke(CalcMock::addProxy));</div><div class="line"></div><div class="line">    EXPECT_CALL(CalcMock::getInstance(), add(<span class="number">1</span>, <span class="number">2</span>))</div><div class="line">        .WillRepeatedly(testing::Return(<span class="number">0</span>));</div><div class="line">    ASSERT_EQ(<span class="number">0</span>, Calc::add(<span class="number">1</span>, <span class="number">2</span>));</div><div class="line"></div><div class="line"></div><div class="line">    EXPECT_CALL(CalcMock::getInstance(), add(<span class="number">1</span>, <span class="number">2</span>))</div><div class="line">        .WillRepeatedly(testing::Return(<span class="number">10</span>));</div><div class="line">    ASSERT_EQ(<span class="number">10</span>, Calc::add(<span class="number">1</span>, <span class="number">2</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在Mock <code>Calc::add</code>方法时, 首先使用Mockcpp将所有<code>Calc:add</code>的调用转发到<code>CalcMock::addProxy</code>上.<br>之后在<code>CalcMock::addProxy</code>里则会调用<code>CalcMock</code>单例的<code>CalcMock::add</code>方法, 而这个<code>CalcMock::add</code>方法则是通过Google Mock声明的.<br>可以使用<code>EXPECT_CALL</code>及其他Google Mock支持的语法对Mock的<code>Calc::add</code>设置期望.</p>
+<p>此时我们已经可以脱离Mockcpp, 使用更加友好的Google Mock来控制静态函数.</p>
+<p>在这个示例中, 我们同时解决了上一节提到的Mockcpp不能多次对同一静态函数Mock的问题.<br>我们使用Mockcpp一劳永逸的将静态函数转发给了Google Mock, 而Google Mock则可以对Mock对象的单例任意设置期望.</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/06/disable-override-keyword-for-visual-assist/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">禁止Visual Assist自动添加Override关键字</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2014/04/seh-extension-in-vc/">
+        <span class="next-text nav-default">VC中对SEH的扩展</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://www.linkedin.com/in/kun-wu-102636113/" class="iconfont icon-linkedin" title="linkedin"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://www.github.com/coney" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Coney Wu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

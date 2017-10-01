@@ -157,7 +157,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2015/09/2015-09-11-gmock-with-const-function/">GMOCK下对const函数重载的处理</a>
+          <a class="post-link" href="/2015/09/gmock-with-const-function/">GMOCK下对const函数重载的处理</a>
         
       </h1>
 
@@ -185,7 +185,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">virtual</span> ~SomeClass() <span class="keyword">throw</span>() &#123;&#125;</div><div class="line">    <span class="keyword">virtual</span> <span class="keyword">int</span> get() = <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>这种类我们在使用时编译器会根据我们的传入对象是否带有const属性自动调用对应的版本, 但是通过GMOCK的编写Mock调用时, 很多人对如何设置const函数的EXPECT_ALL和调用产生了疑问.<br>其实处理方式也比较简单, 在使用EXPECT_CALL或者调用mock对象的方法时, 我们可以显示通过const_cast将mock对象的转为const版本.<br>例如对于上面的类, 我们可以这么去写Mock, 设置期望和调用:</p>
           <div class="read-more">
-            <a href="/2015/09/2015-09-11-gmock-with-const-function/" class="read-more-link">阅读更多</a>
+            <a href="/2015/09/gmock-with-const-function/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -203,7 +203,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/">handle ambiguous overloaded functions in gmock</a>
+          <a class="post-link" href="/2015/08/handle-ambiguous-overloaded-functions-in-gmock/">handle ambiguous overloaded functions in gmock</a>
         
       </h1>
 
@@ -243,13 +243,13 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/">移除HTTP Proxy的NTLM认证</a>
+          <a class="post-link" href="/2015/08/setup-cntlm-for-ntlm-http-proxy/">移除HTTP Proxy的NTLM认证</a>
         
       </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2015-08-06
+          2015-08-07
         </span>
         
         
@@ -273,7 +273,7 @@
 <p>首先从<a href="http://cntlm.sourceforge.net/" target="_blank" rel="external">CNTLM</a>官方网站下载最新版本的CNTLM程序:</p>
 <p><a href="http://sourceforge.net/projects/cntlm/files/" target="_blank" rel="external">http://sourceforge.net/projects/cntlm/files/</a></p>
           <div class="read-more">
-            <a href="/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/" class="read-more-link">阅读更多</a>
+            <a href="/2015/08/setup-cntlm-for-ntlm-http-proxy/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -291,7 +291,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2015/08/2015-08-06-cpp-projects-for-source-reading/">C++ 源码阅读项目推荐</a>
+          <a class="post-link" href="/2015/08/cpp-projects-for-source-reading/">C++ 源码阅读项目推荐</a>
         
       </h1>
 
@@ -332,7 +332,7 @@
 <li>源码地址: <a href="https://www.sgi.com/tech/stl/" target="_blank" rel="external">https://www.sgi.com/tech/stl/</a></li>
 </ul>
           <div class="read-more">
-            <a href="/2015/08/2015-08-06-cpp-projects-for-source-reading/" class="read-more-link">阅读更多</a>
+            <a href="/2015/08/cpp-projects-for-source-reading/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -350,7 +350,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2015/05/2015-06-01-disable-override-keyword-for-visual-assist/">禁止Visual Assist自动添加Override关键字</a>
+          <a class="post-link" href="/2015/06/disable-override-keyword-for-visual-assist/">禁止Visual Assist自动添加Override关键字</a>
         
       </h1>
 
@@ -386,7 +386,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeImplementation</span> :</span> <span class="keyword">public</span> SomeInterface &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> override</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="built_in">std</span>::logic_error(<span class="string">"The method or operation is not implemented."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>Visual Assist在<code>virtual void doSomething()</code>后面帮我们添加了一个<code>override</code>关键字, 这个关键是符合c++11标准的. 但是一些老旧的编译器并不支持<code>override</code>, 因此导致编译错误. 这使我们不得不手动删除所有生成方法后的<code>override</code>关键字.</p>
           <div class="read-more">
-            <a href="/2015/05/2015-06-01-disable-override-keyword-for-visual-assist/" class="read-more-link">阅读更多</a>
+            <a href="/2015/06/disable-override-keyword-for-visual-assist/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -404,7 +404,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2015/05/2015-05-06-mock-static-function-with-mockcpp/">使用Mockcpp Mock C++静态函数</a>
+          <a class="post-link" href="/2015/05/mock-static-function-with-mockcpp/">使用Mockcpp Mock C++静态函数</a>
         
       </h1>
 
@@ -441,7 +441,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calc</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> ::add(x, y);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>但是对于存量代码, 这种重构并不现实(工作量及流程问题). 正当我们束手无策时, 我们发现mockcpp可以帮助我们解决一部分静态方法Mock的需求.</p>
           <div class="read-more">
-            <a href="/2015/05/2015-05-06-mock-static-function-with-mockcpp/" class="read-more-link">阅读更多</a>
+            <a href="/2015/05/mock-static-function-with-mockcpp/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -459,7 +459,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2014/04/2014-04-19-seh-extension-in-vc/">VC中对SEH的扩展</a>
+          <a class="post-link" href="/2014/04/seh-extension-in-vc/">VC中对SEH的扩展</a>
         
       </h1>
 
@@ -487,7 +487,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">EXCEPTION_REGISTRATION_RECORD</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line">   <span class="class"><span class="keyword">struct</span> _<span class="title">EXCEPTION_REGISTRATION_RECORD</span> *<span class="title">Next</span>;</span></div><div class="line">   PEXCEPTION_ROUTINE                     Handler;</div><div class="line">&#125; EXCEPTION_REGISTRATION_RECORD, *PEXCEPTION_REGISTRATION_RECORD;</div><div class="line"></div><div class="line">__try</div><div class="line">&#123;</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line">__except( XXX )</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 这里是对应那个_EXCEPTION_REGISTRATION_RECORD 的第二个成员Handler</span></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>但是对于<code>__finally</code>却没有介绍具体的实现方式. 通过调试器trace不到<code>__finally</code>的调用路径.<br>
           <div class="read-more">
-            <a href="/2014/04/2014-04-19-seh-extension-in-vc/" class="read-more-link">阅读更多</a>
+            <a href="/2014/04/seh-extension-in-vc/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -505,7 +505,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2014/04/2014-04-07-fixing-arcade-machine/">西安Office游戏机修复之路</a>
+          <a class="post-link" href="/2014/04/fixing-arcade-machine/">西安Office游戏机修复之路</a>
         
       </h1>
 
@@ -540,7 +540,7 @@
 <p>回想曾经的街机经历, 无非也就两种选择: 一是到游戏厅玩真机, 第二种便是通过PC上的模拟器. 重买一个街机主板放进去肯定不是我们想要的方案, 所以我们基本确定思路就是通过PC主机+模拟器的方式. 比较常见的街机模拟器有winkawaks, nebula和MAME等, 相信不少人都有玩过:</p>
 <p><img src="/images/2014/04/MAME.jpg" alt="MAME"><br>
           <div class="read-more">
-            <a href="/2014/04/2014-04-07-fixing-arcade-machine/" class="read-more-link">阅读更多</a>
+            <a href="/2014/04/fixing-arcade-machine/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -558,7 +558,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2014/02/2014-02-06-booting-ubuntu-without-x/">防止Ubuntu启动时自动进入GUI</a>
+          <a class="post-link" href="/2014/02/booting-ubuntu-without-x/">防止Ubuntu启动时自动进入GUI</a>
         
       </h1>
 
@@ -591,7 +591,7 @@
           <p>为了实验几个需要X的小程序, 很不情愿的在Ubuntu Server上安装了Ubuntu-Desktop, 但是Ubuntu每次引导后自动进入Gnome实在是烦.</p>
 <p>一般情况下想默认进入CLI的话只需要修改下runlevel, 可是我安装的Ubuntu(Server 12.04 LTS)默认的runlevel是2, Gnome也跑在level 2上. 貌似不能像往常一样通过修改<code>inittab</code>来禁用X.</p>
           <div class="read-more">
-            <a href="/2014/02/2014-02-06-booting-ubuntu-without-x/" class="read-more-link">阅读更多</a>
+            <a href="/2014/02/booting-ubuntu-without-x/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -609,14 +609,20 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2014/01/2014-01-26-hello-world/">Hello World from github</a>
+          <a class="post-link" href="/2013/12/make_rvm_support_more_gcc_versions/">让mac下rvm支持更多的编译器</a>
         
       </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2014-01-26
+          2013-12-13
         </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/Ruby/">Ruby</a>
+            
+          </div>
         
         
       </div>
@@ -629,15 +635,16 @@
       
         
         
+          
+        
 
         
-          <hr>
-<ul>
-<li>Hello Kitty</li>
-<li>Hello Kitty</li>
-<li>Hello Kitty</li>
-</ul>
-
+          <p>通过rvm安装ruby-1.9.3-p484时, 发现rvm会尝试通过brew安装gcc46, 但在编译gcc46依赖的ppl011时产生错误, 导致整个安装流程失败. 我的机器上已经通过brew安装了更高版本的gcc49, rvm看起来还不够聪明去自动使用更新的编译器.</p>
+<p>从网上搜索解决方案时看到这个commit:</p>
+<p><img src="/images/2013/12/QQ20131210-1.png" alt="img"><br>
+          <div class="read-more">
+            <a href="/2013/12/make_rvm_support_more_gcc_versions/" class="read-more-link">阅读更多</a>
+          </div>
         
       
     </div>

@@ -157,59 +157,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/12/2013-12-13-make_rvm_support_more_gcc_versions/">让mac下rvm支持更多的编译器</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2013-12-13
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/Ruby/">Ruby</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>通过rvm安装ruby-1.9.3-p484时, 发现rvm会尝试通过brew安装gcc46, 但在编译gcc46依赖的ppl011时产生错误, 导致整个安装流程失败. 我的机器上已经通过brew安装了更高版本的gcc49, rvm看起来还不够聪明去自动使用更新的编译器.</p>
-<p>从网上搜索解决方案时看到这个commit:</p>
-<p><img src="/images/2013/12/QQ20131210-1.png" alt="img"><br>
-          <div class="read-more">
-            <a href="/2013/12/2013-12-13-make_rvm_support_more_gcc_versions/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2013/12/2013-12-08-fix_java_ssl_problem/">Java下"Failure initializing default system SSL context"的修复</a>
+          <a class="post-link" href="/2013/12/fix_java_ssl_problem/">Java下"Failure initializing default system SSL context"的修复</a>
         
       </h1>
 
@@ -244,7 +192,7 @@
 <p>从网上查了很多内容, 大部分都没有什么帮助, 后来发现并不是gradle的问题, 而是在使用java的https时证书有问题导致. 参考网上的资料, 要对keystore进行一些处理:</p>
 <p><a href="http://publib.boulder.ibm.com/infocenter/javasdk/v6r0/index.jsp?topic=%2Fcom.ibm.java.security.component.60.doc%2Fsecurity-component%2Fjsse2Docs%2Fcustomizingstores.html" target="_blank" rel="external">http://publib.boulder.ibm.com/infocenter/javasdk/v6r0/index.jsp?topic=%2Fcom.ibm.java.security.component.60.doc%2Fsecurity-component%2Fjsse2Docs%2Fcustomizingstores.html</a><br>
           <div class="read-more">
-            <a href="/2013/12/2013-12-08-fix_java_ssl_problem/" class="read-more-link">阅读更多</a>
+            <a href="/2013/12/fix_java_ssl_problem/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -262,7 +210,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/11/2013-11-30-funny-commands/">Funny Commands</a>
+          <a class="post-link" href="/2013/11/funny-commands/">Funny Commands</a>
         
       </h1>
 
@@ -289,7 +237,7 @@
           <p>最近总是能够从其他同事那里学来一些有趣的命令, 害怕时间长忘记了, 所以开个帖子记录下.</p>
 <h1 id="ipcalc"><a href="#ipcalc" class="headerlink" title="ipcalc:"></a>ipcalc:</h1><p>这个命令是用来计算IP或者子网的, 能够以漂亮的色彩分析ip或者子网的范围, 掩码等信息. 我比较喜欢用这个东西来查看类似192.168.0.0/22这种子网的范围.<br><img src="/images/2013/11/QQ20131130-2.png" alt="img"><br>
           <div class="read-more">
-            <a href="/2013/11/2013-11-30-funny-commands/" class="read-more-link">阅读更多</a>
+            <a href="/2013/11/funny-commands/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -307,7 +255,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/">命令行编译arduino源码及上传执行</a>
+          <a class="post-link" href="/2013/11/compile-and-upload-adruino-source-form-cli/">命令行编译arduino源码及上传执行</a>
         
       </h1>
 
@@ -341,7 +289,7 @@
 <p>首先尝试带参启动arduino的IDE, 没有发现类似devenv.exe带参直接编译工程的功能. 之后在arduino主站搜索一番, 倒是发现了一个通过makefile的方法(<a href="http://playground.arduino.cc/Learning/CommandLine" target="_blank" rel="external">http://playground.arduino.cc/Learning/CommandLine</a>), 不过提供的库略坑爹. 折腾了半天后发现提供的uart.h里面没有mega2560的定义. 从IDE中提取的库也找不到这个定义. 只能搞一些较老的芯片, 遂放弃.</p>
 <p>继续google, 发现另外一套基于python的命令行工具ino, 试用了下, 还是比较稳定的. ino的介绍可以看这里:<a href="http://inotool.org/" target="_blank" rel="external">http://inotool.org/</a> 网站上提供了多种安装方式, 因为我的树莓派是debian的系统,  所以相关的东西基本都是通过apt安装的.<br>
           <div class="read-more">
-            <a href="/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/" class="read-more-link">阅读更多</a>
+            <a href="/2013/11/compile-and-upload-adruino-source-form-cli/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -359,7 +307,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/10/2013-10-04-go-ci-pipeline/">GO CI - 创建Pipeline</a>
+          <a class="post-link" href="/2013/10/go-ci-pipeline/">GO CI - 创建Pipeline</a>
         
       </h1>
 
@@ -393,7 +341,7 @@
 <p>首先我们给Pipeline起一个名字:</p>
 <p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午1.08.42.png" alt="img"><br>
           <div class="read-more">
-            <a href="/2013/10/2013-10-04-go-ci-pipeline/" class="read-more-link">阅读更多</a>
+            <a href="/2013/10/go-ci-pipeline/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -411,7 +359,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/10/2013-10-02-go-ci-setup/">GO CI - 安装配置</a>
+          <a class="post-link" href="/2013/10/go-ci-setup/">GO CI - 安装配置</a>
         
       </h1>
 
@@ -444,7 +392,7 @@
           <p>什么是Go呢? Go是骚窝出品的一款持续交付(CD)产品, 类似于Hudson, Bamboo等CI服务. 作为一家专业的敏捷和持续交付咨询公司,  Go从定位上就已经拉开了与其他同类产品的距离, 当别人还在搞CI的时候, 骚窝已经在玩CD了. 下面简单贴下安装和配置流程, 以及试用体验.</p>
 <h1 id="安装Go-Server"><a href="#安装Go-Server" class="headerlink" title="安装Go Server"></a>安装Go Server</h1>
           <div class="read-more">
-            <a href="/2013/10/2013-10-02-go-ci-setup/" class="read-more-link">阅读更多</a>
+            <a href="/2013/10/go-ci-setup/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -462,7 +410,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/">命令行参数解析 - Shell 脚本</a>
+          <a class="post-link" href="/2013/07/parse-cli-arguments-in-shell-script/">命令行参数解析 - Shell 脚本</a>
         
       </h1>
 
@@ -496,7 +444,7 @@
 <p>比较常见的做法就是解析bash内置的几个特殊变量, 例如直接遍历$*或者$@:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#/bin/sh</span></div><div class="line"><span class="built_in">echo</span> <span class="string">'args from \$*'</span></div><div class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> $*; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">'args from \$@'</span></div><div class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="variable">$@</span>; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">'args from "\$*"'</span></div><div class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="string">"$*"</span>; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">'args from "\$@"'</span></div><div class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="string">"<span class="variable">$@</span>"</span>; <span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
           <div class="read-more">
-            <a href="/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/" class="read-more-link">阅读更多</a>
+            <a href="/2013/07/parse-cli-arguments-in-shell-script/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -514,7 +462,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/06/2013-06-28-issuses-of-installing-mysql-and-libv8-on-mac/">mac下gem install mysql和libv8时编译错误的处理</a>
+          <a class="post-link" href="/2013/06/issuses-of-installing-mysql-and-libv8-on-mac/">mac下gem install mysql和libv8时编译错误的处理</a>
         
       </h1>
 
@@ -565,7 +513,7 @@ checking for mysql/mysql.h... no
 Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gems/mysql-2.9.1/ext/mysql_api/gem_make.out
 </code></pre>
           <div class="read-more">
-            <a href="/2013/06/2013-06-28-issuses-of-installing-mysql-and-libv8-on-mac/" class="read-more-link">阅读更多</a>
+            <a href="/2013/06/issuses-of-installing-mysql-and-libv8-on-mac/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -583,7 +531,7 @@ Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gem
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/03/2013-03-27-invalid-writing-std-string-cstr/">直接改写std::string内存导致的问题</a>
+          <a class="post-link" href="/2013/03/invalid-writing-std-string-cstr/">直接改写std::string内存导致的问题</a>
         
       </h1>
 
@@ -616,7 +564,7 @@ Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gem
           <p>今天帮一个同事查问题: 他写了一个全局的string变量, 在程序运行过程中可能会对该变量进行解析操作, 但是在持续运行过程中第二次访问到这个全局变量的时候, string的内容发生了改变. 他代码大体逻辑类似下面这样:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;rawstr)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">string</span> delim = <span class="string">","</span>;</div><div class="line">    <span class="built_in">string</span> newstr = rawstr;</div><div class="line">    <span class="comment">// 认为这里会复制文本内容</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"rawstr:%p newstr:%p\n"</span>, rawstr.c_str(), newstr.c_str());</div><div class="line"></div><div class="line">    <span class="keyword">char</span> *ptoken = strtok(<span class="keyword">const_cast</span>&lt;<span class="keyword">char</span> *&gt;(newstr.c_str()), delim.c_str());</div><div class="line">    <span class="keyword">while</span> (ptoken)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">// process ptoken</span></div><div class="line">        ptoken = strtok(<span class="literal">NULL</span>, delim.c_str());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">string</span> str = <span class="string">"1,2,3,4"</span>;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"before:'%s'\n"</span>, str.c_str());</div><div class="line">    process(str);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"after:'%s'\n"</span>, str.c_str());</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
           <div class="read-more">
-            <a href="/2013/03/2013-03-27-invalid-writing-std-string-cstr/" class="read-more-link">阅读更多</a>
+            <a href="/2013/03/invalid-writing-std-string-cstr/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -634,7 +582,7 @@ Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gem
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/03/2013-03-23-what-happens-when-cpp-destructor-is-not-virtual/">c++声明接口未提供虚析构函数的后果</a>
+          <a class="post-link" href="/2013/03/what-happens-when-cpp-destructor-is-not-virtual/">c++声明接口未提供虚析构函数的后果</a>
         
       </h1>
 
@@ -667,8 +615,57 @@ Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gem
           <p>这是一个比较低级的错误, 用C++模拟C#提供接口, 声明了纯虚函数, 看起来像这样:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ITestable</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
           <div class="read-more">
-            <a href="/2013/03/2013-03-23-what-happens-when-cpp-destructor-is-not-virtual/" class="read-more-link">阅读更多</a>
+            <a href="/2013/03/what-happens-when-cpp-destructor-is-not-virtual/" class="read-more-link">阅读更多</a>
           </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2013/03/file-locked-issue-under-visual-studio/">VS编译运行后可执行文件不能再次写入的问题</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2013-03-20
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/WinDev/">WinDev</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>在公司和家里的电脑上都遇到这个问题, 编译运行程序后, 无论clean或者rebuild, 生成的exe都不能删除掉, 通过processhacker查看是system占用, 怀疑是杀软引用了exe的文件句柄. 可惜卸载杀软后问题同样出现. 提示信息如下:<br>    LINK : fatal error LNK1104: cannot open file ‘D:\Coney\Desktop\Solution\Bin\ProjectApp.exe’<br>后来google下, 发现已经有人碰到过类似问题了,  原因是没有开启Application Experience服务, 大体原因是该服务维护应用程序缓存, 当删除文件时, 应用程序标记为待删除, 待所有打开的进程句柄关闭后进行删除. 但是因为Application Experince服务没有启动, 导致无法获取这个应用程序状态, 所以要等待一段时间应用程序才能被删除掉.</p>
+<p>ref: </p>
+<p><a href="http://stackoverflow.com/questions/3906404/link-fatal-error-lnk1104-cannot-open-file-d-myproj-exe?1363796963" target="_blank" rel="external">http://stackoverflow.com/questions/3906404/link-fatal-error-lnk1104-cannot-open-file-d-myproj-exe?1363796963</a></p>
+<p><a href="http://www.retrocopy.com/blog/28/cant-delete-exe-files-in-vista--windows-7-solved.aspx" target="_blank" rel="external">http://www.retrocopy.com/blog/28/cant-delete-exe-files-in-vista–windows-7-solved.aspx</a></p>
+
         
       
     </div>

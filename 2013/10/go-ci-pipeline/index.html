@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="GO CI - 创建Pipeline"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello Coney">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://coney.github.io/2013/10/go-ci-pipeline/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> GO CI - 创建Pipeline - Hello Coney </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hello Coney</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hello Coney</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          GO CI - 创建Pipeline
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2013-10-04
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/Linux-Network/">Linux/Network</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建Pipeline"><span class="toc-text">创建Pipeline</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h1 id="创建Pipeline"><a href="#创建Pipeline" class="headerlink" title="创建Pipeline"></a>创建Pipeline</h1><p>装完了Go肯定要拿来试试效果, 这里使用了过去写过的一个C++小程序来测试整套Build Pipeline系统. 因为这个小程序比较简单, 就分成了两个Stages. 一个是测试, 另一个是编译App.</p>
+<p>首先我们给Pipeline起一个名字:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午1.08.42.png" alt="img"><br><a id="more"></a></p>
+<p>点击Next后, 我们需要设置Pipline使用的repo, 这里支持svn, git等多种版本管理工具, 设置好repo地址后继续点击Next.</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午1.10.32.png" alt="img"></p>
+<p>进入第三步后我们要开始配置Pipeline要执行的任务, 这里我们需要填写Stage以及Job的名称. Stage下可以包含多个Jobs. 例如名为Test的Stage下可以包含UnitTest, IntegrationTest等多种测试. 这里只简单运行一下代码中包含的gtest. 因为是c++代码使用Makefile, 这里使用Custom Command来执行我们自己的命令:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午1.11.47.png" alt="img"></p>
+<p>创建完成后, 可以通过Admin面板下的Pipeline标签查看创建的Pipeline:</p>
+<p><img src="/images/2013/10/Screen-Shot-2013-10-05-at-上午1.21.28.png" alt="img"></p>
+<p>这里可以修改刚才创建的Stage和Jobs, 也可以增加更多的Stages或者Jobs. 这里额外创建一个Build的Stage, 在Test成功执行后执行.</p>
+<p>Pipeline创建完成后, 通过Pipeline面板, 可以查看所有的Pipeline信息, 并进行操作, 点击播放箭头, 开始执行Build:</p>
+<p><img src="/images/2013/10/QQ截图20131008230403.jpg" alt="img"></p>
+<p>Pipeline执行的时间取决于agent的能力以及pipeline中jobs的内容. 当pipeline完成后, 可以点击进度条查看每个Stage执行的结果:</p>
+<p><img src="/images/2013/10/build_result.png" alt="img"></p>
+<p>在每个Stage下点击jobs的链接, 可以跳转到对应jobs的详细信息页面:</p>
+<p><img src="/images/2013/10/job_details.png" alt="img"></p>
+<p>在Jobs的详细信息页面, 有一个Artifacts标签, 这个下面用于存放pipeline运行过程中生成的一些东西, 可以是日志(例如console.log), 可以是编译后的应用程序, 安装包等(rover_test), 也可以是测试报告等(test_detail.xml), 这里的信息可以在pipeline admin中jobs对应的artifacts配置中修改:<img src="/images/2013/10/job_config_artifacts.png" alt="img"></p>
+<p>这里的Artifacts类型分为两种, Build的是一般产出的程序, 压缩包之类的东西, 可以供下载使用, 而Test Artifact则是由Go进行解析的报告, 例如这个示例中通过gtest的–gtest_output=xml选项生成了XML格式的日志, 被Go解析后可以直接在Job的运行结果页面看到执行的测试结果:</p>
+<p><img src="/images/2013/10/test_result.png" alt="img"></p>
+<p>不过这里发现的一个问题就是同一个pipeline中前面jobs产生的artifact不能直接被后面的job使用, 不知道是没找到方法还是真的不支持. 总体来说用起来不是特别复杂, 但是觉得跟bamboo比起来还是有差距,</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2013/11/compile-and-upload-adruino-source-form-cli/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">命令行编译arduino源码及上传执行</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2013/10/go-ci-setup/">
+        <span class="next-text nav-default">GO CI - 安装配置</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://www.linkedin.com/in/kun-wu-102636113/" class="iconfont icon-linkedin" title="linkedin"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://www.github.com/coney" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Coney Wu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

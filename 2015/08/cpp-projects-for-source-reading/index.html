@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="C++ 源码阅读项目推荐"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello Coney">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://coney.github.io/2015/08/cpp-projects-for-source-reading/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> C++ 源码阅读项目推荐 - Hello Coney </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hello Coney</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hello Coney</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          C++ 源码阅读项目推荐
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2015-08-06
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Chromium"><span class="toc-text">Chromium</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#STL"><span class="toc-text">STL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Poco"><span class="toc-text">Poco</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MFC-amp-Qt"><span class="toc-text">MFC & Qt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ACE"><span class="toc-text">ACE</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h3 id="Chromium"><a href="#Chromium" class="headerlink" title="Chromium"></a>Chromium</h3><ul>
+<li>流行浏览器的Chrome的开发版本</li>
+<li>源码符合Google C++ 编程风格规范<a href="http://google.github.io/styleguide/cppguide.html" target="_blank" rel="external">Google C++ Style Guide</a></li>
+<li>较多人进行阅读, 有一些现有阅读笔记<a href="http://www.cnblogs.com/duguguiyu/archive/2008/10/02/1303095.html" target="_blank" rel="external">Chrome源码剖析</a></li>
+<li>能够学习到比较全面各种子系统的设计知识, 如网络, 多线程, IO, 内存管理等</li>
+<li>其项目中包含了若干Google的子项目, 也很值得阅读, 例如: libv8, gtest, gflags</li>
+<li>源码地址: <a href="https://code.google.com/p/chromium/" target="_blank" rel="external">https://code.google.com/p/chromium/</a></li>
+</ul>
+<h3 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h3><ul>
+<li>C++标准模板库, 日常开发必备</li>
+<li>通过源码能够学习到模板编程基础, 相对于Boost来说可读性很高, 上手容易</li>
+<li>通过学习STL实现能够更好的掌握STL的开发范式, 例如通过迭代器编程而不是传递容器, 使用或扩展STL中的算法</li>
+<li>通过了解STL常用容器的底层实现也能更好的让我们再不同场景下选择合适的容器, 避免因误用造成时间空间的浪费</li>
+<li>STL实现版本较多, 内部接口的编程风格不是很好, 建议通过SGI STL的源码进行阅读</li>
+<li>源码地址: <a href="https://www.sgi.com/tech/stl/" target="_blank" rel="external">https://www.sgi.com/tech/stl/</a></li>
+</ul>
+<a id="more"></a>
+<h3 id="Poco"><a href="#Poco" class="headerlink" title="Poco"></a>Poco</h3><ul>
+<li>大而全的实用类库, 提供类似于JDK或者.net frameworks的功能, 是stl/boost的强大补充</li>
+<li>通过Poco能够找到大量可以直接应用于项目的组件和库, 即使我们不打算直接使用, 也可以借鉴其架构设计</li>
+<li>设计和编码风格良好, 代码规范偏Java, 同样与M2000的编程风格较为接近</li>
+<li>源码地址: <a href="http://pocoproject.org/" target="_blank" rel="external">http://pocoproject.org/</a></li>
+</ul>
+<h3 id="MFC-amp-Qt"><a href="#MFC-amp-Qt" class="headerlink" title="MFC &amp; Qt"></a>MFC &amp; Qt</h3><ul>
+<li>传统老牌的大型C++框架, 提供UI能力</li>
+<li>类似Poco, 通过阅读源码能够对我们未来开发自己的模块和框架提供参考和指导</li>
+<li>忽略掉MFC中类的C前缀和Qt中类的Q前缀, 其编码规范还是较为良好</li>
+<li>完整的框架结构和继承体系, 有利于我们了解大型SDK的组织结构</li>
+<li>Qt源码地址: <a href="https://wiki.qt.io/Get_the_Source" target="_blank" rel="external">https://wiki.qt.io/Get_the_Source</a></li>
+<li>MFC源码安装完Visual Studio即可获得, 源码使用方法: <a href="https://msdn.microsoft.com/en-us/library/bs046sh0.aspx" target="_blank" rel="external">https://msdn.microsoft.com/en-us/library/bs046sh0.aspx</a></li>
+</ul>
+<h3 id="ACE"><a href="#ACE" class="headerlink" title="ACE"></a>ACE</h3><ul>
+<li>高性能分布式框架</li>
+<li>从中可以学习到一些网络和IO设计模型, 其设计思想即使对于了解其他语言的类似Java的BIO, NIO, AIO也很有帮助</li>
+<li>代码阅读难度稍大, 工程也较为复杂, 上手难度大</li>
+<li>源码地址: <a href="https://github.com/DOCGroup/ATCD" target="_blank" rel="external">https://github.com/DOCGroup/ATCD</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/08/setup-cntlm-for-ntlm-http-proxy/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">移除HTTP Proxy的NTLM认证</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2015/06/disable-override-keyword-for-visual-assist/">
+        <span class="next-text nav-default">禁止Visual Assist自动添加Override关键字</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://www.linkedin.com/in/kun-wu-102636113/" class="iconfont icon-linkedin" title="linkedin"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://www.github.com/coney" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Coney Wu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

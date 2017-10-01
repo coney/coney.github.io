@@ -157,56 +157,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/03/2013-03-20-file-locked-issue-under-visual-studio/">VS编译运行后可执行文件不能再次写入的问题</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2013-03-20
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/WinDev/">WinDev</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p>在公司和家里的电脑上都遇到这个问题, 编译运行程序后, 无论clean或者rebuild, 生成的exe都不能删除掉, 通过processhacker查看是system占用, 怀疑是杀软引用了exe的文件句柄. 可惜卸载杀软后问题同样出现. 提示信息如下:<br>    LINK : fatal error LNK1104: cannot open file ‘D:\Coney\Desktop\Solution\Bin\ProjectApp.exe’<br>后来google下, 发现已经有人碰到过类似问题了,  原因是没有开启Application Experience服务, 大体原因是该服务维护应用程序缓存, 当删除文件时, 应用程序标记为待删除, 待所有打开的进程句柄关闭后进行删除. 但是因为Application Experince服务没有启动, 导致无法获取这个应用程序状态, 所以要等待一段时间应用程序才能被删除掉.</p>
-<p>ref: </p>
-<p><a href="http://stackoverflow.com/questions/3906404/link-fatal-error-lnk1104-cannot-open-file-d-myproj-exe?1363796963" target="_blank" rel="external">http://stackoverflow.com/questions/3906404/link-fatal-error-lnk1104-cannot-open-file-d-myproj-exe?1363796963</a></p>
-<p><a href="http://www.retrocopy.com/blog/28/cant-delete-exe-files-in-vista--windows-7-solved.aspx" target="_blank" rel="external">http://www.retrocopy.com/blog/28/cant-delete-exe-files-in-vista–windows-7-solved.aspx</a></p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2013/03/2013-03-17-design-pattern-summary/">设计模式一句话总结</a>
+          <a class="post-link" href="/2013/03/design-pattern-summary/">设计模式一句话总结</a>
         
       </h1>
 
@@ -246,7 +197,7 @@
 </li>
 <li><p>Builder: 将复杂对象的组装过程与调用者分离(创建者, 组装者, 调用者)</p>
           <div class="read-more">
-            <a href="/2013/03/2013-03-17-design-pattern-summary/" class="read-more-link">阅读更多</a>
+            <a href="/2013/03/design-pattern-summary/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -264,7 +215,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/03/2013-03-02-bash-control-statements/">Bash控制语句总结</a>
+          <a class="post-link" href="/2013/03/bash-control-statements/">Bash控制语句总结</a>
         
       </h1>
 
@@ -299,7 +250,7 @@
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> [ <span class="built_in">test</span> ]; <span class="keyword">then</span></div><div class="line">    xxxx</div><div class="line"><span class="keyword">elif</span> [ <span class="built_in">test</span> ]; <span class="keyword">then</span></div><div class="line">    xxxx</div><div class="line"><span class="keyword">else</span></div><div class="line">    xxxx</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
           <div class="read-more">
-            <a href="/2013/03/2013-03-02-bash-control-statements/" class="read-more-link">阅读更多</a>
+            <a href="/2013/03/bash-control-statements/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -317,53 +268,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/02/2013-02-19-go-home/">巨想回家啊</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2013-02-19
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/Mood/">Mood</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p><img src="/images/2013/02/未命名.gif" alt="img"></p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2013/02/2013-02-19-find-dependent-symbols-by-ldd/">通过ldd查找符号引用</a>
+          <a class="post-link" href="/2013/02/find-dependent-symbols-by-ldd/">通过ldd查找符号引用</a>
         
       </h1>
 
@@ -410,54 +315,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2013/01/2013-01-08-hehe/">写点啥呢?</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2013-01-08
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/Mood/">Mood</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p>最近好累啊, 碎了</p>
-<p><img src="/images/2013/01/yy102483.jpg" alt="img"></p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2013/01/2013-01-07-hello-world/">Hello world!</a>
+          <a class="post-link" href="/2013/01/hello-world/">Hello world!</a>
         
       </h1>
 

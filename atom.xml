@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://coney.github.io/"/>
-  <updated>2017-09-27T08:59:04.000Z</updated>
+  <updated>2017-09-29T03:05:22.915Z</updated>
   <id>http://coney.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>GMOCK下对const函数重载的处理</title>
-    <link href="http://coney.github.io/2015/09/2015-09-11-gmock-with-const-function/"/>
-    <id>http://coney.github.io/2015/09/2015-09-11-gmock-with-const-function/</id>
-    <published>2015-09-10T20:32:00.000Z</published>
-    <updated>2017-09-27T08:59:04.000Z</updated>
+    <link href="http://coney.github.io/2015/09/gmock-with-const-function/"/>
+    <id>http://coney.github.io/2015/09/gmock-with-const-function/</id>
+    <published>2015-09-11T04:32:00.000Z</published>
+    <updated>2017-09-29T03:05:22.915Z</updated>
     
     <summary type="html">
     
@@ -36,9 +36,9 @@
   
   <entry>
     <title>handle ambiguous overloaded functions in gmock</title>
-    <link href="http://coney.github.io/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/"/>
-    <id>http://coney.github.io/2015/08/2015-08-21-handle-ambiguous-overloaded-functions-in-gmock/</id>
-    <published>2015-08-20T23:44:24.000Z</published>
+    <link href="http://coney.github.io/2015/08/handle-ambiguous-overloaded-functions-in-gmock/"/>
+    <id>http://coney.github.io/2015/08/handle-ambiguous-overloaded-functions-in-gmock/</id>
+    <published>2015-08-21T07:44:24.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
     <summary type="html">
@@ -58,9 +58,9 @@
   
   <entry>
     <title>移除HTTP Proxy的NTLM认证</title>
-    <link href="http://coney.github.io/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/"/>
-    <id>http://coney.github.io/2015/08/2015-08-07-setup-cntlm-for-ntlm-http-proxy/</id>
-    <published>2015-08-06T08:04:58.000Z</published>
+    <link href="http://coney.github.io/2015/08/setup-cntlm-for-ntlm-http-proxy/"/>
+    <id>http://coney.github.io/2015/08/setup-cntlm-for-ntlm-http-proxy/</id>
+    <published>2015-08-06T16:04:58.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
     <summary type="html">
@@ -78,10 +78,10 @@
   
   <entry>
     <title>C++ 源码阅读项目推荐</title>
-    <link href="http://coney.github.io/2015/08/2015-08-06-cpp-projects-for-source-reading/"/>
-    <id>http://coney.github.io/2015/08/2015-08-06-cpp-projects-for-source-reading/</id>
-    <published>2015-08-05T18:25:47.000Z</published>
-    <updated>2017-09-27T08:59:04.000Z</updated>
+    <link href="http://coney.github.io/2015/08/cpp-projects-for-source-reading/"/>
+    <id>http://coney.github.io/2015/08/cpp-projects-for-source-reading/</id>
+    <published>2015-08-06T02:25:47.000Z</published>
+    <updated>2017-09-29T03:13:25.634Z</updated>
     
     <summary type="html">
     
@@ -109,10 +109,10 @@
   
   <entry>
     <title>禁止Visual Assist自动添加Override关键字</title>
-    <link href="http://coney.github.io/2015/05/2015-06-01-disable-override-keyword-for-visual-assist/"/>
-    <id>http://coney.github.io/2015/05/2015-06-01-disable-override-keyword-for-visual-assist/</id>
-    <published>2015-05-31T22:32:21.000Z</published>
-    <updated>2017-09-27T08:59:04.000Z</updated>
+    <link href="http://coney.github.io/2015/06/disable-override-keyword-for-visual-assist/"/>
+    <id>http://coney.github.io/2015/06/disable-override-keyword-for-visual-assist/</id>
+    <published>2015-06-01T06:32:21.000Z</published>
+    <updated>2017-10-01T15:10:20.458Z</updated>
     
     <summary type="html">
     
@@ -131,9 +131,9 @@
   
   <entry>
     <title>使用Mockcpp Mock C++静态函数</title>
-    <link href="http://coney.github.io/2015/05/2015-05-06-mock-static-function-with-mockcpp/"/>
-    <id>http://coney.github.io/2015/05/2015-05-06-mock-static-function-with-mockcpp/</id>
-    <published>2015-05-05T23:22:10.000Z</published>
+    <link href="http://coney.github.io/2015/05/mock-static-function-with-mockcpp/"/>
+    <id>http://coney.github.io/2015/05/mock-static-function-with-mockcpp/</id>
+    <published>2015-05-06T07:22:10.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
     <summary type="html">
@@ -154,9 +154,9 @@
   
   <entry>
     <title>VC中对SEH的扩展</title>
-    <link href="http://coney.github.io/2014/04/2014-04-19-seh-extension-in-vc/"/>
-    <id>http://coney.github.io/2014/04/2014-04-19-seh-extension-in-vc/</id>
-    <published>2014-04-19T00:30:54.000Z</published>
+    <link href="http://coney.github.io/2014/04/seh-extension-in-vc/"/>
+    <id>http://coney.github.io/2014/04/seh-extension-in-vc/</id>
+    <published>2014-04-19T08:30:54.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
     <summary type="html">
@@ -172,9 +172,9 @@
   
   <entry>
     <title>西安Office游戏机修复之路</title>
-    <link href="http://coney.github.io/2014/04/2014-04-07-fixing-arcade-machine/"/>
-    <id>http://coney.github.io/2014/04/2014-04-07-fixing-arcade-machine/</id>
-    <published>2014-04-07T00:33:24.000Z</published>
+    <link href="http://coney.github.io/2014/04/fixing-arcade-machine/"/>
+    <id>http://coney.github.io/2014/04/fixing-arcade-machine/</id>
+    <published>2014-04-07T08:33:24.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
     <summary type="html">
@@ -193,9 +193,9 @@
   
   <entry>
     <title>防止Ubuntu启动时自动进入GUI</title>
-    <link href="http://coney.github.io/2014/02/2014-02-06-booting-ubuntu-without-x/"/>
-    <id>http://coney.github.io/2014/02/2014-02-06-booting-ubuntu-without-x/</id>
-    <published>2014-02-06T05:56:15.000Z</published>
+    <link href="http://coney.github.io/2014/02/booting-ubuntu-without-x/"/>
+    <id>http://coney.github.io/2014/02/booting-ubuntu-without-x/</id>
+    <published>2014-02-06T13:56:15.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
     <summary type="html">
@@ -211,35 +211,9 @@
   </entry>
   
   <entry>
-    <title>Hello World from github</title>
-    <link href="http://coney.github.io/2014/01/2014-01-26-hello-world/"/>
-    <id>http://coney.github.io/2014/01/2014-01-26-hello-world/</id>
-    <published>2014-01-26T00:52:46.000Z</published>
-    <updated>2017-09-27T08:59:04.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;hr&gt;
-&lt;ul&gt;
-&lt;li&gt;Hello Kitty&lt;/li&gt;
-&lt;li&gt;Hello Kitty&lt;/li&gt;
-&lt;li&gt;Hello
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>让mac下rvm支持更多的编译器</title>
-    <link href="http://coney.github.io/2013/12/2013-12-13-make_rvm_support_more_gcc_versions/"/>
-    <id>http://coney.github.io/2013/12/2013-12-13-make_rvm_support_more_gcc_versions/</id>
+    <link href="http://coney.github.io/2013/12/make_rvm_support_more_gcc_versions/"/>
+    <id>http://coney.github.io/2013/12/make_rvm_support_more_gcc_versions/</id>
     <published>2013-12-13T03:50:40.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -258,8 +232,8 @@
   
   <entry>
     <title>Java下&quot;Failure initializing default system SSL context&quot;的修复</title>
-    <link href="http://coney.github.io/2013/12/2013-12-08-fix_java_ssl_problem/"/>
-    <id>http://coney.github.io/2013/12/2013-12-08-fix_java_ssl_problem/</id>
+    <link href="http://coney.github.io/2013/12/fix_java_ssl_problem/"/>
+    <id>http://coney.github.io/2013/12/fix_java_ssl_problem/</id>
     <published>2013-12-08T01:21:09.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -281,8 +255,8 @@
   
   <entry>
     <title>Funny Commands</title>
-    <link href="http://coney.github.io/2013/11/2013-11-30-funny-commands/"/>
-    <id>http://coney.github.io/2013/11/2013-11-30-funny-commands/</id>
+    <link href="http://coney.github.io/2013/11/funny-commands/"/>
+    <id>http://coney.github.io/2013/11/funny-commands/</id>
     <published>2013-11-30T02:30:32.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -298,8 +272,8 @@
   
   <entry>
     <title>命令行编译arduino源码及上传执行</title>
-    <link href="http://coney.github.io/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/"/>
-    <id>http://coney.github.io/2013/11/2013-11-09-compile-and-upload-adruino-source-form-cli/</id>
+    <link href="http://coney.github.io/2013/11/compile-and-upload-adruino-source-form-cli/"/>
+    <id>http://coney.github.io/2013/11/compile-and-upload-adruino-source-form-cli/</id>
     <published>2013-11-09T02:34:49.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -318,8 +292,8 @@
   
   <entry>
     <title>GO CI - 创建Pipeline</title>
-    <link href="http://coney.github.io/2013/10/2013-10-04-go-ci-pipeline/"/>
-    <id>http://coney.github.io/2013/10/2013-10-04-go-ci-pipeline/</id>
+    <link href="http://coney.github.io/2013/10/go-ci-pipeline/"/>
+    <id>http://coney.github.io/2013/10/go-ci-pipeline/</id>
     <published>2013-10-04T09:44:54.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -338,8 +312,8 @@
   
   <entry>
     <title>GO CI - 安装配置</title>
-    <link href="http://coney.github.io/2013/10/2013-10-02-go-ci-setup/"/>
-    <id>http://coney.github.io/2013/10/2013-10-02-go-ci-setup/</id>
+    <link href="http://coney.github.io/2013/10/go-ci-setup/"/>
+    <id>http://coney.github.io/2013/10/go-ci-setup/</id>
     <published>2013-10-02T05:46:56.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -357,8 +331,8 @@
   
   <entry>
     <title>命令行参数解析 - Shell 脚本</title>
-    <link href="http://coney.github.io/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/"/>
-    <id>http://coney.github.io/2013/06/2013-07-01-parse-cli-arguments-in-shell-script/</id>
+    <link href="http://coney.github.io/2013/07/parse-cli-arguments-in-shell-script/"/>
+    <id>http://coney.github.io/2013/07/parse-cli-arguments-in-shell-script/</id>
     <published>2013-06-30T21:05:46.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -381,8 +355,8 @@
   
   <entry>
     <title>mac下gem install mysql和libv8时编译错误的处理</title>
-    <link href="http://coney.github.io/2013/06/2013-06-28-issuses-of-installing-mysql-and-libv8-on-mac/"/>
-    <id>http://coney.github.io/2013/06/2013-06-28-issuses-of-installing-mysql-and-libv8-on-mac/</id>
+    <link href="http://coney.github.io/2013/06/issuses-of-installing-mysql-and-libv8-on-mac/"/>
+    <id>http://coney.github.io/2013/06/issuses-of-installing-mysql-and-libv8-on-mac/</id>
     <published>2013-06-28T09:32:12.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -418,8 +392,8 @@ Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gem
   
   <entry>
     <title>直接改写std::string内存导致的问题</title>
-    <link href="http://coney.github.io/2013/03/2013-03-27-invalid-writing-std-string-cstr/"/>
-    <id>http://coney.github.io/2013/03/2013-03-27-invalid-writing-std-string-cstr/</id>
+    <link href="http://coney.github.io/2013/03/invalid-writing-std-string-cstr/"/>
+    <id>http://coney.github.io/2013/03/invalid-writing-std-string-cstr/</id>
     <published>2013-03-26T21:24:43.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -439,8 +413,8 @@ Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gem
   
   <entry>
     <title>c++声明接口未提供虚析构函数的后果</title>
-    <link href="http://coney.github.io/2013/03/2013-03-23-what-happens-when-cpp-destructor-is-not-virtual/"/>
-    <id>http://coney.github.io/2013/03/2013-03-23-what-happens-when-cpp-destructor-is-not-virtual/</id>
+    <link href="http://coney.github.io/2013/03/what-happens-when-cpp-destructor-is-not-virtual/"/>
+    <id>http://coney.github.io/2013/03/what-happens-when-cpp-destructor-is-not-virtual/</id>
     <published>2013-03-23T01:13:30.000Z</published>
     <updated>2017-09-27T08:59:04.000Z</updated>
     
@@ -455,6 +429,30 @@ Results logged to /Users/coney/.rvm/gems/ree-1.8.7-2012.02@customer-platform/gem
     
     
       <category term="Interface 虚析构" scheme="http://coney.github.io/tags/Interface-%E8%99%9A%E6%9E%90%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VS编译运行后可执行文件不能再次写入的问题</title>
+    <link href="http://coney.github.io/2013/03/file-locked-issue-under-visual-studio/"/>
+    <id>http://coney.github.io/2013/03/file-locked-issue-under-visual-studio/</id>
+    <published>2013-03-20T08:36:22.000Z</published>
+    <updated>2017-09-27T08:59:04.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在公司和家里的电脑上都遇到这个问题, 编译运行程序后, 无论clean或者rebuild, 生成的exe都不能删除掉, 通过processhacker查看是system占用, 怀疑是杀软引用了exe的文件句柄. 可惜卸载杀软后问题同样出现. 提示信息如下:&lt;br&gt;   
+        
+      
+    
+    </summary>
+    
+      <category term="WinDev" scheme="http://coney.github.io/categories/WinDev/"/>
+    
     
   </entry>
   

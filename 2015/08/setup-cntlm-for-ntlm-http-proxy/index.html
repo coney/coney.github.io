@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="移除HTTP Proxy的NTLM认证"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello Coney">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://coney.github.io/2015/08/setup-cntlm-for-ntlm-http-proxy/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> 移除HTTP Proxy的NTLM认证 - Hello Coney </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Hello Coney</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Hello Coney</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          移除HTTP Proxy的NTLM认证
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2015-08-07
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        <p>某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙.</p>
+<p>通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持.</p>
+<p>例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择CNTLM将代理转化为不需要认证的HTTP代理.</p>
+<p>首先从<a href="http://cntlm.sourceforge.net/" target="_blank" rel="external">CNTLM</a>官方网站下载最新版本的CNTLM程序:</p>
+<p><a href="http://sourceforge.net/projects/cntlm/files/" target="_blank" rel="external">http://sourceforge.net/projects/cntlm/files/</a></p>
+<a id="more"></a>
+<p>安装CNTLM后, 我们需要对CNTLM进行一些配置.<br>首先进入CNTLM安装目录, 打开<code>cntlm.ini</code>, 修改代理服务器地址为目前使用的NTLM认证的代理服务器地址:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Proxy     your.proxy.com:8080</div><div class="line">Listen    3128</div></pre></td></tr></table></figure>
+<p>需要注意此处是<strong>修改</strong><code>cntlm.ini</code>中的对应项而不是新增, 需要移除掉原来的<code>Listen</code>和<code>Proxy</code>配置.</p>
+<p>之后运行<code>cmd</code>进入命令行环境, 切换到CNTLM安装目录, 执行如下命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">C:\Program Files\Cntlm&gt; cntlm -M http://www.baidu.com/ -d your.domain.com -u username</div><div class="line">Password:</div><div class="line">Config profile  1/4... Credentials rejected</div><div class="line">Config profile  2/4... OK (HTTP code: 200)</div><div class="line">----------------------------[ Profile  1 ]------</div><div class="line">Auth            NTLM</div><div class="line">PassNT          6549XXXXXXXXXXXXXXXXXXXXXXXXC0B0</div><div class="line">PassLM          1B1AXXXXXXXXXXXXXXXXXXXXXXXXBFE3</div><div class="line">------------------------------------------------</div></pre></td></tr></table></figure>
+<p>将<code>-u</code>后的参数换成你的域账号, 并且在提示输入Password的地方输入域账号密码.<br>cntlm会尝试使用NTLM认证, 并且输出了认证使用的Key Hash.<br>编辑CNTLM安装目录的<code>cntlm.ini</code>, 根据刚才返回的Key Hash, 修改以下几行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Username  username</div><div class="line">Domain    your.domain.com</div><div class="line"></div><div class="line">Auth      NTLM</div><div class="line">PassNT    6549XXXXXXXXXXXXXXXXXXXXXXXXC0B0</div><div class="line">PassLM    1B1AXXXXXXXXXXXXXXXXXXXXXXXXBFE3</div></pre></td></tr></table></figure>
+<p>最后启动CNTLM服务:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net start cntlm</div></pre></td></tr></table></figure>
+<p>在浏览器中配置代理<code>127.0.0.1:3128</code>, 尝试访问外网, 验证代理是否工作正常.</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2015/08/handle-ambiguous-overloaded-functions-in-gmock/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">handle ambiguous overloaded functions in gmock</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2015/08/cpp-projects-for-source-reading/">
+        <span class="next-text nav-default">C++ 源码阅读项目推荐</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://www.linkedin.com/in/kun-wu-102636113/" class="iconfont icon-linkedin" title="linkedin"></a>
+        
+      
+    
+      
+    
+      
+        
+          <a href="https://www.github.com/coney" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Coney Wu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
