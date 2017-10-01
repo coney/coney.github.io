@@ -175,9 +175,9 @@
 
     <div class="post-content">
       
-        <p>某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙.</p>
-<p>通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持.</p>
-<p>例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择CNTLM将代理转化为不需要认证的HTTP代理.</p>
+        <p>某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会架设AD并使用ISA作为代理服务器及防火墙.</p>
+<p>通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却有很多HTTP客户端不支持.</p>
+<p>例如在某客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择CNTLM将代理转化为不需要认证的HTTP代理.</p>
 <p>首先从<a href="http://cntlm.sourceforge.net/" target="_blank" rel="external">CNTLM</a>官方网站下载最新版本的CNTLM程序:</p>
 <p><a href="http://sourceforge.net/projects/cntlm/files/" target="_blank" rel="external">http://sourceforge.net/projects/cntlm/files/</a></p>
 <a id="more"></a>

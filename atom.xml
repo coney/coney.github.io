@@ -39,7 +39,7 @@
     <link href="http://coney.github.io/2015/08/handle-ambiguous-overloaded-functions-in-gmock/"/>
     <id>http://coney.github.io/2015/08/handle-ambiguous-overloaded-functions-in-gmock/</id>
     <published>2015-08-21T07:44:24.000Z</published>
-    <updated>2017-09-27T08:59:04.000Z</updated>
+    <updated>2017-10-01T15:19:11.674Z</updated>
     
     <summary type="html">
     
@@ -47,7 +47,8 @@
       
         
         
-          &lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div
+          &lt;p&gt;在声明的接口中, 可能会存在返回值及函数参数个数一直的情况, 例如下面&lt;code&gt;Inf::f()&lt;/code&gt;方法:&lt;/p&gt;
+&lt;figure class=&quot;highlight c++&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div
         
       
     
@@ -61,13 +62,13 @@
     <link href="http://coney.github.io/2015/08/setup-cntlm-for-ntlm-http-proxy/"/>
     <id>http://coney.github.io/2015/08/setup-cntlm-for-ntlm-http-proxy/</id>
     <published>2015-08-06T16:04:58.000Z</published>
-    <updated>2017-09-27T08:59:04.000Z</updated>
+    <updated>2017-10-01T15:19:52.203Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会假设AD并使用ISA作为代理服务器及防火墙.&lt;/p&gt;
-&lt;p&gt;通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却又很多HTTP客户端不支持.&lt;/p&gt;
-&lt;p&gt;例如在客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择CNTLM将代理转化为不需要认证的HTTP代理.&lt;/p&gt;
+      &lt;p&gt;某些企业内网处于安全考虑, 封堵了互联网访问, 外网出口仅保留一个HTTP Proxy, 在国内不少企业会架设AD并使用ISA作为代理服务器及防火墙.&lt;/p&gt;
+&lt;p&gt;通过ISA支持的NTLM认证能够比较方便的实现Windows端的SSO, 但是这种明显Windows风的认证方式却有很多HTTP客户端不支持.&lt;/p&gt;
+&lt;p&gt;例如在某客户现场使用npm通过代理安装包时, npm无法通过NTLM认证导致安装失败. 此时我们可以选择CNTLM将代理转化为不需要认证的HTTP代理.&lt;/p&gt;
 &lt;p&gt;首先从&lt;a href=&quot;http://cntlm.sourceforge.net/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CNTLM&lt;/a&gt;官方网站下载最新版本的CNTLM程序:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://sourceforge.net/projects/cntlm/files/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://sourceforge.net/projects/cntlm/files/&lt;/a&gt;&lt;/p&gt;
     
@@ -171,15 +172,15 @@
   </entry>
   
   <entry>
-    <title>西安Office游戏机修复之路</title>
+    <title>古董街机修复之路</title>
     <link href="http://coney.github.io/2014/04/fixing-arcade-machine/"/>
     <id>http://coney.github.io/2014/04/fixing-arcade-machine/</id>
     <published>2014-04-07T08:33:24.000Z</published>
-    <updated>2017-09-27T08:59:04.000Z</updated>
+    <updated>2017-10-01T15:21:53.707Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;加入Thoughtworks前参观西安Office时就已经注意到餐厅的游戏机, 但入职后才知道游戏机已经坏了有些年月. 机缘巧合, 加入硬件小组后了解到有修复游戏机的计划, 所以便有了以下的经历.&lt;/p&gt;
+      &lt;p&gt;加入Thoughtworks前参观西安Office时就已经注意到办公室角落的一台街机, 在入职后才知道此街机已经坏了有些年月. 机缘巧合, 加入硬件小组后了解到有修复游戏机的计划, 所以便有了以下的经历.&lt;/p&gt;
 &lt;p&gt;#方案选择#&lt;br&gt;开搞之前, 新宇和高亮已经把游戏机肚里的东西摸得一清二楚. 游戏机主板寄给某个淘宝店家后已杳无音讯, 屏幕则是一块接受RGBS信号的25寸显像管, 摇杆和按钮是最直接的按键开关, 闭合后会跟GND连通. 有了这些基本输入输出信息, 下一步就是选择合适的软硬件来重建主板.&lt;/p&gt;
 &lt;p&gt;回想曾经的街机经历, 无非也就两种选择: 一是到游戏厅玩真机, 第二种便是通过PC上的模拟器. 重买一个街机主板放进去肯定不是我们想要的方案, 所以我们基本确定思路就是通过PC主机+模拟器的方式. 比较常见的街机模拟器有winkawaks, nebula和MAME等, 相信不少人都有玩过:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/2014/04/MAME.jpg&quot; alt=&quot;MAME&quot;&gt;&lt;br&gt;
