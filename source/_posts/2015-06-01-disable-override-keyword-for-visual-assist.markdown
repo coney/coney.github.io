@@ -52,4 +52,4 @@ Set the value to 00 to return to the default behavior.
 
 如果你怕麻烦, 也可以下载并运行这个文件来修改注册表(适用于Visual Studio 2013):
 
-[disable-override-keyword-for-vs2013.reg](/assets/resources/disable-override-keyword-for-vs2013.reg)
+[disable-override-keyword-for-vs2013.reg](disable-override-keyword-for-vs2013.reg)
